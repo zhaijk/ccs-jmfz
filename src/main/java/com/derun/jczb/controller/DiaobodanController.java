@@ -19,7 +19,7 @@ import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
 /**
- *    换单+油料调拨
+ *    换单+油料调拨 添加换单业务和调拨业务
  * @author Administrator
  *
  */
