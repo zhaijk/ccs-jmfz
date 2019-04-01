@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">
+  <title>车辆管理</title>
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+<!--   <link rel="stylesheet" href="css/jquery.dataTables.min.css"> -->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">  
+  <link rel="stylesheet" href="css/buttons.bootstrap.min.css">
+  <link rel="stylesheet" href="css/select.bootstrap.min.css">
+  <link rel="stylesheet" href="css/editor.dataTables.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css"> 
+  <link rel="stylesheet" href="css/skins/_all-skins.css">
+  
+ </head>
+<body>
+	<!-- 
+	<div id="toolbar" class="btn-group">	
+	<button id="addRow" type="button"  class="btn  btn-default">
+		<span class="glyphicon glyphicon-plus" aria-hidden="false"></span>新增
+	</button>
+	<button id="updateRow" type="button" class="btn  btn-default">
+		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+	</button>
+	<button id="deleteRow" type="button" class="btn  btn-default">
+		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+	</button>	
+	<button id="confirmRow" type="button" class="btn  btn-default">
+		<span class="glyphicon glyphicon-ok" aria-hidden="false"></span>确定
+	</button>	
+	</div>
+	<span style="font-size:24px;position:relative;top:6px;left:16%">车辆信息</span>
+  -->
+			
+<table id="car_infos" class="table table-striped table-bordered table-hover table-condensed">
+  <thead>
+	<tr style="font-size:16px;background-color:rgb(237, 241, 244);align:center">
+		<th style="width:6%" >序号</th>
+		<th style="width:14%" >车辆号牌</th>
+		<th style="width:20%">所属部门</th>
+		<th style="width:12%">车辆品牌</th>
+		<th style="width:10%">建立日期</th>
+		<th style="width:8%">使用人</th>
+		<th style="width:8%">联系电话</th>		 
+	</tr>
+  </thead>
+  <tbody>  
+  </tbody>
+</table>
+
+
+
+<!-- jQuery 3 -->
+<script src="js/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+
+<script src="js/dataTables.buttons.min.js"></script>
+<script src="js/buttons.bootstrap.min.js"></script>
+<script src="js/dataTables.select.min.js"></script>
+
+<script src="js/dataTables.editor.js"></script>
+<script src="js/editor.bootstrap.min.js"></script>
+
+<script src="js/adminlte.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="js/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="js/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+
+
+<script type='text/javascript' th:inline="javascript">
+var editor;
+//var cartypeinfo;
+//var departinfo;
+$(function(){ 
+	
+	var cartypeinfo=[[${carTypeInfos}]];
+	var departInfos=[[${departInfos}]];
+	var array_car=new Array();
+	var array_depart=new Array();
+	for(i in cartypeinfo){
+		array_car[i]={name:cartypeinfo[i].autoCarType2,label:cartypeinfo[i].name};		
+	}
+	for(i in departInfos){
+		array_depart[i]={name:departInfos[i].departmentCode,label:departInfos[i].departmentName};		
+	}
+	//alert(departinfo);
+	editor = new $.fn.dataTable.Editor( {
+	        ajax: "car-manager/edit",
+	        table: "#car_infos",
+	        idSrc:  'id',
+	        "fields": [{
+	        	label: "车辆号牌",
+	        	name: "autoCarCode",
+	        	type: "text"
+	        }, {
+	        	label: "所属部门",
+	        	name: "departmentName",
+	        	type: "select",
+                options: array_depart
+	        	
+	        }, {
+	        	label: "车辆品牌",
+	        	name: "carBrandName",
+	        	type:  'select',
+                options: array_car
+	        }, {
+	        	label: "建立日期",
+	        	name: "fastDate",
+	            type: "datetime"
+	        }]
+	    } );
+    var table=$('#car_infos').DataTable({		
+//        'pageLength' : 10,
+		'pageLength' : 10,
+		'lengthChange' : false,
+		'searching' : true,
+		//'ordering' : false,
+		'info' : true,
+		'autoWidth' : false,
+/* 		'searching' : true,
+		'ordering' : false,
+		'info' : true,
+		'autoWidth' : false,
+    	"Selected": true,
+   	    "bFilter":true,
+   		"bLengthChange":false,
+   		"bDestroy":true,
+   		"bRetrieve":true,
+   		"bSort" : true, 		//是否启动各个字段的排序功能 
+	  	"pagingType": "full_numbers",
+	  	"bJQueryUI" : false, 	//是否使用 jQury的UI theme  */
+	  	"bDestroy":true,
+   		"bRetrieve":true,
+	  	"ajax": "car-manager/datas",
+	  	"columns": [
+	  		{ "data": "id"},
+            { "data": "autoCarCode" },
+            { "data": "departmentName"  },
+            { "data": "carBrandName" },
+            { "data": "fastDate" },
+            { "data": "driverName" },
+            { "data": "telephoneNumber"}
+        ],
+       /*  columnDefs: [ {
+            orderable: false,
+            className: 'select-checkbox',
+            targets:   0
+        } ],
+        select: {
+            style:    'os',
+            selector: 'td:first-child'
+        },
+		*/
+        select: true,
+    	"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍后...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",    
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+    	}
+	});
+     new $.fn.dataTable.Buttons( table, [
+        { extend: "create", editor: editor },
+        { extend: "edit",   editor: editor },
+        { extend: "remove", editor: editor }
+    ] );
+  
+     table.buttons().container()
+        .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+     $('#car_infos').on( 'click', 'tbody td', function (e) {
+        editor.inline(this);
+    } ); 
+     $('#car_infos tbody').on('click', 'tr', function () {
+         console.log(table.row(this).data());
+     });
+})
+</script>
+</body>
+</html>

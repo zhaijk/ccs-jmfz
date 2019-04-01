@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <link rel="stylesheet" href="css/bootstrap-table.min.css">  
+  <!-- DataTables -->
+  <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">  
+  <link rel="stylesheet" href="css/buttons.bootstrap.min.css">
+  <link rel="stylesheet" href="css/select.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css"> 
+  <link rel="stylesheet" href="css/skins/skin-blue.min.css">
+
+  <link href="css/bootstrap-editable.css" rel="stylesheet" />
+  <!--<link href="css/print2.css" rel="stylesheet"type="text/css" media="print"/> -->
+  <link th:href="@{'css/print2.css'}" rel="stylesheet"type="text/css" media="print"/>
+  <!-- jQuery 3 -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- <script src="js/bootstrap-table-editable.min.js"></script> -->
+  <script src="js/bootstrap-editable.js"></script>
+  <script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-editable.min.js"></script>
+<!-- DataTables -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+
+<script src="js/dataTables.buttons.min.js"></script>
+<script src="js/buttons.bootstrap.min.js"></script>
+<script src="js/dataTables.select.min.js"></script>
+
+<script src="js/adminlte.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="js/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="js/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  <style >
+ /*  editable-table-cell{
+	  //background-color: yellow;
+	 
+	  "data-type": "text";
+	  //"data-title": "用户名";
+  } */
+  /* inputclass{
+  	width: 10px;
+  } */
+    .box-title{
+        position:relative;
+  	    //left:45%;
+  	    top:8px; 
+    }
+</style>
+</head>
+<body>
+<div class="box">
+    <div class="box-header with-border">
+    <div class="row">
+			<div class="col-md-2">
+				<div class="box-title">价拨油料经费汇总表</div>
+			</div>		
+			<div class="col-md-2">				
+				<select class="form-control" id="years">
+					<option value="all">选择年份</option>
+					<th:block th:each="obj:${years}">
+					<option th:value="${obj}" th:text="${obj}"></option>
+					</th:block>					
+				</select>
+			</div>			
+			<div class="col-md-2 ">
+				<button type="button" class="btn btn-block  btn-info" onclick="loaddata();loadprint();">查询</button>
+			</div>
+		</div>
+	</div>
+	<div class="box-body">
+		<table id="table_infos" class="table table-hover  table-bordered table-condensed">
+			<thead>
+				<tr	style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+					<!-- <th style="width: 14%">序号</th> -->
+					<th style="width: 14%">月份</th>
+					<th style="width: 6%">上期结转</th>
+					<th style="width: 12%">本期收入</th>
+					<th style="width: 10%">本期支出</th>
+					<th style="width: 8%">本期结存</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="box">
+<div class="box-body with-border">
+	<div class="row" id="print_area">			
+	</div>
+</div>
+</div>
+<script src="js/jquery.jqprint-0.3.js" type="text/JavaScript" language="javascript"></script>
+<script type='text/javascript' th:inline="javascript">
+function loaddata(){
+	var departs='7200';
+	var oiltypes=$('#oiltypes').val();
+	var niandu=$('#years').val();	
+	var table=$('#table_infos').DataTable({
+		columnDefs:[{
+		　　　　'targets' : [1,2,3,4],    //除第六，第七两列外，都默认不排序
+		　　　　'orderable' : false
+		　　}] ,
+		'paging' : false,		
+	 	'searching' : false,
+		'info' : false,
+		'autoWidth' : false,
+	  	"bDestroy":true,
+   		"processing": 		true,
+  		"ajax": {
+        	"url": "price_quota_total_report/datas",
+        	"type": "post",
+        	"data":{"departmentcode":departs,"niandu":niandu}
+    	},  	
+	    "columns": [  			
+	    	//{ "data": "id" },
+	    	{ "data": "recorddate" },
+        	{ "data": "sqjz"  },
+        	{ "data": "shouru" },
+        	{ "data": "zhichu" },
+        	{ "data": "jiechun" }
+    	]
+		/* "oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+		}    	 */
+	});
+	//console.info(departs+' '+oiltypes+' '+querydate+'222222222222222')
+}
+$(function(){
+    loaddata();
+    loadprint();
+    /* $('#querydate').datepicker({
+    	todayHighlight:true,    	
+    	keyboardNavigation:true,
+    	autoclose:true,
+    	language:'zh-cn',
+    	format:'yyyy-mm-dd'
+    }); */
+    //$('#querydate').datepicker('setDate', new Date());
+});
+$('#print').click(function(){
+	$('#printarea').jqprint({
+		debug: true, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+		importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+		printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+		operaSupport: false//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印
+	});
+});
+$('#printatgrid').click(function(){	
+	window.open('print_','_blank');
+});
+function loadprint(){
+	var departs=$('#departs').val();
+	var oiltypes=$('#oiltypes').val();
+	var niandu=$('#years').val();	
+	$("#print_area").load("price_print_?departmentcode="+departs+"&oil="+oiltypes+"&niandu="+niandu);
+}
+</script>
+</body>
+</html>
