@@ -72,9 +72,9 @@
     <div class="box-header with-border">
     <div class="row">
 			<div class="col-md-2">
-				<div class="box-title">油料调拨</div>
+				<div class="box-title">解放军换单</div>
 			</div>			
-			<div class="col-md-2">				
+			<!-- <div class="col-md-2">				
 				<select class="form-control" id="departs">
 					<option value="all">选择部门</option>
 					<th:block th:each="obj:${departs}">
@@ -89,63 +89,118 @@
 					<option th:text="${obj.name}" th:value="${obj.code}"></option>
 					</th:block>		
 				</select>
-			</div>
+			</div> -->
 			<div class="col-md-2">				
-				<select class="form-control" id="danjuhao">
-					<option value="all">选择单据号</option>
-					<th:block th:each="obj:${danjuhaos}">
-					<option th:text="${obj}" th:value="${obj}"></option>
-					</th:block>		
-				</select>
+				
 			</div>			
-			<div class="col-md-2">
+			<!-- <div class="col-md-2">
 				<select class="form-control" id="gongyingdanwei">
 					<option value="all">选择供应单位</option>
 					<th:block th:each="obj:${youkus}">
 					<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
 					</th:block>		
 				</select>
-			</div>
-			<div class="col-md-2 ">
+			</div> -->
+			<!-- <div class="col-md-2 ">
 				<button type="button" class="btn btn-block  btn-info" onclick="loaddata();">查询</button>
-			</div>
+			</div> -->
 		</div>		
 	</div>
 	<div class="box-body">
-		<table id="diaobodan_table" class="table table-hover  table-bordered table-condensed">
-			<thead>
-			<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
-				<th style="width: 6%">序号</th>
-				<th style="width: 12%">单据号</th>
-				<th style="width: 12%">换单号</th>
-				<th style="width: 8%">类型</th>
-				<th style="width: 8%">开单日期</th>
-				<th style="width: 8%">供应油库</th>
-				<th style="width: 8%">受供单位</th>
-				<th style="width: 8%">军区代码</th>
-				<th style="width: 8%">小计</th>
-				<th style="width: 8%">结转标志</th>
-				<th style="width: 8%">次数</th>
-				<th style="width: 8%">记账</th>
-			</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+	<table style="width:100%"><tr>
+	<td>
+	<select class="form-control" id="danjuhao">
+		<option value="all">选择总后单据号</option>
+		<th:block th:each="obj:${danjuhaos}">
+		    <option th:text="${obj}" th:value="${obj}"></option>
+	    </th:block>		
+	</select>
+	</td>
+	<td>
+    	<input type="text" class="input-mini form-control" id="departName" placeholder="请输入换单单据号">
+	</td>
+	<td>
+	<div class="input-group date">
+	<div class="input-group-addon">
+		<i class="fa fa-calendar"></i>
+	</div>
+	  <input type="text" class="form-control pull-right"
+			  id="dateselect" placeholder='选择操作日期'>
+	</div>
+	</td>
+	<td>
+    	<input type="text" class="input-mini form-control" id="depart_name" placeholder="供应单位" disabled>
+	</td>
+	<td>
+    	<select class="form-control" id="gongyingdanwei">
+			<option value="all">选择供应油库</option>
+			<th:block th:each="obj:${youkus}">
+			<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
+			</th:block>		
+		</select>
+	</td>	
+	<td>
+    	<input type="text" class="input-mini form-control" id="departName" placeholder="备注">
+	</td>
+	<td>
+		<button class="btn btn-info btn-block" id="submit">换单</button>
+	</td>
+	</tr>
+	</table>
+	<table style="width:100%">
+	<tr>
+	<td th:each="obj:${oils}">
+    	<input type="text" class="input-mini form-control" th:placeholder="${obj.name}">
+	</td>
+	</tr>
+	</table>
 	</div>
 </div>
 <div class="box">
-    <div class="box-header with-border">
-    	油库调拨
-    </div>
-    <div class="box-header with-border">
-    	换单+调拨
-    </div>
+<div class="box-header with-border">
+<table id="diaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<thead>
+	<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+				<th style="width:5%">日期</th>
+				<th style="width:5%">上级单据号</th>
+				<th style="width:5%">供应单位</th>
+				<th style="width:5%">换单号</th>				
+				<th style="width:5%">供应油库</th>				
+				<th style="width:5%">收入</th>
+				<th style="width:5%">支出</th>
+				<th style="width:5%">结存</th>
+				<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</div>
 </div>    
 <script type='text/javascript' th:inline="javascript">
+
 var table;
 function reload(){
 	table.ajax.reload();
+}
+$("#danjuhao").on('change',function(){
+	loaddata();
+	loadSJdanjuhao();
+})
+function loadSJdanjuhao(){
+	var danjuhao=$('#danjuhao').val();
+	$.ajax({
+		url: 'youliao_diaobo/getshangjidiaobodan',
+		type: "post",
+    	data:{"danjuhao":danjuhao},
+    	success:function(data){
+    		console.info(data.danwei_name);
+    		$('#depart_name').attr('value',data.danwei_name);
+    	},
+    	error:function(result){
+    		$('#depart_name').attr('value',"供应单位");
+    	}    	
+	});
 }
 function loaddata(){
 
@@ -188,7 +243,7 @@ function loaddata(){
    	        info: false
    	    }, */
    	 	columnDefs:[{
-		　　　　'targets' : [1,2,3,4,5,6,7,8,9,10,11],    //除第六，第七两列外，都默认不排序
+		　　　　'targets' : [0,1,2,3,4,5,6,7,8,9,10],    //除第六，第七两列外，都默认不排序
 		　　　　'orderable' : false
 		　　}] ,
   		"ajax": {
@@ -197,17 +252,23 @@ function loaddata(){
         	"data":{"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
     	},
   		"columns": [
-  			{ "data": "id"},
+  			//{ "data": "id"},
+  			{ "data": "kaidanriqi" },
         	{ "data": "danjuhao" },
+        	{ "data": "danwei_name" },
         	{ "data": "huandanhao"  },
-        	{ "data": "leixing" },
-        	{ "data": "kaidanriqi" },
-        	{ "data": "gongyingyouku" },
-        	{ "data": "shougongdanwei" },
-        	{ "data": "junqu_code" },
+        	{ "data": "youku_name" },
+        	//{ "data": "leixing" },
+        	//{ "data": "kaidanriqi" },
+        	//{ "data": "gongyingyouku" },
+        	//{ "data": "shougongdanwei" },
         	{ "data": "xiaoji" },
-        	{ "data": "jz" },
-        	{ "data": "cishu" },
+        	{ "data": "xiaoji" },
+        	{ "data": "xiaoji" },
+        	{ "data": "jizhang" },
+        	{ "data": "jizhang" },
+        	{ "data": "jizhang" },
+        	{ "data": "jizhang" },
         	{ "data": "jizhang" }
     	],
 		"oLanguage": { //国际化配置  
@@ -231,7 +292,7 @@ function loaddata(){
 }
 $(function(){
     loaddata();
-    /* $('#querydatestart').datepicker({
+    $('#dateselect').datepicker({
     	todayHighlight:true,    	
     	keyboardNavigation:true,
     	clearBtn:true,
@@ -239,7 +300,7 @@ $(function(){
     	language:'zh-Cn',
     	format:'yyyy-mm-dd'
     });    
-    $('#querydatestop').datepicker({
+    /*$('#querydatestop').datepicker({
     	todayHighlight:true,    	
     	keyboardNavigation:true,
     	clearBtn:true,

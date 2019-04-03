@@ -19,26 +19,27 @@ public class Diaobodan  {
 	 *  10 本级武警油库损耗
 	 */
 	private Long leixing;
-	private String kaidanriqi;// 开单日期
-	private String gongyingyouku;// 供应油库
-	private String shougongdanwei;// 受供单位
-	private String junqu_code;// 军区编码(多数时候只是为了记录)
-	private Double xiaoji = 0d;// 油料小计,附表油料之和
-	private String chengbanren;// 承办人(一般为空,手写在单据上)
-	private String jingbanren;// 经办人(一般为空,手写在单据上)
-	private String pizhunren;// 批准人(一般为空,手写在单据上)
-	private String beizhu;// 备注
-	private String beizhu_sys;// 系统用备注
-	private Integer niandu;// 年度
-	private Long biaozhi = 0l;// 有效标志
-	private Long dayin = 0l;// 打印次数
-	private String caozuoyuan;// 操作员
-	private String caozuoriqi;// 操作日期(最后一次操作日期)
-	private String caozuotime;// 操作时间
-	private Long jz = 0l;// 结转标志(结转记录使用)
-	private Long cishu;// 调拨次数 2014.2.17新加的字段
-	private Long jizhang = 0l;// 记账标志(0:未记账，1：待记账，2：记账)
-
+	private String kaidanriqi;			// 开单日期
+	private String gongyingyouku;		// 供应油库
+	private String shougongdanwei;		// 受供单位
+	private String junqu_code;			// 军区编码(多数时候只是为了记录)
+	private Double xiaoji = 0d;			// 油料小计,附表油料之和
+	private String chengbanren;			// 承办人(一般为空,手写在单据上)
+	private String jingbanren;			// 经办人(一般为空,手写在单据上)
+	private String pizhunren;			// 批准人(一般为空,手写在单据上)
+	private String beizhu;				// 备注
+	private String beizhu_sys;			// 系统用备注
+	private Integer niandu;				// 年度
+	private Long biaozhi = 0l;			// 有效标志
+	private Long dayin = 0l;			// 打印次数
+	private String caozuoyuan;			// 操作员
+	private String caozuoriqi;			// 操作日期(最后一次操作日期)
+	private String caozuotime;			// 操作时间
+	private Long jz = 0l;				// 结转标志(结转记录使用)
+	private Long cishu;					// 调拨次数 2014.2.17新加的字段
+	private Long jizhang = 0l;			// 记账标志(0:未记账，1：待记账，2：记账)
+	private String danwei_name;			//供应单位名称
+	private String youku_name;			//供应油库名称
 //	// 附表记录
 //	private Set<DiaobodanRecord> diaobodanRecords = new HashSet<DiaobodanRecord>(
 //			0);
@@ -263,6 +264,22 @@ public class Diaobodan  {
 
 	public void setBeizhu_sys(String beizhu_sys) {
 		this.beizhu_sys = beizhu_sys;
+	}
+
+	public String getDanwei_name() {
+		return danwei_name;
+	}
+
+	public void setDanwei_name(String danwei_name) {
+		this.danwei_name = danwei_name;
+	}
+
+	public String getYouku_name() {
+		return youku_name;
+	}
+
+	public void setYouku_name(String youku_name) {
+		this.youku_name = youku_name;
 	}
 
 //	public Set<DiaobodanRecord> getDiaobodanRecords() {

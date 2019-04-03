@@ -3,6 +3,7 @@ package com.derun.jczb.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import com.derun.jczb.model.Diaobodan;
+import com.derun.jczb.model.DiaobodanRecord;
 /**
  *  调拨单操作
  * @author Administrator
@@ -10,18 +11,21 @@ import com.derun.jczb.model.Diaobodan;
  */
 public interface DiaobodanMapper {
 
-	@Select("select distinct danjuhao from jiangsu.diaobodan where niandu>=#{niandu} and leixing in (1,2,7,8) order by danjuhao desc")
+	@Select("select distinct danjuhao from jiangsu.diaobodan where niandu>=#{niandu} and leixing =1 order by danjuhao desc")
 	public List<String> queryDanjuhao(String niandu);
 	@Select("select * from jiangsu.Diaobodan where leixing in (1,2,7,8) and niandu > #{year} order by danjuhao desc")
 	public List<Diaobodan> queryBy(String danjuhao,String year);
-	@Select("<script> select * from jiangsu.Diaobodan "+
-			"<where> niandu=#{niandu} and leixing in (1,2,4,5,6,7,8) "+
-			"<if test='\"all\"!=gongyingyouku'>"+
+	@Select("<script> select a.*,(select junqu from JUNQU_DICTIONARY t where junqu_code=a.junqu_code) as danwei_name,(select youku from jiangsu.YOUKU_DICTIONARY t where youku_code=a.gongyingyouku) as youku_name from jiangsu.Diaobodan a "+
+			"<where> leixing=#{type}"+
+			/*"<if test='\"all\"!=gongyingyouku'>"+
 			" and gongyingyouku =#{gongyingyouku} </if>"+			
 			"<if test='\"all\"!=shougongdanwei'>"+
-			" and shougongdanwei=#{shougongdanwei} </if>"+					
+			" and shougongdanwei=#{shougongdanwei} </if>"+*/					
 			"<if test='\"all\"!=danjuhao'>"+
 			" and danjuhao=#{danjuhao} or huandanhao=#{danjuhao} </if> "+			
 			"</where> </script>")
-	public List<Diaobodan> queryByModel(String gongyingyouku,String shougongdanwei,String danjuhao,String niandu);
+	public List<Diaobodan> queryByModel(int type,String gongyingyouku,String shougongdanwei,String danjuhao,String niandu);
+	@Select("select * from jiangsu.diaobodan_record where fk_id=#{fk_id}")
+	public List<DiaobodanRecord> queryByRecord(int fk_id);
+	
 }

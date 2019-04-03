@@ -22,7 +22,7 @@ public class DataTypeConverter {
 	}
 	public static int getIntYear() {
 		return LocalDate.now().getYear();
-	}
+	}	
 //	public static void main(String[] args) {
 //		//String str=getDate();
 //		System.out.println(getDate()+getYear());

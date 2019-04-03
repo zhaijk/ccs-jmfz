@@ -50,9 +50,14 @@ public class QuotaAssignController {
 		obj.setNiandu(2016);
 		switch(action) {
 			case "accounting":
+				//记账
+				obj.setJizhang(1l);
+				obj.setWenjianhao("");
+				obj.setJzdate(DataTypeConverter.getYear());
 				result=quotaMapper.updateOne(obj);
 				break;
 			case "delete":
+				//删除记账数据
 				result=quotaMapper.deleteOne(obj);
 				break;
 			case "assign":				

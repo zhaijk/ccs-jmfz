@@ -39,22 +39,28 @@ public class DiaobodanController {
 	public String init(ModelMap model) {
 		List<String> danjuhaos=diaobodanMapper.queryDanjuhao("2016");
 		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
-		List<YoukuDictionary> youkus=youkuDictionaryMapper.queryBy();
-		List<DeparDictionary> departs=departDictionaryMapper.queryBy();
-		List<Diaobodan> diaobodans=diaobodanMapper.queryByModel("all", "all", "all", "2016");		
-		model.put("diaobodans", diaobodans);
+		List<YoukuDictionary> youkus=youkuDictionaryMapper.queryBy(1);
+		//List<DeparDictionary> departs=departDictionaryMapper.queryBy();
+		//List<Diaobodan> diaobodans=diaobodanMapper.queryByModel("all", "all", "all", "2016");		
+		//model.put("diaobodans", diaobodans);
 		model.put("danjuhaos", danjuhaos);
 		model.put("oils", oils);
 		model.put("youkus", youkus);
-		model.put("departs", departs);
+		//model.put("departs", departs);
 		return "youliao_diaobo";
 	}
 	@PostMapping("youliao_diaobo/datas")
 	@ResponseBody
 	public QueryDataVO<Diaobodan> query(String departs,String oiltypes,String danjuhao,String gongyingdanwei){
 		QueryDataVO<Diaobodan> maps=new QueryDataVO<Diaobodan>();
-		List<Diaobodan> diaobodans=diaobodanMapper.queryByModel(gongyingdanwei,departs,danjuhao,"2016");		
+		List<Diaobodan> diaobodans=diaobodanMapper.queryByModel(3,gongyingdanwei,departs,danjuhao,"2016");		
 		maps.setData(diaobodans);
 		return maps;
+	}
+	@PostMapping("youliao_diaobo/getshangjidiaobodan")
+	@ResponseBody
+	public Diaobodan querySJ(String departs,String oiltypes,String danjuhao,String gongyingdanwei){
+		List<Diaobodan> diaobodans=diaobodanMapper.queryByModel(1,gongyingdanwei,departs,danjuhao,"2016");		
+		return diaobodans.get(0);
 	}
 }
