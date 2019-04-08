@@ -1,5 +1,7 @@
 package com.derun.jczb.model;
 
+import java.util.List;
+
 public class Diaobodan  {
 
 	private Long id;			// 主键
@@ -40,6 +42,7 @@ public class Diaobodan  {
 	private Long jizhang = 0l;			// 记账标志(0:未记账，1：待记账，2：记账)
 	private String danwei_name;			//供应单位名称
 	private String youku_name;			//供应油库名称
+	private List<String> shiwu;
 //	// 附表记录
 //	private Set<DiaobodanRecord> diaobodanRecords = new HashSet<DiaobodanRecord>(
 //			0);
@@ -280,6 +283,14 @@ public class Diaobodan  {
 
 	public void setYouku_name(String youku_name) {
 		this.youku_name = youku_name;
+	}
+
+	public List<String> getShiwu() {
+		return shiwu;
+	}
+
+	public void setShiwu(List<String> shiwu) {
+		this.shiwu = shiwu;
 	}
 
 //	public Set<DiaobodanRecord> getDiaobodanRecords() {

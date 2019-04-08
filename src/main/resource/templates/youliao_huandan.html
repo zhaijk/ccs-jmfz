@@ -142,7 +142,7 @@
 	<td>
     	<input type="text" class="input-mini form-control" id="departName" placeholder="备注">
 	</td>
-	<td>
+	<td style="width:16%">
 		<button class="btn btn-info btn-block" id="submit">换单</button>
 	</td>
 	</tr>
@@ -154,10 +154,30 @@
 	</td>
 	</tr>
 	</table>
+	<table id="sjdiaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<thead>
+	<tr style="font-size: 0.5px; background-color: rgb(237, 241, 244); align: center">
+				<th style="width:5%">日期</th>
+				<th style="width:8%">总后单据号</th>
+				<th style="width:5%">供应单位</th>
+				<!-- <th style="width:5%">换单号</th>				
+				<th style="width:5%">供应油库</th>	 -->			
+                <th style="width:2%">收入</th>
+				<th style="width:2%">支出</th>
+				<th style="width:2%">结存</th>
+				<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
 	</div>
 </div>
 <div class="box">
 <div class="box-header with-border">
+换单明细
+</div>
+<div class="box-body with-border">
 <table id="diaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
 	<thead>
 	<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
@@ -166,9 +186,9 @@
 				<th style="width:5%">供应单位</th>
 				<th style="width:5%">换单号</th>				
 				<th style="width:5%">供应油库</th>				
-				<th style="width:5%">收入</th>
-				<th style="width:5%">支出</th>
-				<th style="width:5%">结存</th>
+<!-- 				<th style="width:2%">收入</th>
+				<th style="width:2%">支出</th>
+				<th style="width:2%">结存</th> -->
 				<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
 	</tr>
 	</thead>
@@ -180,11 +200,13 @@
 <script type='text/javascript' th:inline="javascript">
 
 var table;
+var sjtable;
 function reload(){
 	table.ajax.reload();
 }
 $("#danjuhao").on('change',function(){
 	loaddata();
+	sjloaddata();
 	loadSJdanjuhao();
 })
 function loadSJdanjuhao(){
@@ -202,23 +224,23 @@ function loadSJdanjuhao(){
     	}    	
 	});
 }
-function loaddata(){
+function sjloaddata(){
 
 	var departs=$('#departs').val();
 	var oiltypes=$('#oiltypes').val();	
 	var danjuhao=$('#danjuhao').val();	
 	var gongyingdanwei=$('#gongyingdanwei').val();
 	
-	table=$('#diaobodan_table').DataTable({	
-		'pageLength': 6,
+	sjtable=$('#sjdiaobodan_table').DataTable({	
+		'pageLength': 1,
 		'bDestroy': 		true,  
 		'processing': 		true,
 		'searching' : 		false,
 		'lengthChange' : 	false,
-		"select": {
+		/* "select": {
    	        style: 'single',
    	        info: false
-   	    },
+   	    }, */
 		/* "paging": true,
 		"processing": 		true,
 	    "serverSide": 		true,
@@ -242,14 +264,114 @@ function loaddata(){
    	        style: 'single',
    	        info: false
    	    }, */
-   	 	columnDefs:[{
+   	    "ordering": false, // 禁止排序
+   	 	/* columnDefs:[{
+		　　　　'targets' : [1,2,3,4,5,6,7,8,9,10,11],    //除第六，第七两列外，都默认不排序
+		　　　　'orderable' : false
+   	 	}], */
+  		"ajax": {
+        	"url": "youliao_huandan/datas",
+        	"type": "POST",
+        	"data":{"flagtype":1,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
+    	},
+  		"columns": [
+  			//{ "data": "id"},
+  			{ "data": "kaidanriqi" },
+        	{ "data": "danjuhao" },
+        	{ "data": "danwei_name" },
+        	//{ "data": "huandanhao"  },
+        	//{ "data": "youku_name" },
+        	//{ "data": "leixing" },
+        	//{ "data": "kaidanriqi" },
+        	//{ "data": "gongyingyouku" },
+        	//{ "data": "shougongdanwei" },
+         	{data : "0.0",defaultContent : "0.0"}
+        	,
+        	{data : "0.0",defaultContent : "0.0"}
+			,
+			{data : "0.0",defaultContent : "0.0"}, 
+			/* <th:block th:each="obj:${oils}">
+			{data : "shiwu."+,defaultContent : "0.0"},
+			</th:block>*/
+			{data : "shiwu.0",defaultContent : "0.0"},
+ 			{data : "shiwu.1",defaultContent : "0.0"},
+			{data : "shiwu.2",defaultContent : "0.0"},
+			{data : "shiwu.3",defaultContent : "0.0"},
+			{data : "shiwu.4",defaultContent : "0.0"},
+			{data : "shiwu.5",defaultContent : "0.0"},
+			{data : "shiwu.6",defaultContent : "0.0"},
+			{data : "shiwu.7",defaultContent : "0.0"},
+			{data : "shiwu.8",defaultContent : "0.0"},
+			{data : "shiwu.9",defaultContent : "0.0"}
+    	],
+		"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+		}    	
+	});	
+}
+function loaddata(){
+
+	var departs=$('#departs').val();
+	var oiltypes=$('#oiltypes').val();	
+	var danjuhao=$('#danjuhao').val();	
+	var gongyingdanwei=$('#gongyingdanwei').val();
+	
+	table=$('#diaobodan_table').DataTable({	
+		'pageLength': 6,
+		'bDestroy': 		true,  
+		'processing': 		true,
+		'searching' : 		false,
+		'lengthChange' : 	false,
+		"select": {
+   	        style: 'single',
+   	        info: false
+   	    },
+   	    "ordering": false, // 禁止排序
+		/* "paging": true,
+		"processing": 		true,
+	    "serverSide": 		true,
+		'lengthChange' : 	false,
+		'searching' : 		false,
+		'info' : 			true,
+		'autoWidth' : 		false,
+		"bDestroy" : 		true,   		
+   		"select": {
+   	        style: 'single',
+   	        info: false
+   	    }, */
+		/*"processing": 		true,
+	    "serverSide": 		true,
+		'lengthChange' : 	false,
+		'searching' : 		false,
+		'info' : 			true,
+		'autoWidth' : 		false,
+		"bDestroy" : 		true,  		
+   		"select": {
+   	        style: 'single',
+   	        info: false
+   	    }, */
+   	 	/* columnDefs:[{
 		　　　　'targets' : [0,1,2,3,4,5,6,7,8,9,10],    //除第六，第七两列外，都默认不排序
 		　　　　'orderable' : false
-		　　}] ,
+		　　}] , */
   		"ajax": {
-        	"url": "youliao_diaobo/datas",
+        	"url": "youliao_huandan/datas",
         	"type": "POST",
-        	"data":{"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
+        	"data":{"flagtype":3,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
     	},
   		"columns": [
   			//{ "data": "id"},
@@ -262,14 +384,21 @@ function loaddata(){
         	//{ "data": "kaidanriqi" },
         	//{ "data": "gongyingyouku" },
         	//{ "data": "shougongdanwei" },
-        	{ "data": "xiaoji" },
-        	{ "data": "xiaoji" },
-        	{ "data": "xiaoji" },
-        	{ "data": "jizhang" },
-        	{ "data": "jizhang" },
-        	{ "data": "jizhang" },
-        	{ "data": "jizhang" },
-        	{ "data": "jizhang" }
+        /* 	{data : "0.0",defaultContent : "0.0"}
+        	,
+        	{data : "0.0",defaultContent : "0.0"}
+			,
+			{data : "0.0",defaultContent : "0.0"}, */
+			{data : "shiwu.0",defaultContent : "0.1"},
+        	{data : "shiwu.1",defaultContent : "0.2"},
+			{data : "shiwu.2",defaultContent : "0.3"},
+			{data : "shiwu.3",defaultContent : "0.4"},
+			{data : "shiwu.4",defaultContent : "0.5"},
+			{data : "shiwu.5",defaultContent : "0.6"},
+			{data : "shiwu.6",defaultContent : "0.5"},
+			{data : "shiwu.7",defaultContent : "0.6"},
+			{data : "shiwu.8",defaultContent : "0.5"},
+			{data : "shiwu.9",defaultContent : "0.6"}
     	],
 		"oLanguage": { //国际化配置  
 			"sProcessing" : "正在获取数据，请稍候...",    
@@ -292,6 +421,7 @@ function loaddata(){
 }
 $(function(){
     loaddata();
+    //sjloaddata();
     $('#dateselect').datepicker({
     	todayHighlight:true,    	
     	keyboardNavigation:true,
