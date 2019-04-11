@@ -1,6 +1,7 @@
 package com.derun.util;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 //import java.util.BitSet;
 
@@ -16,6 +17,9 @@ public class DataTypeConverter {
 	}
 	public static String getDate() {
 		return LocalDate.now().toString();
+	}
+	public static String getTime() {
+		return LocalTime.now().toString().substring(0, 8);
 	}
 	public static String getYear() {
 		return String.valueOf(LocalDate.now().getYear());

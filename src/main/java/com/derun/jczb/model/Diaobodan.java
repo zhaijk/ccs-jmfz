@@ -42,7 +42,10 @@ public class Diaobodan  {
 	private Long jizhang = 0l;			// 记账标志(0:未记账，1：待记账，2：记账)
 	private String danwei_name;			//供应单位名称
 	private String youku_name;			//供应油库名称
-	private List<String> shiwu;
+	private List<String> shiwu;			//油品 数量
+	private double income;				//收入
+	private double payment;				//支出
+	private double balance;				//结余
 //	// 附表记录
 //	private Set<DiaobodanRecord> diaobodanRecords = new HashSet<DiaobodanRecord>(
 //			0);
@@ -291,6 +294,42 @@ public class Diaobodan  {
 
 	public void setShiwu(List<String> shiwu) {
 		this.shiwu = shiwu;
+	}
+
+	public double getIncome() {
+		return income;
+	}
+
+	public void setIncome(double income) {
+		this.income = income;
+	}
+
+	public double getPayment() {
+		return payment;
+	}
+
+	public void setPayment(double payment) {
+		this.payment = payment;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	@Override
+	public String toString() {
+		return "Diaobodan [id=" + id + ", danjuhao=" + danjuhao + ", huandanhao=" + huandanhao + ", leixing=" + leixing
+				+ ", kaidanriqi=" + kaidanriqi + ", gongyingyouku=" + gongyingyouku + ", shougongdanwei="
+				+ shougongdanwei + ", junqu_code=" + junqu_code + ", xiaoji=" + xiaoji + ", chengbanren=" + chengbanren
+				+ ", jingbanren=" + jingbanren + ", pizhunren=" + pizhunren + ", beizhu=" + beizhu + ", beizhu_sys="
+				+ beizhu_sys + ", niandu=" + niandu + ", biaozhi=" + biaozhi + ", dayin=" + dayin + ", caozuoyuan="
+				+ caozuoyuan + ", caozuoriqi=" + caozuoriqi + ", caozuotime=" + caozuotime + ", jz=" + jz + ", cishu="
+				+ cishu + ", jizhang=" + jizhang + ", danwei_name=" + danwei_name + ", youku_name=" + youku_name
+				+ ", shiwu=" + shiwu + ", income=" + income + ", payment=" + payment + ", balance=" + balance + "]";
 	}
 
 //	public Set<DiaobodanRecord> getDiaobodanRecords() {

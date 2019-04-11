@@ -22,6 +22,7 @@ import com.derun.jczb.model.DiaobodanRecord;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
+import com.derun.jczb.service.CommitService;
 /**
  *     油料调拨 解放军 武警  
  * @author Administrator
@@ -40,13 +41,16 @@ public class DiaoboController {
 	private DiaobodanMapper diaobodanMapper;
 	@Autowired
 	private DiaobodanRecordMapper diaobodanRecordMapper;
+	@Autowired
+	private CommitService commitService;
 	
 	@RequestMapping("youliao_diaobo.htm")
 	public String init(ModelMap model) {
-		List<String> danjuhaos=diaobodanMapper.queryDanjuhao("2016");
+		//List<String> danjuhaos=diaobodanMapper.queryDanjuhao("2016");
+		List<String> danjuhaos=commitService.queryDanjuhao("2016");
 		//List<DiaobodanRecord> oils=null;
 		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
-		List<YoukuDictionary> youkus=youkuDictionaryMapper.queryBy(1);
+		List<YoukuDictionary> youkus=youkuDictionaryMapper.queryBy(1,2);
 		//List<DeparDictionary> departs=departDictionaryMapper.queryBy();
 		//List<Diaobodan> diaobodans=diaobodanMapper.queryByModel("all", "all", "all", "2016");		
 		//model.put("diaobodans", diaobodans);

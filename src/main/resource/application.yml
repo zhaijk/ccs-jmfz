@@ -41,4 +41,4 @@ pagehelper:
     params: count=countSql
 logging: 
   level: 
-    com.derun: DEBUG
+    com.derun.jczb: debug

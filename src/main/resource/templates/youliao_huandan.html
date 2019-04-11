@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
 <head>
-  <meta charset="utf-8">
-  
+  <meta charset="utf-8">  
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Ionicons -->
@@ -15,7 +14,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="css/AdminLTE.min.css"> 
   <link rel="stylesheet" href="css/skins/skin-blue.min.css">
-
+  
   <link href="css/bootstrap-editable.css" rel="stylesheet" />
   
   <!-- jQuery 3 -->
@@ -117,14 +116,14 @@
 	</select>
 	</td>
 	<td>
-    	<input type="text" class="input-mini form-control" id="departName" placeholder="请输入换单单据号">
+    	<input type="text" class="input-mini form-control" id="huandanhao" placeholder="请输入换单单据号">
 	</td>
 	<td>
 	<div class="input-group date">
-	<div class="input-group-addon">
-		<i class="fa fa-calendar"></i>
-	</div>
-	  <input type="text" class="form-control pull-right"
+		<div class="input-group-addon">
+			<i class="fa fa-calendar"></i>
+		</div>
+	  	<input type="text" class="form-control pull-right"
 			  id="dateselect" placeholder='选择操作日期'>
 	</div>
 	</td>
@@ -132,7 +131,7 @@
     	<input type="text" class="input-mini form-control" id="depart_name" placeholder="供应单位" disabled>
 	</td>
 	<td>
-    	<select class="form-control" id="gongyingdanwei">
+    	<select class="form-control" id="gongyingyouku">
 			<option value="all">选择供应油库</option>
 			<th:block th:each="obj:${youkus}">
 			<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
@@ -140,56 +139,56 @@
 		</select>
 	</td>	
 	<td>
-    	<input type="text" class="input-mini form-control" id="departName" placeholder="备注">
+    	<input type="text" class="input-mini form-control" id="memo" placeholder="备注">
 	</td>
 	<td style="width:16%">
-		<button class="btn btn-info btn-block" id="submit">换单</button>
+		<button class="btn btn-info btn-block" id="btn_submit">换单</button>
 	</td>
 	</tr>
 	</table>
 	<table style="width:100%">
-	<tr>
+	<tr id="oilsinput">
 	<td th:each="obj:${oils}">
     	<input type="text" class="input-mini form-control" th:placeholder="${obj.name}">
 	</td>
 	</tr>
 	</table>
-	<table id="sjdiaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<!-- <table id="sjdiaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
 	<thead>
-	<tr style="font-size: 0.5px; background-color: rgb(237, 241, 244); align: center">
-				<th style="width:5%">日期</th>
-				<th style="width:8%">总后单据号</th>
-				<th style="width:5%">供应单位</th>
-				<!-- <th style="width:5%">换单号</th>				
-				<th style="width:5%">供应油库</th>	 -->			
-                <th style="width:2%">收入</th>
-				<th style="width:2%">支出</th>
-				<th style="width:2%">结存</th>
-				<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	<tr style="background-color: rgb(237, 241, 244); align: center">
+		<th style="width:5%">日期</th>
+		<th style="width:5%">总后单据号</th>
+		<th style="width:5%">供应单位</th>
+		<th style="width:5%">换单号</th>				
+		<th style="width:5%">供应油库</th>				
+        <th style="width:2%">收入</th>
+		<th style="width:2%">支出</th>
+		<th style="width:2%">结存</th>
+		<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
 	</tr>
 	</thead>
 	<tbody>
 	</tbody>
-</table>
+	</table> -->
 	</div>
 </div>
 <div class="box">
-<div class="box-header with-border">
+<!-- <div class="box-header with-border">
 换单明细
-</div>
+</div> -->
 <div class="box-body with-border">
 <table id="diaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
 	<thead>
-	<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
-				<th style="width:5%">日期</th>
-				<th style="width:5%">上级单据号</th>
-				<th style="width:5%">供应单位</th>
-				<th style="width:5%">换单号</th>				
-				<th style="width:5%">供应油库</th>				
-<!-- 				<th style="width:2%">收入</th>
-				<th style="width:2%">支出</th>
-				<th style="width:2%">结存</th> -->
-				<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	<tr style="font-size: 10px; background-color: rgb(237, 241, 244); align: center">
+		<th style="width:4%">日期</th>
+		<th style="width:6%">上级单据号</th>
+		<th style="width:3%">供应单位</th>
+		<th style="width:6%">换单号</th>				
+		<th style="width:3%">供应油库</th>	
+		<th style="width:2%">收入</th>
+		<th style="width:2%">支出</th>
+		<th style="width:2%">结存</th>			
+		<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -199,12 +198,68 @@
 </div>    
 <script type='text/javascript' th:inline="javascript">
 
+$("#btn_submit").on('click',function(){
+	var danjuhao=$("#danjuhao").val();
+	console.info(danjuhao);
+	if(danjuhao=='all'){
+		alert('请选择单据号');return;
+	}		
+	var huandanhao=$("#huandanhao").val();
+	console.info(huandanhao);
+	if(huandanhao==''){
+		alert('请输入换单号');return;
+	}	
+	var dateselect=$("#dateselect").val();
+	console.info(dateselect);
+	if(dateselect==''){
+		alert('请选择操作日期');return;
+	}	
+	var departname=$("#depart_name").val();	
+	var gongyingyouku=$("#gongyingyouku").val();
+	if(gongyingyouku=='all'){
+		alert('请选择供应油库');return;
+	}
+	var memo=$("#memo").val();
+	var oilsinputs=$("#oilsinput td input");
+	var oils=new Array();
+	/* console.info(danjuhao);
+	console.info(huandanhao);
+	console.info(dateselect);
+	console.info(departname);
+	console.info(gongyingyouku);
+	console.info(memo);
+	console.info(oilsinputs.length); */
+	oilsinputs.each(function(){
+		oils.push($(this).val());
+	});
+	/* $.each(oils, function(i,val){      
+		console.info(i+": "+val);
+	  }); */
+	$.ajax({
+		url:'youliao_huandan/edit',
+		type:'post',
+		data:{'danjuhao':danjuhao,'huandanhao':huandanhao,'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'memo':memo,'oils':oils},
+		success:function(data){
+			alert(data);
+		},
+		error:function(data){
+			alert(data);
+		}
+	});
+});
+
+var oils=[[${oils}]];
 var table;
 var sjtable;
 function reload(){
 	table.ajax.reload();
 }
 $("#danjuhao").on('change',function(){
+	var danjuhao=$("#danjuhao").val();
+	console.info(danjuhao);
+	if(danjuhao=='all'){
+		return;
+	}		
 	loaddata();
 	sjloaddata();
 	loadSJdanjuhao();
@@ -216,7 +271,7 @@ function loadSJdanjuhao(){
 		type: "post",
     	data:{"danjuhao":danjuhao},
     	success:function(data){
-    		console.info(data.danwei_name);
+    		//console.info(data.danwei_name);
     		$('#depart_name').attr('value',data.danwei_name);
     	},
     	error:function(result){
@@ -231,12 +286,18 @@ function sjloaddata(){
 	var danjuhao=$('#danjuhao').val();	
 	var gongyingdanwei=$('#gongyingdanwei').val();
 	
+	var columnList = [];
+	columnList.push({"data": "kaidanriqi"});
+	columnList.push({"data": "danjuhao"});
+	columnList.push({"data": "danwei_name"});
+	for(var i=0;i<oils.length;i++)
+		columnList.push({"data" : "shiwu."+i,defaultContent : "0.0"});
 	sjtable=$('#sjdiaobodan_table').DataTable({	
-		'pageLength': 1,
+		'pageLength': 		1,
 		'bDestroy': 		true,  
 		'processing': 		true,
-		'searching' : 		false,
-		'lengthChange' : 	false,
+		'searching': 		false,
+		'lengthChange': 	false,
 		/* "select": {
    	        style: 'single',
    	        info: false
@@ -272,9 +333,9 @@ function sjloaddata(){
   		"ajax": {
         	"url": "youliao_huandan/datas",
         	"type": "POST",
-        	"data":{"flagtype":1,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
+        	"data": {"flagtype":1,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
     	},
-  		"columns": [
+  		"columns": columnList,/* [
   			//{ "data": "id"},
   			{ "data": "kaidanriqi" },
         	{ "data": "danjuhao" },
@@ -285,16 +346,17 @@ function sjloaddata(){
         	//{ "data": "kaidanriqi" },
         	//{ "data": "gongyingyouku" },
         	//{ "data": "shougongdanwei" },
-         	{data : "0.0",defaultContent : "0.0"}
+         	{"data" : "0.0",defaultContent : "0.0"}
         	,
-        	{data : "0.0",defaultContent : "0.0"}
+        	{"data" : "0.0",defaultContent : "0.0"}
 			,
-			{data : "0.0",defaultContent : "0.0"}, 
+			{"data" : "0.0",defaultContent : "0.0"}, 
 			/* <th:block th:each="obj:${oils}">
 			{data : "shiwu."+,defaultContent : "0.0"},
 			</th:block>*/
-			{data : "shiwu.0",defaultContent : "0.0"},
- 			{data : "shiwu.1",defaultContent : "0.0"},
+			//{"data" : "shiwu.0",defaultContent : "0.0"}//,
+ 			//{data : "shiwu.1",defaultContent : "0.0"}
+			/* ,
 			{data : "shiwu.2",defaultContent : "0.0"},
 			{data : "shiwu.3",defaultContent : "0.0"},
 			{data : "shiwu.4",defaultContent : "0.0"},
@@ -302,8 +364,8 @@ function sjloaddata(){
 			{data : "shiwu.6",defaultContent : "0.0"},
 			{data : "shiwu.7",defaultContent : "0.0"},
 			{data : "shiwu.8",defaultContent : "0.0"},
-			{data : "shiwu.9",defaultContent : "0.0"}
-    	],
+			{data : "shiwu.9",defaultContent : "0.0"} */
+    	//], 
 		"oLanguage": { //国际化配置  
 			"sProcessing" : "正在获取数据，请稍候...",    
 			"sLengthMenu" : "显示 _MENU_ 条",    
@@ -324,12 +386,23 @@ function sjloaddata(){
 	});	
 }
 function loaddata(){
-
+	
 	var departs=$('#departs').val();
 	var oiltypes=$('#oiltypes').val();	
 	var danjuhao=$('#danjuhao').val();	
 	var gongyingdanwei=$('#gongyingdanwei').val();
+	var columnList = [];
 	
+	columnList.push({"data": "kaidanriqi"});
+	columnList.push({"data": "danjuhao"});
+	columnList.push({"data": "danwei_name"});
+	columnList.push({"data": "huandanhao"});
+	columnList.push({"data": "youku_name"});
+	columnList.push({"data": "income"});
+	columnList.push({"data": "payment"});
+	columnList.push({"data": "balance"});
+	for(var i=0;i<oils.length;i++)
+		columnList.push({"data" : "shiwu."+i,defaultContent : "0.0"});
 	table=$('#diaobodan_table').DataTable({	
 		'pageLength': 6,
 		'bDestroy': 		true,  
@@ -373,13 +446,14 @@ function loaddata(){
         	"type": "POST",
         	"data":{"flagtype":3,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
     	},
-  		"columns": [
+  		"columns": columnList,
+  			//[
   			//{ "data": "id"},
-  			{ "data": "kaidanriqi" },
-        	{ "data": "danjuhao" },
-        	{ "data": "danwei_name" },
-        	{ "data": "huandanhao"  },
-        	{ "data": "youku_name" },
+  			//{ "data": "kaidanriqi" },
+        	//{ "data": "danjuhao" },
+        	//{ "data": "danwei_name" },
+        	//{ "data": "huandanhao"  },
+        	//{ "data": "youku_name" },
         	//{ "data": "leixing" },
         	//{ "data": "kaidanriqi" },
         	//{ "data": "gongyingyouku" },
@@ -389,17 +463,17 @@ function loaddata(){
         	{data : "0.0",defaultContent : "0.0"}
 			,
 			{data : "0.0",defaultContent : "0.0"}, */
-			{data : "shiwu.0",defaultContent : "0.1"},
-        	{data : "shiwu.1",defaultContent : "0.2"},
-			{data : "shiwu.2",defaultContent : "0.3"},
+			//{data : "shiwu.0",defaultContent : "0.1"},
+        	//{data : "shiwu",defaultContent : "0.2"}
+			/* {data : "shiwu.2",defaultContent : "0.3"},
 			{data : "shiwu.3",defaultContent : "0.4"},
 			{data : "shiwu.4",defaultContent : "0.5"},
 			{data : "shiwu.5",defaultContent : "0.6"},
 			{data : "shiwu.6",defaultContent : "0.5"},
 			{data : "shiwu.7",defaultContent : "0.6"},
 			{data : "shiwu.8",defaultContent : "0.5"},
-			{data : "shiwu.9",defaultContent : "0.6"}
-    	],
+			{data : "shiwu.9",defaultContent : "0.6"} */
+    	//],
 		"oLanguage": { //国际化配置  
 			"sProcessing" : "正在获取数据，请稍候...",    
 			"sLengthMenu" : "显示 _MENU_ 条",    
