@@ -146,7 +146,7 @@
 	</td>
 	</tr>
 	</table>
-	<table style="width:100%">
+	<table style="width:100%" id="table_oils">
 	<tr id="oilsinput">
 	<td th:each="obj:${oils}">
     	<input type="text" class="input-mini form-control" th:placeholder="${obj.name}">
@@ -197,8 +197,9 @@
 </div>
 </div>    
 <script type='text/javascript' th:inline="javascript">
-
+var limit ;
 $("#btn_submit").on('click',function(){
+	$("#btn_submit").attr('disabled',true);
 	var danjuhao=$("#danjuhao").val();
 	console.info(danjuhao);
 	if(danjuhao=='all'){
@@ -241,9 +242,11 @@ $("#btn_submit").on('click',function(){
 		data:{'danjuhao':danjuhao,'huandanhao':huandanhao,'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'memo':memo,'oils':oils},
 		success:function(data){
 			alert(data);
+			$("#btn_submit").attr('disabled',false);
 		},
 		error:function(data){
 			alert(data);
+			$("#btn_submit").attr('disabled',false);
 		}
 	});
 });
@@ -254,15 +257,31 @@ var sjtable;
 function reload(){
 	table.ajax.reload();
 }
+var placeholder=[[${oils}]];
 $("#danjuhao").on('change',function(){
 	var danjuhao=$("#danjuhao").val();
-	console.info(danjuhao);
+	//console.info(danjuhao);
 	if(danjuhao=='all'){
 		return;
-	}		
-	loaddata();
-	sjloaddata();
+	}
+	loaddata();	
+	//loaddata();	
+	//sjloaddata();
 	loadSJdanjuhao();
+	
+	//loadSJdanjuhao();
+	setTimeout(function(){ 
+		table.data().each(function (d) {
+		console.info(d.kaidanriqi);
+	 	if(d.kaidanriqi=='合  计'){
+	        	limit=d.shiwu;
+	        	console.info(limit);
+	    }
+		});	
+		var counter=0;
+		$("#table_oils td input").each(function(){
+			$(this).attr('placeholder',oils[counter].name+" <="+limit[counter++]);
+	}); },500);	
 })
 function loadSJdanjuhao(){
 	var danjuhao=$('#danjuhao').val();
@@ -445,7 +464,7 @@ function loaddata(){
         	"url": "youliao_huandan/datas",
         	"type": "POST",
         	"data":{"flagtype":3,"departs":departs,"oiltypes":oiltypes,"danjuhao":danjuhao,"gongyingdanwei":gongyingdanwei}
-    	},
+  		},
   		"columns": columnList,
   			//[
   			//{ "data": "id"},

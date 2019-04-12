@@ -185,7 +185,7 @@ function reload(){
 $("#danjuhao").on('change',function(){
 	loaddata();
 	//sjloaddata();
-	loadSJdanjuhao();
+	//loadSJdanjuhao();
 })
 function loadSJdanjuhao(){
 	var danjuhao=$('#danjuhao').val();
@@ -203,7 +203,7 @@ function loadSJdanjuhao(){
 	});
 }
 function sjloaddata(){
-
+//修改上级单位
 	var departs=$('#departs').val();
 	var oiltypes=$('#oiltypes').val();	
 	var danjuhao=$('#danjuhao').val();	
@@ -398,7 +398,7 @@ function loaddata(){
 	});	
 }
 $(function(){
-    loaddata();
+    //loaddata();
     //sjloaddata();
     $('#dateselect').datepicker({
     	todayHighlight:true,    	
