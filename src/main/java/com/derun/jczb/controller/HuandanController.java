@@ -1,16 +1,13 @@
 package com.derun.jczb.controller;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.stereotype.Controller;
-//import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,17 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //import com.derun.jczb.dao.DepartDictionaryMapper;
-import com.derun.jczb.dao.DiaobodanMapper;
-import com.derun.jczb.dao.DiaobodanRecordMapper;
-import com.derun.jczb.dao.OilDictionaryMapper;
-import com.derun.jczb.dao.YoukuDictionaryMapper;
+
 import com.derun.jczb.model.Diaobodan;
-import com.derun.jczb.model.DiaobodanRecord;
+
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.service.CommitService;
-import com.derun.util.DataTypeConverter;
+
 //import com.derun.jczb.service.CommitService;
 /**
  *    解放军换单   
@@ -36,7 +30,7 @@ import com.derun.util.DataTypeConverter;
  *
  */
 @Controller
-public class DiaobodanController {
+public class HuandanController {
 
 //	@Autowired
 //	private OilDictionaryMapper oilDictionaryMapper;
@@ -85,7 +79,7 @@ public class DiaobodanController {
 	@ResponseBody
 	public QueryDataVO<Diaobodan> query(int flagtype,String departs,String oiltypes,String danjuhao,String gongyingdanwei){
 		QueryDataVO<Diaobodan> maps=new QueryDataVO<Diaobodan>();
-		List<Diaobodan> diaobodans=commitService.queryDiaobodanIncomePayment(gongyingdanwei, departs, danjuhao, "2016");
+		List<Diaobodan> diaobodans=commitService.queryHuanDanIncomePayment(gongyingdanwei, departs, danjuhao, "2016");
 		maps.setData(diaobodans);
 		return maps;
 	}
@@ -93,7 +87,7 @@ public class DiaobodanController {
 	@ResponseBody
 	public  String edit(Diaobodan diaobodan,@RequestParam("oils[]") Integer[] oils){
 		
-		String result=commitService.insertDiaobodan(diaobodan, oils);
+		String result=commitService.insertHuanDan(diaobodan, oils);// .insertHuandan(diaobodan, oils);
 		return result;
 	}
 	/*@PostMapping("youliao_huandan/getshangjidiaobodan")
