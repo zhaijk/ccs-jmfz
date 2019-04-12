@@ -1,10 +1,13 @@
 package com.derun.jczb.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.derun.jczb.dao.DiaobodanMapper;
 import com.derun.jczb.dao.DiaobodanRecordMapper;
@@ -116,7 +119,8 @@ public class CommitServiceImpl implements CommitService{
 	/*
 	 * 解放军换单diaobodan leixing=3  按油品添加diaobodan_record记录
 	 */
-	public String insertDiaobodan(Diaobodan diaobodan, Integer[] oils) {
+	@Transactional(rollbackFor=SQLException.class,propagation=Propagation.REQUIRED)
+	public String insertDiaobodan(Diaobodan diaobodan, Integer[] oils)  {
 		List<OilDictionary> oilinfo=queryByOil("1");
 		diaobodan.setCaozuoriqi(DataTypeConverter.getDate());
 		diaobodan.setCaozuotime(DataTypeConverter.getTime());
@@ -147,7 +151,7 @@ public class CommitServiceImpl implements CommitService{
 				DiaobodanRecord record=new DiaobodanRecord();
 				record.setFk_id(id);
 				record.setYoupin_code(oilinfo.get(index).getCode());
-				record.setShiwu((double)obj);
+				record.setShiwu((double)obj);				
 				diaobodanRecordMapper.insertOne(record);
 			}
 			index++;

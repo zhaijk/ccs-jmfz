@@ -197,6 +197,7 @@
 </div>
 </div>    
 <script type='text/javascript' th:inline="javascript">
+
 var limit ;
 $("#btn_submit").on('click',function(){
 	$("#btn_submit").attr('disabled',true);
@@ -222,7 +223,7 @@ $("#btn_submit").on('click',function(){
 	}
 	var memo=$("#memo").val();
 	var oilsinputs=$("#oilsinput td input");
-	var oils=new Array();
+	var oilvals=new Array();
 	/* console.info(danjuhao);
 	console.info(huandanhao);
 	console.info(dateselect);
@@ -230,16 +231,34 @@ $("#btn_submit").on('click',function(){
 	console.info(gongyingyouku);
 	console.info(memo);
 	console.info(oilsinputs.length); */
+	
+	var counter=0;
+	var flag=0;
 	oilsinputs.each(function(){
-		oils.push($(this).val());
+		var val=$(this).val();
+		//console.info(val+' '+oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+		console.info(typeof val +" "+typeof limit[counter])
+		if(parseFloat(val)>parseFloat(limit[counter])){		
+			flag=1;
+			alert(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+			$(this).val('');
+			//break ;
+		}	
+		//return ;
+		oilvals.push($(this).val());
+		counter++;
 	});
+	if(flag==1){
+		$("#btn_submit").attr('disabled',false);
+		return;
+	}
 	/* $.each(oils, function(i,val){      
 		console.info(i+": "+val);
 	  }); */
 	$.ajax({
 		url:'youliao_huandan/edit',
 		type:'post',
-		data:{'danjuhao':danjuhao,'huandanhao':huandanhao,'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'memo':memo,'oils':oils},
+		data:{'danjuhao':danjuhao,'huandanhao':huandanhao,'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'memo':memo,'oils':oilvals},
 		success:function(data){
 			alert(data);
 			$("#btn_submit").attr('disabled',false);
@@ -257,7 +276,6 @@ var sjtable;
 function reload(){
 	table.ajax.reload();
 }
-var placeholder=[[${oils}]];
 $("#danjuhao").on('change',function(){
 	var danjuhao=$("#danjuhao").val();
 	//console.info(danjuhao);
@@ -281,6 +299,7 @@ $("#danjuhao").on('change',function(){
 		var counter=0;
 		$("#table_oils td input").each(function(){
 			$(this).attr('placeholder',oils[counter].name+" <="+limit[counter++]);
+			$(this).val('');
 	}); },500);	
 })
 function loadSJdanjuhao(){

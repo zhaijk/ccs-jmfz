@@ -9,6 +9,7 @@ public class DiaobodanRecord{
 	private Double jiabo = 0d;		// 价拨油数量
 	private Double zigou = 0d;		// 自购油数量
 	private String youpin_name;
+	private Long  id;
 	
 	public Double getZigou() {
 		return zigou;
@@ -45,6 +46,12 @@ public class DiaobodanRecord{
 	}
 	public void setYoupin_name(String youpin_name) {
 		this.youpin_name = youpin_name;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

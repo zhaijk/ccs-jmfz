@@ -14,5 +14,5 @@ public interface DiaobodanRecordMapper {
 	public List<DiaobodanRecord> queryOils(String niandu);
 	@Insert("insert into jiangsu.diaobodan_record (fk_id,youpin_code,shiwu,jiabo,zigou,id) values(#{fk_id},#{youpin_code},#{shiwu},#{jiabo},#{zigou},jiangsu.DIAOBODANRECORD_SEQUENCES.nextval) ")
 	public int insertOne(DiaobodanRecord obj);
-	
+		
 }
