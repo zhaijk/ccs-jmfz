@@ -47,7 +47,7 @@ public interface DiaobodanMapper {
 			" and shougongdanwei=#{shougongdanwei} </if>"+					
 			/*"<if test='\"all\"!=danjuhao'>"+
 			" and danjuhao=#{danjuhao} or huandanhao=#{danjuhao} </if> "+	*/		
-			"</where> order by leixing asc,kaidanriqi asc</script>")
+			"</where> order by leixing asc,kaidanriqi desc</script>")
 	public List<Diaobodan> queryDiaoboByLeixing(String jyjyoukus,String shougongdanwei,String niandu);
 	@Select("select * from jiangsu.diaobodan_record where fk_id=#{fk_id}")
 	public List<DiaobodanRecord> queryByRecord(int fk_id);

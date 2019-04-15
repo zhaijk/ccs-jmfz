@@ -34,4 +34,5 @@ public interface CommitService {
 	List<DeparDictionary> queryDepartInfo();
 	List<Diaobodan> queryDiaoboIncomePayment(String jyjyoukus,String shougongdanwei,String niandu);
 	String insertDiaobo(Diaobodan diaobodan, Integer[] oils);
+	String insertDiaoboDWWJ(Diaobodan diaobodan, Integer[] oils);
 }

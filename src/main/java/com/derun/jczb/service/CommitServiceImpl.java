@@ -118,7 +118,7 @@ public class CommitServiceImpl implements CommitService{
 			shiwu.add(String.valueOf(val));
 		}
 		total.setShiwu(shiwu);
-		diaobodans.add(total);
+		diaobodans.add(0,total);
 		return diaobodans;
 	}
 	/*
@@ -179,8 +179,9 @@ public class CommitServiceImpl implements CommitService{
 				int flag=0;
 				for(DiaobodanRecord record:objs) {
 				if(oil.getCode()==record.getYoupin_code()) {
-					total+=record.getShiwu();
-					obj.getShiwu().add(record.getShiwu().toString());
+					Double sum=record.getShiwu()+record.getJiabo();
+					total+=sum;
+					obj.getShiwu().add(sum.toString());
 					flag=1;
 					break;
 				}}
@@ -229,7 +230,10 @@ public class CommitServiceImpl implements CommitService{
 			shiwu.add(String.valueOf(val));
 		}
 		total.setShiwu(shiwu);
-		diaobodans.add(total);
+		if(shougongdanwei.equals("all")==false) {
+			total.setBalance(0);
+		}
+		diaobodans.add(0,total);
 		return diaobodans;
 	}
 	/*
@@ -271,6 +275,50 @@ public class CommitServiceImpl implements CommitService{
 				diaobodanRecordMapper.insertOne(record);
 			}
 			index++;
+		}
+		return "success";
+	}
+	/*
+	 *    油料调拨 单位 武警油库leixing=4,5  按油品添加diaobodan_record记录
+	 */
+	@Transactional(rollbackFor=SQLException.class,propagation=Propagation.REQUIRED)
+	public String insertDiaoboDWWJ(Diaobodan diaobodan, Integer[] oils)  {
+		List<OilDictionary> oilinfo=queryByOil("1");
+		diaobodan.setCaozuoriqi(DataTypeConverter.getDate());
+		diaobodan.setCaozuotime(DataTypeConverter.getTime());
+		//Diaobodan dbd=diaobodanMapper.queryBySJ(diaobodan.getDanjuhao(), "2016");
+		String name=youkuDictionaryMapper.queryNameByCode(diaobodan.getGongyingyouku());
+		diaobodan.setBeizhu_sys(name);
+		diaobodan.setDayin(0l);
+		//diaobodan.setShougongdanwei(dbd.getShougongdanwei());
+		diaobodan .setJunqu_code("");
+		diaobodan.setBeizhu("");
+		//diaobodan.setLeixing(3l);	//本级分配 4 本级调拨 5 武警油库调拨
+		//diaobodan.setCaozuoyuan("测试");
+		diaobodan.setDanjuhao("1900001");
+		diaobodan.setHuandanhao("");
+		diaobodan.setNiandu(DataTypeConverter.getIntYear());
+		double total=0;
+		for(Integer obj:oils) {
+			if(null!=obj) {	
+				total+=obj;
+			}
+		}
+		diaobodan.setXiaoji(total);
+		long id=diaobodanMapper.queryDiaobodanId();
+		diaobodan.setId(id);
+		diaobodan.setCaozuoyuan("");
+		diaobodanMapper.insertOne(diaobodan);
+		int len=oils.length/2;
+		for(int i=0;i<len;i++) {
+			if(oils[i]+oils[i+len]>0){	
+				DiaobodanRecord record=new DiaobodanRecord();
+				record.setFk_id(id);
+				record.setYoupin_code(oilinfo.get(i).getCode());
+				record.setShiwu((double)oils[i]);
+				record.setJiabo((double)oils[i+len]);
+				diaobodanRecordMapper.insertOne(record);
+			}
 		}
 		return "success";
 	}

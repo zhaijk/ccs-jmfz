@@ -70,7 +70,7 @@
 <body>	
 <div class="box">
     <div class="box-header with-border">
-    	<span class="box-title">解放军(武警)油库调拨</span>
+    	<span class="box-title">解放军油库调拨</span>
     	<p style="width:40%;position:absolute;top:-2px;left:53%" class="text-muted well well-sm">开具油料调拨单给受供单位或本级油库,凭此单据到军队油库领油</p>		
 	</div>
 	<div class="box-body">
@@ -105,21 +105,20 @@
 	<div class="input-group-addon">
 		<i class="fa fa-calendar"></i>
 	</div>
-	  <input type="text" class="form-control pull-right"
-			  id="dateselect" placeholder='选择操作日期'>
+	  <input type="text" readonly class="form-control pull-right" id="dateselect" placeholder='选择操作日期'>
 	</div>
 	</td>	
 	<td style="width:10%">
     	<input type="text" class="input-mini form-control" id="departName" placeholder="备注">
 	</td>
-	<td style="width:20%">
-		<button style="width:30%" class="btn btn-info " id="submit">开具调拨单</button>
-		<button style="width:30%" class="btn btn-info " id="submit">作废调拨单</button>
-		<button style="width:30%" class="btn btn-info " id="submit">打印预览</button>
+	<td style="width:20%;" align="center">
+		<button style="width:30%" class="btn btn-primary " id="btn_submit">开具调拨单</button>
+		<button style="width:30%" class="btn btn-warning"  id="btn_invalid">作废调拨单</button>
+		<button style="width:30%" class="btn btn-info btn-flat disabled" id="btn_print">打印预览</button>
 	</td>
 	</tr>
 	</table>
-	<table style="width:100%">
+	<table id="table_oils" style="width:100%">
 	<tr>
 	<td>
 		实物：
@@ -163,12 +162,118 @@
 <script type='text/javascript' th:inline="javascript">
 var oils=[[${oils}]];
 var table;
+var limit ;
+$("#btn_submit").on('click',function(){
+	$(this).attr('disabled',true);
+	var jfjyoukus=$("#jfjyoukus").val();
+	if(jfjyoukus=='all'){
+		alert('请选择解放军油库');$(this).attr('disabled',false);return;
+	}		
+	var shougongdanwei=$("#shougongdanwei").val();
+	var wjyoukus=$("#wjyoukus").val();
+	if(shougongdanwei=='all' && wjyoukus=='all'){
+		alert('请选择领油单位或者武警油库');$(this).attr('disabled',false);return;
+	}	
+	var dateselect=$("#dateselect").val();	
+	if(dateselect==''){
+		alert('请选择操作日期');$(this).attr('disabled',false);return;
+	}
+	var memo=$("#memo").val();
+	var oilsinputs=$("#table_oils td input");
+	var oilvals=new Array();
+	
+	var counter=0;
+	var flag=0;
+	oilsinputs.each(function(){
+		var val=$(this).val();
+		if(val=='')
+			oilvals.push(0);	
+		else	
+			oilvals.push($(this).val());		
+	});
+	var offset=oils.length;
+	var total=0;
+	for(var i=0;i<offset;i++){
+		var sum=parseFloat(oilvals[i])+parseFloat(oilvals[offset+i]);
+		if(parseFloat(sum)>parseFloat(limit[i])){
+			alert(oils[i].name + " 输入值: "+sum+"大于结余值: "+limit[i]);
+			$(this).attr('disabled',false);
+			return;
+		}
+		total+=sum;
+	}
+	if(total<=0){
+		alert("请输入有效值");
+		$(this).attr('disabled',false);
+		return;
+	}
+	/* console.info(oilvals);
+	console.info(oilvals.length);
+	console.info(limit); */
+	
+	/*
+	var val=$(this).val();
+	console.info(val+' '+oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+	console.info(typeof val +" "+typeof limit[counter])
+	if(parseFloat(val)>parseFloat(limit[counter])){		
+		flag=1;
+		alert(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+		$(this).val('');
+		return;
+		//break ;
+	}		
+	//return ;
+	oilvals.push($(this).val());
+	counter++;
+	*/
+	//console.info(flag);
+	/* if(flag==1){
+		$("#btn_submit").attr('disabled',false);
+		$(this).attr('disabled',false);return;
+	}	 */
+	$.ajax({
+		url:'youliao_diaobo/edit',
+		type:'post',
+		data:{'edit':'apply','jfjyoukus':jfjyoukus,'shougongdanwei':shougongdanwei,'wjyoukus':wjyoukus,'kaidanriqi':dateselect,'memo':memo,'oils':oilvals},
+		success:function(data){
+			alert(data);
+			$("#btn_submit").attr('disabled',false);
+			$("#shougongdanwei").trigger("change");
+		},
+		error:function(data){
+			alert(data);
+			$("#btn_submit").attr('disabled',false);
+		}
+	});
+	//$(this).attr('disabled',false);
+});
 $("#jfjyoukus").on('change',function(){
+	$("#shougongdanwei").val('all');
 	loaddata();	
+	setTimeout(function(){ 
+		table.data().each(function (d) {		
+	 	if(d.kaidanriqi=='合  计'){
+	        	limit=d.shiwu;	        	
+	    }
+		});
+		var counter=0;		
+		$("#table_oils td input").each(function(){
+			var str=oils[counter].name+"(实物+价拨)<="+limit[counter];
+			$(this).attr('placeholder',str);
+			$(this).val('');
+			counter++;
+			if(counter==oils.length) counter=0;
+		}); 
+	},200);	
 });
 $("#shougongdanwei").on('change',function(){
+	$("#wjyoukus").val('all');
 	loaddata();	
 });
+$("#wjyoukus").on('change',function(){
+	$("#shougongdanwei").val('all');
+});
+
 function loaddata(){
 
 	var jyjyoukus=$('#jfjyoukus').val();

@@ -49,8 +49,19 @@ public class DiaoboController {
 	}
 	@PostMapping("youliao_diaobo/edit")
 	@ResponseBody	
-	public  String edit(Diaobodan diaobodan,@RequestParam("oils[]") Integer[] oils){		
-		commitService.insertDiaobo(diaobodan,oils);
+	public  String edit(String edit,String jfjyoukus,String shougongdanwei,String wjyoukus,String kaidanriqi,String memo,@RequestParam("oils[]") Integer[] oils){	
+		Diaobodan diaobodan=new Diaobodan();
+		diaobodan.setGongyingyouku(jfjyoukus);
+		if(wjyoukus.equals("all")) {
+			diaobodan.setLeixing(4l);
+			diaobodan.setShougongdanwei(shougongdanwei);
+		}else {
+			diaobodan.setLeixing(5l);
+			diaobodan.setShougongdanwei(wjyoukus);
+		}
+		diaobodan.setKaidanriqi(kaidanriqi);
+		//System.out.println(jfjyoukus+" "+shougongdanwei+" "+wjyoukus+" "+dateselect+" "+memo+" "+oils[oils.length-1]);
+		commitService.insertDiaoboDWWJ(diaobodan,oils);
 		return "success";
 	}
 }
