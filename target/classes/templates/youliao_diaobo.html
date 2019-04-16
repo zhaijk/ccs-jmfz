@@ -238,7 +238,16 @@ $("#btn_submit").on('click',function(){
 		success:function(data){
 			alert(data);
 			$("#btn_submit").attr('disabled',false);
-			$("#shougongdanwei").trigger("change");
+			$("#shougongdanwei").val('all');
+			$("#jfjyoukus").trigger("change");
+			var counter=0;		
+			$("#table_oils td input").each(function(){
+				var str=oils[counter].name+"(实物+价拨)<="+limit[counter];
+				$(this).attr('placeholder',str);
+				$(this).val('');
+				counter++;
+				if(counter==oils.length) counter=0;
+			}); 
 		},
 		error:function(data){
 			alert(data);

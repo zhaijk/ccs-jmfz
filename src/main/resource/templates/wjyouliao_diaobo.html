@@ -70,16 +70,16 @@
 <body>	
 <div class="box">
     <div class="box-header with-border">
-    	<span class="box-title">解放军油库调拨</span>
+    	<span class="box-title">武警油库 油料调拨</span>
     	<p style="width:40%;position:absolute;top:-2px;left:53%" class="text-muted well well-sm">开具油料调拨单给受供单位或本级油库,凭此单据到军队油库领油</p>		
 	</div>
 	<div class="box-body">
 	<table style="width:100%">
 	<tr>
 	<td style="width:8%">
-		<select class="form-control" id="jfjyoukus">
-			<option value="all">选择解放军油库</option>
-			<th:block th:each="obj:${jfjyoukus}">
+		<select class="form-control" id="wjyoukus">
+			<option value="all">选择武警油库</option>
+			<th:block th:each="obj:${wjyoukus}">
 			<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
 			</th:block>		
 		</select>
@@ -91,15 +91,7 @@
 			<option th:value="${obj.bumen_code}" th:text="${obj.bumen}"></option>
 			</th:block>		
 		</select>
-	</td>
-	<td style="width:8%">
-    	<select class="form-control" id="wjyoukus">
-			<option value="all">选择武警油库</option>
-			<th:block th:each="obj:${wjyoukus}">
-			<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
-			</th:block>		
-		</select>
-	</td>
+	</td>	
 	<td style="width:10%">
 	<div class="input-group date">
 	<div class="input-group-addon">
@@ -165,14 +157,13 @@ var table;
 var limit ;
 $("#btn_submit").on('click',function(){
 	$(this).attr('disabled',true);
-	var jfjyoukus=$("#jfjyoukus").val();
-	if(jfjyoukus=='all'){
+	var wjyoukus=$("#wjyoukus").val();
+	if(wjyoukus=='all'){
 		alert('请选择解放军油库');$(this).attr('disabled',false);return;
 	}		
-	var shougongdanwei=$("#shougongdanwei").val();
-	var wjyoukus=$("#wjyoukus").val();
+	var shougongdanwei=$("#shougongdanwei").val();	
 	if(shougongdanwei=='all' && wjyoukus=='all'){
-		alert('请选择领油单位或者武警油库');$(this).attr('disabled',false);return;
+		alert('请选择领油单位');$(this).attr('disabled',false);return;
 	}	
 	var dateselect=$("#dateselect").val();	
 	if(dateselect==''){
@@ -207,30 +198,6 @@ $("#btn_submit").on('click',function(){
 		$(this).attr('disabled',false);
 		return;
 	}
-	/* console.info(oilvals);
-	console.info(oilvals.length);
-	console.info(limit); */
-	
-	/*
-	var val=$(this).val();
-	console.info(val+' '+oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
-	console.info(typeof val +" "+typeof limit[counter])
-	if(parseFloat(val)>parseFloat(limit[counter])){		
-		flag=1;
-		alert(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
-		$(this).val('');
-		return;
-		//break ;
-	}		
-	//return ;
-	oilvals.push($(this).val());
-	counter++;
-	*/
-	//console.info(flag);
-	/* if(flag==1){
-		$("#btn_submit").attr('disabled',false);
-		$(this).attr('disabled',false);return;
-	}	 */
 	$.ajax({
 		url:'youliao_diaobo/edit',
 		type:'post',
@@ -256,7 +223,11 @@ $("#btn_submit").on('click',function(){
 	});
 	//$(this).attr('disabled',false);
 });
-$("#jfjyoukus").on('change',function(){
+$("#shougongdanwei").on('change',function(){
+	$("#wjyoukus").val('all');
+	loaddata();	
+});
+$("#wjyoukus").on('change',function(){
 	$("#shougongdanwei").val('all');
 	loaddata();	
 	setTimeout(function(){ 
@@ -273,19 +244,12 @@ $("#jfjyoukus").on('change',function(){
 			counter++;
 			if(counter==oils.length) counter=0;
 		}); 
-	},200);	
-});
-$("#shougongdanwei").on('change',function(){
-	$("#wjyoukus").val('all');
-	loaddata();	
-});
-$("#wjyoukus").on('change',function(){
-	$("#shougongdanwei").val('all');
+	},200);
 });
 
 function loaddata(){
 
-	var jyjyoukus=$('#jfjyoukus').val();
+	var wjyoukus=$('#wjyoukus').val();
 	var shougongdanwei=$('#shougongdanwei').val();
 	var columnList = [];
 	
@@ -311,9 +275,9 @@ function loaddata(){
    	    },
    	    "ordering": false, // 禁止排序
 		"ajax": {
-        	"url": "youliao_diaobo/datas",
+        	"url": "wjyouliao_diaobo/datas",
         	"type": "POST",
-        	"data":{"jyjyoukus":jyjyoukus,"shougongdanwei":shougongdanwei}
+        	"data":{"wjyoukus":wjyoukus,"shougongdanwei":shougongdanwei}
     	},
   		"columns": columnList,
 		"oLanguage": { //国际化配置  

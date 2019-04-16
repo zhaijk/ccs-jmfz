@@ -64,4 +64,41 @@ public class DiaoboController {
 		commitService.insertDiaoboDWWJ(diaobodan,oils);
 		return "success";
 	}
+	@RequestMapping("wjyouliao_diaobo.htm")
+	public String init_wj(ModelMap model) {
+//		List<YoukuDictionary> jfjyoukus=commitService.queryByYouku(1, 2);
+		List<YoukuDictionary> wjyoukus=commitService.queryByYouku(2, 2);
+		List<DeparDictionary> departs=commitService.queryDepartInfo();
+		List<OilDictionary> oils=commitService.queryByOil("1");
+//		model.put("jfjyoukus", jfjyoukus);
+		model.put("wjyoukus", wjyoukus);
+		model.put("departs", departs);
+		model.put("oils", oils);
+		return "wjyouliao_diaobo";
+	}
+	@PostMapping("wjyouliao_diaobo/datas")
+	@ResponseBody
+	public QueryDataVO<Diaobodan> query_wj(String wjyoukus,String shougongdanwei){
+		QueryDataVO<Diaobodan> maps=new QueryDataVO<Diaobodan>();
+		List<Diaobodan> objs=commitService.queryDiaoboWjIncomePayment(wjyoukus,shougongdanwei, "2016");
+		maps.setData(objs);
+		return maps;
+	}
+	@PostMapping("wjyouliao_diaobo/edit")
+	@ResponseBody	
+	public  String edit_wj(String edit,String wjyoukus,String shougongdanwei,String kaidanriqi,String memo,@RequestParam("oils[]") Integer[] oils){	
+		Diaobodan diaobodan=new Diaobodan();
+		diaobodan.setGongyingyouku(wjyoukus);
+		if(wjyoukus.equals("all")) {
+			diaobodan.setLeixing(4l);
+			diaobodan.setShougongdanwei(shougongdanwei);
+		}else {
+			diaobodan.setLeixing(5l);
+			diaobodan.setShougongdanwei(wjyoukus);
+		}
+		diaobodan.setKaidanriqi(kaidanriqi);
+		//System.out.println(jfjyoukus+" "+shougongdanwei+" "+wjyoukus+" "+dateselect+" "+memo+" "+oils[oils.length-1]);
+		commitService.insertDiaoboDWWJ(diaobodan,oils);
+		return "success";
+	}
 }

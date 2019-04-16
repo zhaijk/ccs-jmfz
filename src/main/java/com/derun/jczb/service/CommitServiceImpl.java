@@ -295,7 +295,7 @@ public class CommitServiceImpl implements CommitService{
 		diaobodan.setBeizhu("");
 		//diaobodan.setLeixing(3l);	//本级分配 4 本级调拨 5 武警油库调拨
 		//diaobodan.setCaozuoyuan("测试");
-		diaobodan.setDanjuhao("1900001");
+		diaobodan.setDanjuhao(diaoboDanjuhao(diaobodan.getGongyingyouku()));
 		diaobodan.setHuandanhao("");
 		diaobodan.setNiandu(DataTypeConverter.getIntYear());
 		double total=0;
@@ -322,4 +322,100 @@ public class CommitServiceImpl implements CommitService{
 		}
 		return "success";
 	}
+	/**
+	 *  单据号生成器  XX年份 XXXX供应油库代码去掉中间两位  尾数 4位序列号
+	 * @param gongyingyouku
+	 * @return
+	 */
+	private String diaoboDanjuhao(String gongyingyouku) {
+		
+		StringBuilder  idStr=new StringBuilder();
+		String danjuhao=diaobodanMapper.queryMaxDanjuhao(gongyingyouku);
+		int year =Integer.parseInt(danjuhao.substring(0, 2));
+		int current_year=DataTypeConverter.getIntYear()%100;
+		if(year==current_year) {//同年
+			idStr.append(danjuhao.substring(0,6));	
+			int counter=Integer.parseInt(danjuhao.substring(6,10))+1;
+			idStr.append(String.format("%04d", counter));
+		}else {
+			idStr.append(DataTypeConverter.getIntYear()%100);
+			idStr.append(danjuhao.substring(2,6));
+			idStr.append("0001");
+		}		
+		return idStr.toString();
+	}
+	
+	/* 查询调拨单 类型 5 收入 6 支出 
+	 * 
+	 * 
+	 */
+	public List<Diaobodan> queryDiaoboWjIncomePayment(String wjyoukus,String shougongdanwei,String niandu){
+		List<Diaobodan> diaobodans=diaobodanMapper.queryDiaoboByWJyouku(wjyoukus,shougongdanwei,niandu);		
+		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
+		for(Diaobodan obj:diaobodans){
+			List<DiaobodanRecord> objs=diaobodanMapper.queryByRecord(obj.getId().intValue());
+			obj.setShiwu(new ArrayList<String>());
+			double total=0;
+			for(OilDictionary oil:oils) {
+				int flag=0;
+				for(DiaobodanRecord record:objs) {
+				if(oil.getCode()==record.getYoupin_code()) {
+					Double sum=record.getShiwu()+record.getJiabo();
+					total+=sum;
+					obj.getShiwu().add(sum.toString());
+					flag=1;
+					break;
+				}}
+				if(flag==1) flag=0;
+				else
+					obj.getShiwu().add("0.0");
+			}
+			if(obj.getLeixing()==5) {			//换单
+				obj.setIncome(total);
+			}else if(obj.getLeixing()==6) {		//调拨
+				obj.setPayment(total);
+			}
+		}
+		//计算汇总
+		double income=0;
+		double payment=0;
+		double balance=0;
+		double[] oilbalance= new double[oils.size()];
+		int index=0;
+		for(Diaobodan obj:diaobodans){
+			long leixing=obj.getLeixing();
+			if(leixing==5) {
+				income+=obj.getIncome();
+			}else if(leixing==6) {
+				payment+=obj.getPayment();
+			}
+			for(String oilval:obj.getShiwu()) {
+				double value=Double.parseDouble(oilval);
+				if(leixing==5) {
+					oilbalance[index]+=value;
+				}else if(leixing==6) {
+					oilbalance[index]-=value;
+				}
+				index++;
+			}
+			index=0;
+		}
+		balance=income-payment;
+		Diaobodan total=new Diaobodan();
+		List<String> shiwu=new ArrayList<String>();
+		total.setKaidanriqi("合  计");
+		total.setIncome(income);
+		total.setPayment(payment);
+		total.setBalance(balance);
+		for(double val:oilbalance) {
+			shiwu.add(String.valueOf(val));
+		}
+		total.setShiwu(shiwu);
+		if(shougongdanwei.equals("all")==false) {
+			total.setBalance(0);
+		}
+		diaobodans.add(0,total);
+		return diaobodans;
+	}
+	
 }
