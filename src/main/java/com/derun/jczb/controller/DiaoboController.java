@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.derun.jczb.dao.ZhuandaigongMapper;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
+import com.derun.jczb.model.Zhuandaigong;
 import com.derun.jczb.service.CommitService;
 /**
- *     油料调拨 解放军 武警  油库
+ *     油料调拨 解放军 油库  武警油库 转代供  
  * @author Administrator
  *
  */
@@ -91,7 +93,39 @@ public class DiaoboController {
 		diaobodan.setShougongdanwei(shougongdanwei);		
 		diaobodan.setKaidanriqi(kaidanriqi);
 		diaobodan.setBeizhu(memo);
-		System.out.println(wjyoukus+" "+shougongdanwei+" "+kaidanriqi+" "+memo+" "+oils[oils.length-1]);
+		//System.out.println(wjyoukus+" "+shougongdanwei+" "+kaidanriqi+" "+memo+" "+oils[oils.length-1]);
+		commitService.insertDiaoboDWWJ(diaobodan,oils);
+		return "success";
+	}
+	@Autowired 
+	private ZhuandaigongMapper zhuandaigongMapper;
+	@RequestMapping("zdgyouliao_diaobo.htm")
+	public String init_zdg(ModelMap model) {
+		List<YoukuDictionary> wjyoukus=commitService.queryByYouku(2, 2);
+		List<DeparDictionary> departs=commitService.queryDepartInfo();
+		List<OilDictionary> oils=commitService.queryByOil("1");
+		model.put("wjyoukus", wjyoukus);
+		model.put("departs", departs);
+		model.put("oils", oils);
+		return "zdgyouliao_diaobo";
+	}
+	@PostMapping("zdgyouliao_diaobo/datas")
+	@ResponseBody
+	public QueryDataVO<Zhuandaigong> query_zdg(){
+		QueryDataVO<Zhuandaigong> maps=new QueryDataVO<Zhuandaigong>();
+		List<Zhuandaigong> objs=zhuandaigongMapper.queryBy(4, 2011);
+		maps.setData(objs);
+		return maps;
+	}
+	@PostMapping("zdgyouliao_diaobo/edit")
+	@ResponseBody	
+	public  String edit_zdg(String edit,String wjyoukus,String shougongdanwei,String kaidanriqi,String memo,@RequestParam("oils[]") Integer[] oils){	
+		Diaobodan diaobodan=new Diaobodan();
+		diaobodan.setGongyingyouku(wjyoukus);
+		diaobodan.setLeixing(6l);
+		diaobodan.setShougongdanwei(shougongdanwei);		
+		diaobodan.setKaidanriqi(kaidanriqi);
+		diaobodan.setBeizhu(memo);
 		commitService.insertDiaoboDWWJ(diaobodan,oils);
 		return "success";
 	}
