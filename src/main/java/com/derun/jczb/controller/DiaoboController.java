@@ -17,7 +17,7 @@ import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.service.CommitService;
 /**
- *     油料调拨 解放军 武警  
+ *     油料调拨 解放军 武警  油库
  * @author Administrator
  *
  */
@@ -66,11 +66,9 @@ public class DiaoboController {
 	}
 	@RequestMapping("wjyouliao_diaobo.htm")
 	public String init_wj(ModelMap model) {
-//		List<YoukuDictionary> jfjyoukus=commitService.queryByYouku(1, 2);
 		List<YoukuDictionary> wjyoukus=commitService.queryByYouku(2, 2);
 		List<DeparDictionary> departs=commitService.queryDepartInfo();
 		List<OilDictionary> oils=commitService.queryByOil("1");
-//		model.put("jfjyoukus", jfjyoukus);
 		model.put("wjyoukus", wjyoukus);
 		model.put("departs", departs);
 		model.put("oils", oils);
@@ -89,15 +87,11 @@ public class DiaoboController {
 	public  String edit_wj(String edit,String wjyoukus,String shougongdanwei,String kaidanriqi,String memo,@RequestParam("oils[]") Integer[] oils){	
 		Diaobodan diaobodan=new Diaobodan();
 		diaobodan.setGongyingyouku(wjyoukus);
-		if(wjyoukus.equals("all")) {
-			diaobodan.setLeixing(4l);
-			diaobodan.setShougongdanwei(shougongdanwei);
-		}else {
-			diaobodan.setLeixing(5l);
-			diaobodan.setShougongdanwei(wjyoukus);
-		}
+		diaobodan.setLeixing(6l);
+		diaobodan.setShougongdanwei(shougongdanwei);		
 		diaobodan.setKaidanriqi(kaidanriqi);
-		//System.out.println(jfjyoukus+" "+shougongdanwei+" "+wjyoukus+" "+dateselect+" "+memo+" "+oils[oils.length-1]);
+		diaobodan.setBeizhu(memo);
+		System.out.println(wjyoukus+" "+shougongdanwei+" "+kaidanriqi+" "+memo+" "+oils[oils.length-1]);
 		commitService.insertDiaoboDWWJ(diaobodan,oils);
 		return "success";
 	}

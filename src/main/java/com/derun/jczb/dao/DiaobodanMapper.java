@@ -52,7 +52,7 @@ public interface DiaobodanMapper {
 	@Select("<script> select a.*,(case leixing when 6 then (select bumen from jiangsu.depar_dictionary  where bumen_code=a.shougongdanwei)  else  (select youku from jiangsu.youku_dictionary  where youku_code=a.shougongdanwei)  end) as danwei_name,(select youku from jiangsu.YOUKU_DICTIONARY t where youku_code=a.gongyingyouku) as youku_name from jiangsu.Diaobodan a "+
 			"<where> (leixing=5 or leixing =6) and niandu>=#{niandu} "+
 			"<if test='\"all\"!=wjyoukus'>"+
-			" and gongyingyouku =#{wjyoukus} </if>"+			
+			" and (gongyingyouku =#{wjyoukus} or shougongdanwei=#{wjyoukus}) </if>"+			
 			"<if test='\"all\"!=shougongdanwei'>"+
 			" and shougongdanwei=#{shougongdanwei} </if>"+					
 			/*"<if test='\"all\"!=danjuhao'>"+
@@ -65,6 +65,6 @@ public interface DiaobodanMapper {
 	public int insertOne(Diaobodan obj);
 	@Select("select jiangsu.diaobodan_sequences.nextval from dual")
 	public int queryDiaobodanId();
-	@Select("select * from (select danjuhao from jiangsu.diaobodan where gongyingyouku=#{gongyingyouku} and (leixing =4 or leixing =5) order by danjuhao desc) where rownum=1")
+	@Select("select * from (select danjuhao from jiangsu.diaobodan where gongyingyouku=#{gongyingyouku} and (leixing =4 or leixing =5 or leixing=6) order by danjuhao desc) where rownum=1")
 	public String queryMaxDanjuhao(String gongyingyouku);	
 }
