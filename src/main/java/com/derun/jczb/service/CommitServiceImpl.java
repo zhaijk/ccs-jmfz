@@ -14,11 +14,13 @@ import com.derun.jczb.dao.DiaobodanMapper;
 import com.derun.jczb.dao.DiaobodanRecordMapper;
 import com.derun.jczb.dao.OilDictionaryMapper;
 import com.derun.jczb.dao.YoukuDictionaryMapper;
+import com.derun.jczb.dao.ZhuandaigongMapper;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.DiaobodanRecord;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.YoukuDictionary;
+import com.derun.jczb.model.Zhuandaigong;
 import com.derun.util.DataTypeConverter;
 
 /**
@@ -35,6 +37,8 @@ public class CommitServiceImpl implements CommitService{
 	private YoukuDictionaryMapper youkuDictionaryMapper;
 	@Autowired
 	private DiaobodanMapper diaobodanMapper;
+	@Autowired
+	private ZhuandaigongMapper zhuandaigongMapper;
 	@Autowired
 	private DiaobodanRecordMapper diaobodanRecordMapper;
 	@Autowired
@@ -344,7 +348,38 @@ public class CommitServiceImpl implements CommitService{
 		}		
 		return idStr.toString();
 	}
-	
+	public int saveZdg(Zhuandaigong obj) {
+		obj.setNiandu(DataTypeConverter.getIntYear());
+		obj.setLeixing(4l);
+		obj.setRiqi(DataTypeConverter.getDate());
+		obj.setWenjianhao(zdgWjh(obj.getSg_danwei()));
+		obj.setYoupin_code(0l);
+		obj.setJz(0l);
+		obj.setBiaozhi(0);
+		obj.setRemark("");
+		int result=zhuandaigongMapper.insertOne(obj);
+		return result;
+	}
+	/**
+	 *  计算转代供记录文件号
+	 * @param sg_danwei
+	 * @return
+	 */
+	private String zdgWjh(String sg_danwei) {		
+		StringBuilder  idStr=new StringBuilder();
+		String wenjianhao=zhuandaigongMapper.queryWjhBy(sg_danwei, 2019, 4);		
+		if(null==wenjianhao) {
+			idStr.append("代");
+			idStr.append(DataTypeConverter.getIntYear()%100);
+			idStr.append(sg_danwei.substring(0, 2));
+			idStr.append("0001");
+			return idStr.toString();
+		}
+		int counter=Integer.parseInt(wenjianhao.substring(5,9))+1;
+		idStr.append(wenjianhao.substring(0,5));
+		idStr.append(String.format("%04d", counter));				
+		return idStr.toString();
+	}	
 	/* 查询调拨单 类型 5 收入 6 支出 
 	 * 
 	 * 

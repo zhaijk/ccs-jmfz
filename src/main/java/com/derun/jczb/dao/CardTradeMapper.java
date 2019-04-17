@@ -10,6 +10,7 @@ import com.derun.jczb.model.CardSumInfos;
 import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.ProvideSumInfo;
 import com.derun.jczb.model.ZdgCardTrades;
+import com.derun.jczb.model.ZhuandaigongTotal;
 
 //@CacheConfig(cacheNames = "users")
 public interface CardTradeMapper {
@@ -130,5 +131,6 @@ public interface CardTradeMapper {
 			" and oiltype like #{oiltype} || '%' </if>"+
 			"</where> </script>")
 	public List<CardSumInfos>  queryCardSumBy(String cardcode,String sumdate,String sumDepartmentcode,String departmentcode,String oiltype,String carcode,String cardtype,String datestart,String datestop);
-
+	@Select("select zhugongdanweiid as code,sum(t.volumnt) as jyl from jiangsu.card_trade t where t.tradedate between #{niandubegin} and #{nianduend} and t.shougongdanweiid='' and t.zhugongdanweiid!='' group by zhugongdanweiid")
+	public List<ZhuandaigongTotal> queryZdgSumBy(String niandubegin,String nianduend);
 }

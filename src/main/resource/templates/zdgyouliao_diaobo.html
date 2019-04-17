@@ -97,31 +97,52 @@
 	</table>
 	</div>
 </div>
+<div class="row">
+<div class="col-md-7"> 
 <div class="box">
 <div class="box-body with-border">
 <table id="diaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
 	<thead>
 	<tr style="font-size: 14px; background-color: rgb(237, 241, 244);">
-		<th style="width:5%;text-align: center ;vertical-align: middle;" rowspan="2">受供单位</th>
-		<th style="width:5%;text-align: center" colspan="3">油料指标(吨)</th>
-		<th style="width:5%;text-align: center;vertical-align: middle;" rowspan="2">现加油量</th>
-        <th style="width:5%;text-align: center;vertical-align: middle;" rowspan="2">超支指标</th>
+		<th style="text-align: center;vertical-align: middle;" rowspan="2">受供单位</th>
+		<th style="text-align: center;vertical-align: middle;" colspan="3">油料指标(吨)</th>
+		<th style="text-align: center;vertical-align: middle;" rowspan="2">现加油量</th>
+        <th style="text-align: center;vertical-align: middle;" rowspan="2">超支指标</th>
 	</tr>
 	<tr style="font-size: 14px; background-color: rgb(237, 241, 244);">
-		<th style="width:5%;text-align: center" >小计</th>
-		<th style="width:5%;text-align: center" >上年结转</th>
-		<th style="width:5%;text-align: center" >本年批准</th>
+		<th style="text-align: center" >小计</th>
+		<th style="text-align: center" >上年结转</th>
+		<th style="text-align: center" >本年批准</th>
 	</tr>
 	</thead>
-	<tbody>
+	<tbody style="text-align: center;">
 	</tbody>
 </table>
 </div>
-</div>    
+</div> 
+</div>
+<div class="col-md-5">  
+<div class="box">
+<div class="box-body with-border">
+<table id="total_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+<thead>
+<tr style="font-size: 14px; background-color: rgb(237, 241, 244);">
+	<th >日期</th>
+	<th >通知书号</th>
+	<th >受供单位</th>
+    <th >数量</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>   
+</div>  
+</div>
 <script type='text/javascript' th:inline="javascript">
-
+var totaltable;
 var table;
-var limit;
 $("#btn_submit").on('click',function(){
 	
 	var shougongdanwei=$("#shougongdanwei").val();	
@@ -132,65 +153,74 @@ $("#btn_submit").on('click',function(){
 	if(inputvalue==''){
 		alert('请输入调拨数量');$(this).attr('disabled',false);return;
 	}	
-	/* $.ajax({
+	$.ajax({
 		url:'zdgyouliao_diaobo/edit',
 		type:'post',
-		data:{'edit':'apply','wjyoukus':wjyoukus,'shougongdanwei':shougongdanwei,'kaidanriqi':dateselect,'memo':memo,'oils':oilvals},
+		data:{'edit':'apply','shuliang':inputvalue,'sg_danwei':shougongdanwei},
 		success:function(data){
 			alert(data);
-			$("#btn_submit").attr('disabled',false);
-			$("#shougongdanwei").val('all');
-			$("#wjyoukus").trigger("change");			
+			$(this).attr('disabled',false);
 		},
 		error:function(data){
 			alert(data);
-			$("#btn_submit").attr('disabled',false);
+			$(this).attr('disabled',false);
 		}
-	}); */
-	//$(this).attr('disabled',false);
+	});	
 });
-/* $("#shougongdanwei").on('change',function(){
-	//$("#wjyoukus").val('all');
-	loaddata();	
-}); */
-/* $("#wjyoukus").on('change',function(){
-	$("#shougongdanwei").val('all');
-	loaddata();	
-	setTimeout(function(){ 
-		table.data().each(function (d) {		
-	 	if(d.kaidanriqi=='合  计'){
-	        	limit=d.shiwu;	        	
-	    }
-		});
-		var counter=0;		
-		$("#table_oils td input").each(function(){
-			var str=oils[counter].name+"(实物+价拨)<="+limit[counter];
-			$(this).attr('placeholder',str);
-			$(this).val('');
-			counter++;
-			if(counter==oils.length) counter=0;
-		}); 
-	},200);
-}); */
-
-function loaddata(){
-
-	//var wjyoukus=$('#wjyoukus').val();
-	//var shougongdanwei=$('#shougongdanwei').val();
-	var columnList = [];
+$("#shougongdanwei").on('change',function(){
+	var sg_danwei=$("#shougongdanwei").val();
+	var sg_danwei_text=$("#shougongdanwei").find("option:selected").text();
+	if(sg_danwei=='all'){
+		return;
+	}
+	loadtotal(sg_danwei,sg_danwei_text);
 	
-	columnList.push({"data": "kaidanriqi"});
-	columnList.push({"data": "danjuhao"});
-	columnList.push({"data": "youku_name"});
-	columnList.push({"data": "danwei_name"});
-	columnList.push({"data": "beizhu"});
-	columnList.push({"data": "income"});
-	columnList.push({"data": "payment"});
-	columnList.push({"data": "balance"});
-	for(var i=0;i<oils.length;i++)
-		columnList.push({"data" : "shiwu."+i,defaultContent : "0.0"});
+});
+function loadtotal(sg_danwei,sg_danwei_text){
+	totaltable==$('#total_table').DataTable({	
+		//'pageLength': 		7,
+		'bDestroy': 		true,  
+		'processing': 		true,
+		'searching' : 		false,
+		'lengthChange' : 	false,
+		/* "select": {
+   	        style: 'single',
+   	        info: false
+   	    }, */
+   	    "ordering": false, // 禁止排序
+		"ajax": {
+        	"url": "zdgyouliao_total/datas",
+        	"type": "POST",
+        	"data":{"sg_danwei":sg_danwei,"sg_danwei_text":sg_danwei_text}
+    	},
+  		"columns": [
+  			{"data": "riqi"},
+  			{"data": "wenjianhao"},
+  			{"data": "sg_danwei"},
+  			{"data": "shuliang"}
+  		],
+		"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+		}    	
+	});	
+}
+function loaddata(){
 	table=$('#diaobodan_table').DataTable({	
-		'pageLength': 		7,
+		//'pageLength': 		7,
 		'bDestroy': 		true,  
 		'processing': 		true,
 		'searching' : 		false,
@@ -203,9 +233,16 @@ function loaddata(){
 		"ajax": {
         	"url": "zdgyouliao_diaobo/datas",
         	"type": "POST",
-        	"data":{"wjyoukus":wjyoukus,"shougongdanwei":shougongdanwei}
+        	"data":{}
     	},
-  		"columns": columnList,
+  		"columns": [
+  			{"data": "name"},
+  			{"data": "total"},
+  			{"data": "jz"},
+  			{"data": "pz"},
+  			{"data": "jyl"},
+  			{"data": "cz"}
+  		],
 		"oLanguage": { //国际化配置  
 			"sProcessing" : "正在获取数据，请稍候...",    
 			"sLengthMenu" : "显示 _MENU_ 条",    
@@ -227,14 +264,6 @@ function loaddata(){
 }
 $(function(){
     loaddata();   
-   /*  $('#dateselect').datepicker({
-    	todayHighlight:true,    	
-    	keyboardNavigation:true,
-    	clearBtn:true,
-    	autoclose:true,
-    	language:'zh-Cn',
-    	format:'yyyy-mm-dd'
-    }); */
 })
 </script>
 </body>

@@ -6,6 +6,7 @@ import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.YoukuDictionary;
+import com.derun.jczb.model.Zhuandaigong;
 
 
 public interface CommitService {	
@@ -36,4 +37,5 @@ public interface CommitService {
 	String insertDiaobo(Diaobodan diaobodan, Integer[] oils);
 	String insertDiaoboDWWJ(Diaobodan diaobodan, Integer[] oils);
 	List<Diaobodan> queryDiaoboWjIncomePayment(String wjyoukus,String shougongdanwei,String niandu);
+	int saveZdg(Zhuandaigong obj);
 }

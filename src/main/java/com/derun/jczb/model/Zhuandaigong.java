@@ -3,7 +3,7 @@ package com.derun.jczb.model;
 public class Zhuandaigong {
 	
 	private Long id;			// 主键
-	private String wenjianhao;	// 文叔号
+	private String wenjianhao;	// 文书号
 	private String zg_danwei;	// 助供单位
 	private String sg_danwei;	// 受供单位
 	private Long leixing;		// 类型1上级转代供 2本级转代供 3 上级内部转代供 4本级内部转代供 系统计算用双数如11为上级转代供系统记录
@@ -14,7 +14,7 @@ public class Zhuandaigong {
 	private Long jz;			// 结转标志
 	private Integer niandu;		// 年度
 	private String remark;
-//	private Integer biaozhi;	// 下载标志，0未下载，1已下载
+	private Integer biaozhi;	// 下载标志，0未下载，1已下载
 //	private String zgBumen;		// 助供名称
 //	private String sgBumen;		// 受供名称
 //	private String xgBiaozhi;	// 修改标志
@@ -96,5 +96,11 @@ public class Zhuandaigong {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public Integer getBiaozhi() {
+		return biaozhi;
+	}
+	public void setBiaozhi(Integer biaozhi) {
+		this.biaozhi = biaozhi;
 	}
 }
