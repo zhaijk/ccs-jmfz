@@ -5,6 +5,7 @@ import java.util.List;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.OilDictionary;
+import com.derun.jczb.model.YouKuSunHao;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
 
@@ -40,4 +41,5 @@ public interface CommitService {
 	int saveZdg(Zhuandaigong obj);
 	List<Diaobodan> queryZigou(String gongyingyouku,String niandu);
 	String insertZiGou(Diaobodan diaobodan, Integer[] oils);
+	public List<YouKuSunHao> queryYoukuSunhao(String gongyingyouku,String niandu);
 }

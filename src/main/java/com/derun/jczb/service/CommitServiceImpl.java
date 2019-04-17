@@ -14,11 +14,13 @@ import com.derun.jczb.dao.DiaobodanMapper;
 import com.derun.jczb.dao.DiaobodanRecordMapper;
 import com.derun.jczb.dao.OilDictionaryMapper;
 import com.derun.jczb.dao.YoukuDictionaryMapper;
+import com.derun.jczb.dao.YoukuSunhaoMapper;
 import com.derun.jczb.dao.ZhuandaigongMapper;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.DiaobodanRecord;
 import com.derun.jczb.model.OilDictionary;
+import com.derun.jczb.model.YouKuSunHao;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
 import com.derun.util.DataTypeConverter;
@@ -58,7 +60,7 @@ public class CommitServiceImpl implements CommitService{
 	}
 	/* 查询调拨单 类型 2
 	 * 
-	 * 
+	 *  自购
 	 */
 	public List<Diaobodan> queryZigou(String gongyingyouku,String niandu) {
 		List<Diaobodan> diaobodans=diaobodanMapper.queryZG(gongyingyouku,niandu);		
@@ -574,5 +576,71 @@ public class CommitServiceImpl implements CommitService{
 		idStr.append(wenjianhao.substring(0,5));
 		idStr.append(String.format("%04d", counter));				
 		return idStr.toString();
-	}	
+	}
+	/**
+	 *   计算油库损耗文件号
+	 * @param sg_danwei
+	 * @return
+	 */
+	private String ykshDJH(String gongyingyouku) {		
+		StringBuilder  idStr=new StringBuilder();
+		String wenjianhao=zhuandaigongMapper.queryZGWjhBy(2019);		
+		if(null==wenjianhao) {
+			idStr.append("耗");
+			idStr.append(DataTypeConverter.getIntYear()%100);
+			idStr.append(gongyingyouku.substring(0, 2));
+			idStr.append("0000001");
+			return idStr.toString();
+		}
+		int counter=Integer.parseInt(wenjianhao.substring(5,12))+1;
+		idStr.append(wenjianhao.substring(0,5));
+		idStr.append(String.format("%04d", counter));				
+		return idStr.toString();
+	}
+	/* 查询油库损耗 
+	 * 
+	 *  
+	 */
+	@Autowired
+	private YoukuSunhaoMapper youkuSunhaoMapper;
+	public List<YouKuSunHao> queryYoukuSunhao(String gongyingyouku,String niandu) {
+		List<YouKuSunHao> ykshs=youkuSunhaoMapper.queryBy(gongyingyouku,niandu);		
+		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
+		
+		for(YouKuSunHao yksh:ykshs){			
+			List<YouKuSunHao> objs=youkuSunhaoMapper.queryByDjh(yksh.getDanjuhao());
+			List<String> youpins=new ArrayList<String>();
+			double total=0;
+			for(OilDictionary oil:oils) {
+				int flag=0;
+				for(YouKuSunHao sh:objs) {
+					if(sh.getOil()==oil.getCode().intValue()) {
+						total+=sh.getYoupin();
+						youpins.add(String.valueOf(sh.getYoupin()));
+						flag=1;						
+					}
+				}
+				if(flag==0) youpins.add("0.0");				
+			}
+			yksh.setYoupins(youpins);
+			yksh.setTotal(total);
+		}		
+		YouKuSunHao total=new YouKuSunHao();
+		total.setDanjuhao("合计");
+		total.setYoupins(ykshs.get(0).getYoupins());
+		double t=0;
+		for(int i=1;i<ykshs.size();i++){
+			List<String> objs=ykshs.get(i).getYoupins();
+			int counter=0;
+			for(String val:total.getYoupins()) {				
+				Double result=Double.parseDouble(objs.get(counter))+Double.parseDouble(val);
+				t=t+result;
+				total.getYoupins().set(counter, result.toString());
+				counter++;
+			}
+		}
+		total.setTotal(t);
+		//ykshs.add(0,total);
+		return ykshs;
+	}
 }

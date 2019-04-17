@@ -19,7 +19,7 @@ import com.derun.jczb.dao.OilTypeMapper;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.YoukuDictionary;
 /**
- *  油库油品管理
+ *   油库油品管理
  * @author Administrator
  *
  */

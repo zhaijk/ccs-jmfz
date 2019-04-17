@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">  
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <link rel="stylesheet" href="css/bootstrap-table.min.css">  
+  <!-- DataTables -->
+  <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">  
+  <link rel="stylesheet" href="css/buttons.bootstrap.min.css">
+  <link rel="stylesheet" href="css/select.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css"> 
+  <link rel="stylesheet" href="css/skins/skin-blue.min.css">
+  
+  <link href="css/bootstrap-editable.css" rel="stylesheet" />
+  
+  <!-- jQuery 3 -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- <script src="js/bootstrap-table-editable.min.js"></script> -->
+  <script src="js/bootstrap-editable.js"></script>
+  <script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-editable.min.js"></script>
+<!-- DataTables -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+
+<script src="js/dataTables.buttons.min.js"></script>
+<script src="js/buttons.bootstrap.min.js"></script>
+<script src="js/dataTables.select.min.js"></script>
+
+<script src="js/adminlte.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="js/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="js/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  <style >
+ /*  editable-table-cell{
+	  //background-color: yellow;
+	 
+	  "data-type": "text";
+	  //"data-title": "用户名";
+  } */
+  /* inputclass{
+  	width: 10px;
+  } */
+    .box-title{
+        position:relative;
+  	    left:10px;
+  	    top:8px;
+    }
+</style>
+</head>
+<body>	
+<div class="box">
+    <div class="box-header with-border">
+    <div class="row">
+			<div class="col-md-2">
+				<div class="box-title">油库损耗</div>
+			</div>
+		</div>		
+	</div>
+	<div class="box-body">
+	<table style="width:50%"><tr>
+	<td style="width:15%">
+	<select class="form-control" id="gongyingyouku">
+		<option value="all">选择存储油库</option>
+		<th:block th:each="obj:${youkus}">
+		<option th:value="${obj.youku_code}" th:text="${obj.youku}"></option>
+		</th:block>		
+	</select>
+	</td>	
+	<td style="width:16%">
+		<button class="btn btn-info btn-block" id="btn_submit">录入</button>
+	</td>
+	</tr>
+	</table>
+	<table style="width:100%" id="table_oils">
+	<tr id="oilsinput">
+	<td th:each="obj:${oils}">
+    	<input type="text" class="input-mini form-control" th:placeholder="${obj.name}">
+	</td>
+	</tr>
+	</table>
+	<!-- <table id="sjdiaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<thead>
+	<tr style="background-color: rgb(237, 241, 244); align: center">
+		<th style="width:5%">日期</th>
+		<th style="width:5%">总后单据号</th>
+		<th style="width:5%">供应单位</th>
+		<th style="width:5%">换单号</th>				
+		<th style="width:5%">供应油库</th>				
+        <th style="width:2%">收入</th>
+		<th style="width:2%">支出</th>
+		<th style="width:2%">结存</th>
+		<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+	</table> -->
+	</div>
+</div>
+<div class="box">
+<!-- <div class="box-header with-border">
+换单明细
+</div> -->
+<div class="box-body with-border">
+<table id="diaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<thead>
+	<tr style="font-size: 10px; background-color: rgb(237, 241, 244); align: center">
+		<th style="width:4%">日期</th>
+		<th style="width:6%">单据号</th>
+		<th style="width:3%">供应单位</th>		
+		<th style="width:2%">汇总</th>			
+		<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</div>
+</div>    
+<script type='text/javascript' th:inline="javascript">
+
+$("#btn_submit").on('click',function(){
+	$("#btn_submit").attr('disabled',true);
+	var gongyingyouku=$("#gongyingyouku").val();
+	if(gongyingyouku=='all'){
+		alert('请选择存储油库');$("#btn_submit").attr('disabled',false);return;
+	}
+	var dateselect=$("#dateselect").val();
+	if(dateselect==''){
+		alert('请选择操作日期');$("#btn_submit").attr('disabled',false);return;
+	}	
+	var memo=$("#memo").val();
+	var oilsinputs=$("#oilsinput td input");
+	var oilvals=new Array();
+	
+	var counter=0;
+	var flag=0;
+	oilsinputs.each(function(){
+		var val=$(this).val();		
+		console.info(typeof val +" "+typeof limit[counter])
+		if(parseFloat(val)>430){		
+			flag=1;
+			alert(oils[counter].name + " 输入值: "+val+"大于最大值:430 ");
+			$(this).val('');
+			return;
+		}
+		oilvals.push($(this).val());
+		counter++;
+	});
+	if(flag==1){
+		$("#btn_submit").attr('disabled',false);
+		return;
+	}	
+	$.ajax({
+		url:'youliao_zigou/edit',
+		type:'post',
+		data:{'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'beizhu_sys':memo,'oils':oilvals},
+		success:function(data){
+			alert(data);
+			$("#btn_submit").attr('disabled',false);
+		},
+		error:function(data){
+			alert(data);
+			$("#btn_submit").attr('disabled',false);
+		}
+	});
+});
+
+var oils=[[${oils}]];
+var table;
+$("#gongyingyouku").on('change',function(){
+	var  gongyingyouku=$(this).val();
+	loaddata(gongyingyouku);
+})
+function loaddata(youku_name){
+	var columnList = [];	
+	columnList.push({"data": "riqi"});
+	columnList.push({"data": "danjuhao"});
+	columnList.push({"data": "youku"});
+	columnList.push({"data": "total"});
+	for(var i=0;i<oils.length;i++)
+		columnList.push({"data" : "youpins."+i,defaultContent : "0.0"});
+	table=$('#diaobodan_table').DataTable({	
+		//'pageLength': 6,
+		'bDestroy': 		true,  
+		'processing': 		true,
+		'searching' : 		false,
+		'lengthChange' : 	false,
+		"select": {
+   	        style: 'single',
+   	        info: false
+   	    },
+   	    "ordering": false, // 禁止排序		
+  		"ajax": {
+        	"url": "youku_sunhao/datas",
+        	"type": "Post",
+        	"data":{"gongyingyouku":youku_name}
+  		},
+  		"columns": columnList,  			
+		"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+		}    	
+	});	
+}
+$(function(){
+    loaddata("all");
+    $('#dateselect').datepicker({
+    	todayHighlight:true,    	
+    	keyboardNavigation:true,
+    	clearBtn:true,
+    	autoclose:true,
+    	language:'zh-Cn',
+    	format:'yyyy-mm-dd'
+    });    
+    /*$('#querydatestop').datepicker({
+    	todayHighlight:true,    	
+    	keyboardNavigation:true,
+    	clearBtn:true,
+    	autoclose:true,
+    	language:'zh-Cn',
+    	format:'yyyy-mm-dd'
+    });  */
+})
+</script>
+</body>
+</html>
