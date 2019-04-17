@@ -59,12 +59,18 @@ public interface DiaobodanMapper {
 			" and danjuhao=#{danjuhao} or huandanhao=#{danjuhao} </if> "+	*/		
 			"</where> order by kaidanriqi desc</script>")
 	public List<Diaobodan> queryDiaoboByWJyouku(String wjyoukus,String shougongdanwei,String niandu);
-	@Select("select * from jiangsu.diaobodan_record where fk_id=#{fk_id}")
+	@Select("select * from diaobodan_record@remote where fk_id=#{fk_id}")
 	public List<DiaobodanRecord> queryByRecord(int fk_id);
 	@Insert("insert into jiangsu.diaobodan (id,danjuhao,huandanhao,leixing,kaidanriqi,gongyingyouku,shougongdanwei,junqu_code,xiaoji,beizhu,niandu,biaozhi,caozuoyuan,caozuoriqi,caozuotime,beizhu_sys,dayin) values(#{id},#{danjuhao},#{huandanhao},#{leixing},#{kaidanriqi},#{gongyingyouku},#{shougongdanwei},#{junqu_code},#{xiaoji},#{beizhu},#{niandu},#{biaozhi},#{caozuoyuan},#{caozuoriqi},#{caozuotime},#{beizhu_sys},#{dayin})")
 	public int insertOne(Diaobodan obj);
 	@Select("select jiangsu.diaobodan_sequences.nextval from dual")
 	public int queryDiaobodanId();
 	@Select("select * from (select danjuhao from jiangsu.diaobodan where gongyingyouku=#{gongyingyouku} and (leixing =4 or leixing =5 or leixing=6) order by danjuhao desc) where rownum=1")
-	public String queryMaxDanjuhao(String gongyingyouku);	
+	public String queryMaxDanjuhao(String gongyingyouku);
+	@Select("<script> select a.*,(select bumen from jiangsu.depar_dictionary  where bumen_code=a.shougongdanwei) as danwei_name,(select youku from jiangsu.YOUKU_DICTIONARY t where youku_code=a.gongyingyouku) as youku_name from diaobodan@remote a "
+			+ "<where> a.leixing=2 and a.niandu=#{niandu} "
+			+ "<if test='\"all\"!=gongyingyouku'> "
+			+ "and gongyingyouku=#{gongyingyouku} </if> "
+			+ "</where> order by kaidanriqi desc </script>")
+	public List<Diaobodan> queryZG(String gongyingyouku,String niandu);
 }

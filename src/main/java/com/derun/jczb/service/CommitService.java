@@ -38,4 +38,6 @@ public interface CommitService {
 	String insertDiaoboDWWJ(Diaobodan diaobodan, Integer[] oils);
 	List<Diaobodan> queryDiaoboWjIncomePayment(String wjyoukus,String shougongdanwei,String niandu);
 	int saveZdg(Zhuandaigong obj);
+	List<Diaobodan> queryZigou(String gongyingyouku,String niandu);
+	String insertZiGou(Diaobodan diaobodan, Integer[] oils);
 }

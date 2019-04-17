@@ -56,6 +56,61 @@ public class CommitServiceImpl implements CommitService{
 	public List<DeparDictionary>  queryDepartInfo(){
 		return departInfoMapper.queryBy();
 	}
+	/* 查询调拨单 类型 2
+	 * 
+	 * 
+	 */
+	public List<Diaobodan> queryZigou(String gongyingyouku,String niandu) {
+		List<Diaobodan> diaobodans=diaobodanMapper.queryZG(gongyingyouku,niandu);		
+		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
+		for(Diaobodan obj:diaobodans){
+			List<DiaobodanRecord> objs=diaobodanMapper.queryByRecord(obj.getId().intValue());
+			obj.setShiwu(new ArrayList<String>());
+			double total=0;
+			for(OilDictionary oil:oils) {
+				int flag=0;
+				for(DiaobodanRecord record:objs) {
+				if(oil.getCode()==record.getYoupin_code()) {
+					total+=record.getZigou();
+					obj.getShiwu().add(record.getZigou().toString());
+					flag=1;
+					break;
+				}}
+				if(flag==1) flag=0;
+				else
+					obj.getShiwu().add("0.0");
+			}
+			obj.setIncome(total);
+		}
+		//计算汇总
+		double income=0;
+		double payment=0;
+		double balance=0;
+		double[] oilbalance= new double[oils.size()];
+		int index=0;
+		for(Diaobodan obj:diaobodans){
+			income+=obj.getIncome();
+			for(String oilval:obj.getShiwu()) {
+				double value=Double.parseDouble(oilval);
+				oilbalance[index]+=value;
+				index++;
+			}
+			index=0;
+		}
+		balance=income-payment;
+		Diaobodan total=new Diaobodan();
+		List<String> shiwu=new ArrayList<String>();
+		total.setKaidanriqi("合  计");
+		total.setIncome(income);
+		total.setPayment(payment);
+		total.setBalance(balance);
+		for(double val:oilbalance) {
+			shiwu.add(String.valueOf(val));
+		}
+		total.setShiwu(shiwu);
+		diaobodans.add(0,total);
+		return diaobodans;
+	}
 	/* 查询调拨单 类型 1 总后调拨  3 本级换单 
 	 * (non-Javadoc)
 	 * @see com.derun.jczb.service.CommitService#queryDiaobodanIncomePayment(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
@@ -452,5 +507,72 @@ public class CommitServiceImpl implements CommitService{
 		diaobodans.add(0,total);
 		return diaobodans;
 	}
-	
+	/**
+	 *   插入自购记录
+	 */
+	@Transactional(rollbackFor=SQLException.class,propagation=Propagation.REQUIRED)
+	public String insertZiGou(Diaobodan diaobodan, Integer[] oils)  {
+		List<OilDictionary> oilinfo=queryByOil("1");
+		diaobodan.setCaozuoriqi(DataTypeConverter.getDate());
+		diaobodan.setCaozuotime(DataTypeConverter.getTime());
+		//String name=youkuDictionaryMapper.queryNameByCode(diaobodan.getGongyingyouku());
+		//diaobodan.setBeizhu_sys();
+		//diaobodan.setDayin(0l);
+		//diaobodan.setShougongdanwei(dbd.getShougongdanwei());
+		//diaobodan .setJunqu_code(dbd.getJunqu_code());
+		diaobodan.setBeizhu("");
+		diaobodan.setLeixing(2l);	//自购
+		diaobodan.setBiaozhi(0l);
+		diaobodan.setDayin(0l);
+		diaobodan.setJz(0l);
+		diaobodan.setDanjuhao(zgDJH(diaobodan.getGongyingyouku()));
+		diaobodan.setHuandanhao("");
+		diaobodan.setShougongdanwei("");
+		diaobodan.setJunqu_code("");
+		//diaobodan.setCaozuoyuan("测试");
+		diaobodan.setNiandu(DataTypeConverter.getIntYear());
+		double total=0;
+		for(Integer obj:oils) {
+			if(null!=obj) {	
+				total+=obj;
+			}
+		}
+		diaobodan.setXiaoji(total);
+		long id=diaobodanMapper.queryDiaobodanId();
+		diaobodan.setId(id);
+		diaobodan.setCaozuoyuan("");
+		diaobodanMapper.insertOne(diaobodan);
+		int index=0;
+		for(Integer obj:oils) {
+			if(null!=obj) {				
+				DiaobodanRecord record=new DiaobodanRecord();
+				record.setFk_id(id);
+				record.setYoupin_code(oilinfo.get(index).getCode());
+				record.setShiwu((double)obj);				
+				diaobodanRecordMapper.insertOne(record);
+			}
+			index++;
+		}
+		return "success";
+	}
+	/**
+	 *  计算转代供记录文件号
+	 * @param sg_danwei
+	 * @return
+	 */
+	private String zgDJH(String gongyingyouku) {		
+		StringBuilder  idStr=new StringBuilder();
+		String wenjianhao=zhuandaigongMapper.queryWjhBy(gongyingyouku, 2019, 2);		
+		if(null==wenjianhao) {
+			idStr.append("自");
+			idStr.append(DataTypeConverter.getIntYear()%100);
+			idStr.append(gongyingyouku.substring(0, 2));
+			idStr.append("0001");
+			return idStr.toString();
+		}
+		int counter=Integer.parseInt(wenjianhao.substring(5,9))+1;
+		idStr.append(wenjianhao.substring(0,5));
+		idStr.append(String.format("%04d", counter));				
+		return idStr.toString();
+	}	
 }
