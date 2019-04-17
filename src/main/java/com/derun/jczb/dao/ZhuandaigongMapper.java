@@ -20,4 +20,6 @@ public interface ZhuandaigongMapper {
 	public int insertOne(Zhuandaigong obj);
 	@Select("select * from jiangsu.zhuandaigong  where sg_danwei=#{sg_danwei} and niandu=#{niandu} order by riqi desc,id")
 	public List<Zhuandaigong> queryTotalSgBy(String sg_danwei,int niandu);
+	@Select("select max(danjuhao) from jiangsu.diaobodan  where niandu=#{niandu} and leixing=2")
+	public String queryZGWjhBy(int niandu);
 }

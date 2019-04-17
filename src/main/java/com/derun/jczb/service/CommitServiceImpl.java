@@ -562,7 +562,7 @@ public class CommitServiceImpl implements CommitService{
 	 */
 	private String zgDJH(String gongyingyouku) {		
 		StringBuilder  idStr=new StringBuilder();
-		String wenjianhao=zhuandaigongMapper.queryWjhBy(gongyingyouku, 2019, 2);		
+		String wenjianhao=zhuandaigongMapper.queryZGWjhBy(2019);		
 		if(null==wenjianhao) {
 			idStr.append("自");
 			idStr.append(DataTypeConverter.getIntYear()%100);
