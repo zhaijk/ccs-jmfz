@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.derun.jczb.dao.DepartDictionaryMapper;
 import com.derun.jczb.dao.DiaobodanMapper;
@@ -577,70 +578,5 @@ public class CommitServiceImpl implements CommitService{
 		idStr.append(String.format("%04d", counter));				
 		return idStr.toString();
 	}
-	/**
-	 *   计算油库损耗文件号
-	 * @param sg_danwei
-	 * @return
-	 */
-	private String ykshDJH(String gongyingyouku) {		
-		StringBuilder  idStr=new StringBuilder();
-		String wenjianhao=zhuandaigongMapper.queryZGWjhBy(2019);		
-		if(null==wenjianhao) {
-			idStr.append("耗");
-			idStr.append(DataTypeConverter.getIntYear()%100);
-			idStr.append(gongyingyouku.substring(0, 2));
-			idStr.append("0000001");
-			return idStr.toString();
-		}
-		int counter=Integer.parseInt(wenjianhao.substring(5,12))+1;
-		idStr.append(wenjianhao.substring(0,5));
-		idStr.append(String.format("%04d", counter));				
-		return idStr.toString();
-	}
-	/* 查询油库损耗 
-	 * 
-	 *  
-	 */
-	@Autowired
-	private YoukuSunhaoMapper youkuSunhaoMapper;
-	public List<YouKuSunHao> queryYoukuSunhao(String gongyingyouku,String niandu) {
-		List<YouKuSunHao> ykshs=youkuSunhaoMapper.queryBy(gongyingyouku,niandu);		
-		List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
-		
-		for(YouKuSunHao yksh:ykshs){			
-			List<YouKuSunHao> objs=youkuSunhaoMapper.queryByDjh(yksh.getDanjuhao());
-			List<String> youpins=new ArrayList<String>();
-			double total=0;
-			for(OilDictionary oil:oils) {
-				int flag=0;
-				for(YouKuSunHao sh:objs) {
-					if(sh.getOil()==oil.getCode().intValue()) {
-						total+=sh.getYoupin();
-						youpins.add(String.valueOf(sh.getYoupin()));
-						flag=1;						
-					}
-				}
-				if(flag==0) youpins.add("0.0");				
-			}
-			yksh.setYoupins(youpins);
-			yksh.setTotal(total);
-		}		
-		YouKuSunHao total=new YouKuSunHao();
-		total.setDanjuhao("合计");
-		total.setYoupins(ykshs.get(0).getYoupins());
-		double t=0;
-		for(int i=1;i<ykshs.size();i++){
-			List<String> objs=ykshs.get(i).getYoupins();
-			int counter=0;
-			for(String val:total.getYoupins()) {				
-				Double result=Double.parseDouble(objs.get(counter))+Double.parseDouble(val);
-				t=t+result;
-				total.getYoupins().set(counter, result.toString());
-				counter++;
-			}
-		}
-		total.setTotal(t);
-		//ykshs.add(0,total);
-		return ykshs;
-	}
+	
 }

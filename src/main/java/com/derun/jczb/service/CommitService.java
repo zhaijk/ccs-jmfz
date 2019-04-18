@@ -41,5 +41,5 @@ public interface CommitService {
 	int saveZdg(Zhuandaigong obj);
 	List<Diaobodan> queryZigou(String gongyingyouku,String niandu);
 	String insertZiGou(Diaobodan diaobodan, Integer[] oils);
-	public List<YouKuSunHao> queryYoukuSunhao(String gongyingyouku,String niandu);
+
 }

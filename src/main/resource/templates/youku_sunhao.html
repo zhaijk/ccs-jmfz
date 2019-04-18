@@ -90,30 +90,13 @@
 	</td>
 	</tr>
 	</table>
-	<table style="width:100%" id="table_oils">
+	<table style="width:100%">
 	<tr id="oilsinput">
 	<td th:each="obj:${oils}">
     	<input type="text" class="input-mini form-control" th:placeholder="${obj.name}">
 	</td>
 	</tr>
-	</table>
-	<!-- <table id="sjdiaobodan_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
-	<thead>
-	<tr style="background-color: rgb(237, 241, 244); align: center">
-		<th style="width:5%">日期</th>
-		<th style="width:5%">总后单据号</th>
-		<th style="width:5%">供应单位</th>
-		<th style="width:5%">换单号</th>				
-		<th style="width:5%">供应油库</th>				
-        <th style="width:2%">收入</th>
-		<th style="width:2%">支出</th>
-		<th style="width:2%">结存</th>
-		<th style="width:5%" th:each="obj:${oils}" th:text="${obj.name}"></th>
-	</tr>
-	</thead>
-	<tbody>
-	</tbody>
-	</table> -->
+	</table>	
 	</div>
 </div>
 <div class="box">
@@ -143,20 +126,17 @@ $("#btn_submit").on('click',function(){
 	var gongyingyouku=$("#gongyingyouku").val();
 	if(gongyingyouku=='all'){
 		alert('请选择存储油库');$("#btn_submit").attr('disabled',false);return;
-	}
-	var dateselect=$("#dateselect").val();
-	if(dateselect==''){
-		alert('请选择操作日期');$("#btn_submit").attr('disabled',false);return;
 	}	
-	var memo=$("#memo").val();
 	var oilsinputs=$("#oilsinput td input");
 	var oilvals=new Array();
 	
 	var counter=0;
 	var flag=0;
+	var total=0;
 	oilsinputs.each(function(){
 		var val=$(this).val();		
-		console.info(typeof val +" "+typeof limit[counter])
+		//console.info(typeof val +" "+typeof limit[counter])
+		total+=val;
 		if(parseFloat(val)>430){		
 			flag=1;
 			alert(oils[counter].name + " 输入值: "+val+"大于最大值:430 ");
@@ -170,12 +150,21 @@ $("#btn_submit").on('click',function(){
 		$("#btn_submit").attr('disabled',false);
 		return;
 	}	
+	if(total==0){
+		alert('请输入有效值');
+		$("#btn_submit").attr('disabled',false);
+		return;
+	}	
 	$.ajax({
-		url:'youliao_zigou/edit',
+		url:'youku_sunhao/edit',
 		type:'post',
-		data:{'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'beizhu_sys':memo,'oils':oilvals},
+		data:{'youku':gongyingyouku,'oils':oilvals},
 		success:function(data){
 			alert(data);
+			$("#oilsinput td input").each(function(){
+				$(this).val("");
+			});
+			$("#gongyingyouku").trigger('change');
 			$("#btn_submit").attr('disabled',false);
 		},
 		error:function(data){
@@ -236,23 +225,7 @@ function loaddata(youku_name){
 	});	
 }
 $(function(){
-    loaddata("all");
-    $('#dateselect').datepicker({
-    	todayHighlight:true,    	
-    	keyboardNavigation:true,
-    	clearBtn:true,
-    	autoclose:true,
-    	language:'zh-Cn',
-    	format:'yyyy-mm-dd'
-    });    
-    /*$('#querydatestop').datepicker({
-    	todayHighlight:true,    	
-    	keyboardNavigation:true,
-    	clearBtn:true,
-    	autoclose:true,
-    	language:'zh-Cn',
-    	format:'yyyy-mm-dd'
-    });  */
+    loaddata("all");   
 })
 </script>
 </body>
