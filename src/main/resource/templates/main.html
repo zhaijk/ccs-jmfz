@@ -42,7 +42,9 @@
 <script type="text/javascript">		
 function loadhtml(url){	
 	$(".content").html("<i class='fa fa-refresh fa-spin'></i>");
-	$(".content").load(url);
+	$(".content").load(url,function(response,status,xhr){
+		$(".content").html(response);
+	});
 }
 //loadhtml("maincontent.htm");
 </script>
