@@ -17,13 +17,15 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 public class HttpsConfig {
 	
-	 @Value("${server.ssl.key-store}")
+
+	 @Value("${https.ssl.key-store}")
 	 private String path;
-	 @Value("${server.ssl.key-store-password}")
+	 @Value("${https.ssl.key-store-password}")
 	 private String password;
-	 @Value("${server.port}")
+	 @Value("${https.port}")
 	 private int port;
-	 
+	 @Value("${http.port}")
+	 private int http_port;	 
 	    /**
 	     * 通过构造工厂造1个jetty
 	     */
@@ -44,7 +46,8 @@ public class HttpsConfig {
 	 
 	            // 添加HTTP配置
 	            ServerConnector connector = new ServerConnector(server);
-	            connector.setPort(8888);
+//	            System.out.println("端口:  "+http_port);
+	            connector.setPort(http_port);
 	 
 	            // 添加HTTPS配置
 	            SslContextFactory sslContextFactory = new SslContextFactory();

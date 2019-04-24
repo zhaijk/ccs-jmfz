@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class CustomRealm extends AuthorizingRealm {
 
 	 
-    private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(CustomRealm.class);
     /**
      * 获取身份验证信息
      * Shiro中，最终是通过 Realm 来获取应用程序中的用户、角色及权限信息的。

@@ -1,4 +1,6 @@
-server:
+http:
+  port: 8081
+https:
   port: 443  
   ssl:
     key-store: keystore.p12
