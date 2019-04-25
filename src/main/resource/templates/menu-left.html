@@ -1,0 +1,196 @@
+<!-- Left side column. contains the sidebar -->
+  <div class="main-header">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+    </a>
+ 
+  </div>
+  <aside class="main-sidebar">   
+    <!-- sidebar: style can be found in sidebar.less -->
+    <!-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="text"></a> -->
+    <section class="sidebar">      
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">          
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>指标管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('quota_assign_managment.htm');"><i class="fa fa-square-o"></i>指标分配</a></li>
+            <li><a href="#" onclick="loadhtml('quota_fixed_managment.htm');"><i class="fa fa-square-o"></i>本级调整</a></li>
+            <!-- <li><a href="#" onclick="loadhtml('quota_assign_managment.htm');"><i class="fa fa-square-o"></i>上级调整</a></li>
+            <li><a href="#" onclick="loadhtml('quota_assign_managment.htm');"><i class="fa fa-square-o"></i>上级转代供通知</a></li> -->
+          </ul>
+        </li>
+        <li class="treeview ">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>油料管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('youliao_huandan.htm');"><i class="fa fa-circle-o"></i>解放军换单</a></li>
+            <li><a href="#" onclick="loadhtml('youliao_zigou.htm');"><i class="fa fa-circle-o"></i>自购实物油料</a></li>
+            <li><a href="#" onclick="loadhtml('youku_sunhao.htm');"><i class="fa fa-circle-o"></i>油库损耗</a></li> 
+          </ul>
+        </li>
+        <li class="treeview ">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>油料调拨</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('youliao_diaobo.htm');"><i class="fa fa-circle-o"></i>解放军油库</a></li>
+            <li><a href="#" onclick="loadhtml('wjyouliao_diaobo.htm');"><i class="fa fa-circle-o"></i>武警油库</a></li>
+            <li><a href="#" onclick="loadhtml('zdgyouliao_diaobo.htm');"><i class="fa fa-circle-o"></i>转代供指标调拨</a></li> 
+          </ul>
+        </li>
+        <li class="treeview ">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>决策系统管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('supply_department_manager.htm');"><i class="fa fa-square-o"></i>单位定义</a></li>
+            <li><a href="#" onclick="loadhtml('youku_youliao_manager.htm');"><i class="fa fa-square-o"></i>油库定义</a></li>
+            
+          </ul>
+        </li>
+        <li>
+          <a href="#" onclick="loadhtml('zm.htm');">
+            <i class="fa fa-th"></i> <span>账目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            
+          </a>
+        </li>
+         <li>
+          <a href="#" onclick="loadhtml('zm.htm');">
+            <i class="fa fa-th"></i> <span>报表管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>指标基础信息管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('depart-manager.htm');"><i class="fa fa-square-o"></i>部门信息管理</a></li>           
+            <li><a href="#" onclick="loadhtml('car-manager.htm');"><i class="fa fa-square-o"></i>车辆信息管理</a></li>
+            <li><a href="#" onclick="loadhtml('car-type-manager.htm');"><i class="fa fa-square-o"></i>车辆类型定义</a></li>
+            <li><a href="#" onclick="loadhtml('gas-station-manager.htm');"><i class="fa fa-square-o"></i>加油站定义</a></li>
+            <li><a href="#" onclick="loadhtml('oil-type-manager.htm');"><i class="fa fa-square-o"></i>油品定义</a></li>
+          </ul>
+        </li>
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>油料管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('card-trade-nonIC-manager.htm');"><i class="fa fa-square-o"></i>非IC卡消耗管理</a></li>           
+            <li><a href="#" onclick="loadhtml('gasstation-loss-manager.htm');"><i class="fa fa-square-o"></i>加油站损耗录入</a></li>
+           <!--  <li><a href="#" onclick="loadhtml('car-type-manager.htm');"><i class="fa fa-square-o"></i>车辆类型定义</a></li>
+            <li><a href="#" onclick="loadhtml('gas-station-manager.htm');"><i class="fa fa-square-o"></i>加油站定义</a></li>
+            <li><a href="#" onclick="loadhtml('oil-type-manager.htm');"><i class="fa fa-square-o"></i>油品定义</a></li> -->
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>指标发放</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a  href="#" onclick="loadhtml('quota-manager.htm');"><i class="fa fa-square-o"></i>指标转换</a></li>
+            <li><a  href="#" onclick="loadhtml('quota-shiwuzhuanhuan.htm');"><i class="fa fa-square-o"></i>实物指标转换</a></li>
+            <li><a  href="#" onclick="loadhtml('quota-zhuangongzhuanhuan.htm');"><i class="fa fa-square-o"></i>转代供指标转换</a></li>
+            <li><a  href="#" onclick="loadhtml('zigoushiwuyouliao.htm');"><i class="fa fa-square-o"></i>自购实物油料</a></li>
+            <li><a  href="#" onclick="loadhtml('department-quota-provide.htm');"><i class="fa fa-square-o"></i>部门指标发放</a></li>
+            <li><a  href="#" onclick="loadhtml('card_quota_provide.htm');"><i class="fa fa-square-o"></i>单卡指标发放</a></li>
+            <li><a  href="#" onclick="loadhtml('fixed_quota_provide.htm');"><i class="fa fa-square-o"></i>固定指标发放</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-table"></i> <span>加油卡管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a  href="#" onclick="loadhtml('card_operation_init.htm');"><i class="fa fa-square-o"></i>卡操作</a></li>
+            <li><a  href="#" onclick="loadhtml('card_operation_init.htm');"><i class="fa fa-square-o"></i>卡发行</a></li>
+            <li><a  href="#" onclick="loadhtml('card_operation_init.htm');"><i class="fa fa-square-o"></i>圈存/解灰</a></li>
+            <li><a  href="#" onclick="loadhtml('card_operation_init.htm');"><i class="fa fa-square-o"></i>卡信息修改</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar"></i> <span>账目管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('depart_record_query.htm');"><i class="fa fa-square-o"></i>部门指标发放查询</a></li>
+            <li><a href="#" onclick="loadhtml('card_quota_query.htm');"><i class="fa fa-square-o"></i>IC卡指标查询</a></li>
+            <li><a href="#" onclick="loadhtml('card_trade_query.htm');"><i class="fa fa-square-o"></i>本单位卡加油记录</a></li>
+            <li><a href="#" onclick="loadhtml('card_trade_local_query.htm');"><i class="fa fa-square-o"></i>本单位卡加油对帐</a></li>
+            <li><a href="#" onclick="loadhtml('card_trade_nolocal_query.htm');"><i class="fa fa-square-o"></i>代供卡加油记录</a></li>
+            <li><a href="#" onclick="loadhtml('card_trade_supply_detail.htm');"><i class="fa fa-square-o"></i>受供油料明细查询</a></li>
+            <li><a href="#" onclick="loadhtml('card_income_payment_query.htm');"><i class="fa fa-square-o"></i>单卡收支明细查询</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-envelope"></i> <span>报表管理</span> 
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>          
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="loadhtml('quota_total_report.htm');"><i class="fa fa-square-o"></i>油料指标统计表</a></li>
+            <li><a href="#" onclick="loadhtml('oil_quota_total_report.htm');"><i class="fa fa-square-o"></i>实物油料指标统计表</a></li>
+            <li><a href="#" onclick="loadhtml('price_quota_total_report.htm');"><i class="fa fa-square-o"></i>价拨油料经费汇总表</a></li>
+            <li><a href="#" onclick="loadhtml('oil_trade_total_report.htm');"><i class="fa fa-square-o"></i>实物油料消耗统计表</a></li>
+            <li><a href="#" onclick="loadhtml('price_trade_total_report.htm');"><i class="fa fa-square-o"></i>价拨油料消耗统计表</a></li>
+            <li><a href="#" onclick="loadhtml('oil_trade_totals_report.htm');"><i class="fa fa-square-o"></i>实物油料消耗汇总表</a></li>
+            <li><a href="#" onclick="loadhtml('price_trade_totals_report.htm');"><i class="fa fa-square-o"></i>价拨油料消耗汇总表</a></li>
+            <li><a href="#" onclick="loadhtml('oil_noquota_total_report.htm');"><i class="fa fa-square-o"></i>自购主油收入统计表</a></li>
+            <li><a href="#" onclick="loadhtml('provide_trade_total_report.htm');"><i class="fa fa-square-o"></i>代供油料统计表</a></li>
+            <li><a href="#" onclick="loadhtml('provided_trade_total_report.htm');"><i class="fa fa-square-o"></i>受供油料统计表</a></li>
+            <li><a href="#" onclick="loadhtml('provided_trade_totals_report.htm');"><i class="fa fa-square-o"></i>受供油料汇总表</a></li>
+            <li><a href="#" onclick="loadhtml('card_info_total_report.htm');"><i class="fa fa-square-o"></i>加油卡统计表</a></li>
+            <li><a href="#" onclick="loadhtml('quota_fixed_totals_report.htm');"><i class="fa fa-square-o"></i>固定指标发放情况表</a></li>            
+          </ul>
+        </li>
+        <li><a href="#" class="sidebar-toggle" data-toggle="push-menu" role="text"></a></li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
