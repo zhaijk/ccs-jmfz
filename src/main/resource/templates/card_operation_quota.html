@@ -3,112 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name=renderer  content=ie-stand>
-  <title>卡操作</title>
+  <title>圈存</title>
   <th:block th:replace="head-css.html"></th:block>
 </head>
-<body>	
-<div class="row">
-<div class="col-md-6">
-<div class="box">
-<div class="box-header with-border">
-卡初始化
-</div> 
-<div class="box-body with-border">
-<table style="width:100%">
-    <tr>
-    <td style="width:40%">	
-    <label class="radio-inline">
-        <input type="radio" name="card_type"  value="0" checked>实物卡
-    </label>
-    
-    <label class="radio-inline">
-        <input type="radio" name="card_type"  value="1">价拨卡
-    </label>
-    <label class="radio-inline">
-        <input type="radio" name="card_type"  value="2">机动卡
-    </label>   
-    </td>
-    <td style="width:20%"><input class="form-control" type="text" id="card_no" value="" placeholder="请输入卡号" /></td>
-    <td style="width:20%"><input class="form-control" type="text" id="card_password" value="0000" placeholder="请输密码" disabled/></td>
-    <td style="width:20%"><button id="btn_init_card" class="btn btn-block btn-info"  >初始化卡</button></td>
-    </tr>
-</table>
-</div>
-</div>
-</div>
-<div class="col-md-4">
+<body>
 <div class="box"> 
 <div class="box-header with-border">
-卡清除
-</div>
-<div class="box-body with-border">
-<table style="width:100%"><tr>
-    <td style="width:30%"><button id="btn_clear_read_card" class="btn btn-success btn-block" >读卡</button></td>
-    <td style="width:40%"><input type="text" class="form-control" disabled id="cardno_clear" value="" placeholder="卡号"/></td>
-    <td style="width:30%"><button id="btn_clear_card" class="btn btn-danger btn-block" >清卡</button></td>
-</tr></table>
-</div>
-</div>
-</div>
-<div class="col-md-2">
-<div class="box"> 
-<div class="box-body with-border">
-	读卡器驱动信息
-    <object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-md-6">
-<div class="box"> 
-<div class="box-header with-border">
-卡有效
-</div>
-<div class="box-body with-border">
-<table>
-    <tr>
-        <td style="width:20%">
-            <button id="btn_valid_read_card" class="btn btn-success btn-block" >读卡</button>
-        </td>
-        <td><input type="text" class="form-control" disabled id="cardno_vaild" value="" placeholder="卡号"/></td>
-        <td><input type="text" class="form-control" disabled id="flag_valid" value="" placeholder="有效 标志"/></td>
-        <td style="width:20%">
-           <button id="btn_valid_card"  class="btn btn-success btn-info" >修改卡有效</button>
-        </td>
-     </tr>
-</table>
-</div>
-</div>
-</div>
-<div class="col-md-6">
-<div class="box"> 
-<div class="box-header with-border">
-卡有效期
-</div>
-<div class="box-body with-border">
-<table>
-<tr>
-<td style="width:20%">
-<button id="btn_valid_date_read_card" class="btn btn-success btn-block" >读卡</button>
-</td>
-<td><input type="text" class="form-control" disabled id="cardno_date" value="" placeholder="卡号"/></td>
-<td><input type="text" class="form-control" disabled id="valid_date"  value="" placeholder="有效期"/></td>
-<td style="width:20%">
-<button id="btn_valid_date_card" class="btn btn-success btn-info" >修改卡有效期</button>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
 
-<div class="box"> 
-<div class="box-header with-border">
-卡解灰
 <input id="btn_read_gray_card" style="width:10%" type="button" class="btn btn-success " value="读卡"/>
-<input id="btn_gray_card" style="width:10%" type="button" class="btn btn-info " value="解灰 " disabled/>
+<input id="btn_gray_card" style="width:10%" type="button" class="btn btn-info " value="圈存" disabled/>
 </div>
 <div class="box-body with-border">
 <div class="row">
@@ -134,30 +37,34 @@
 </table>
 </div>
 <div class="col-md-6">
-<table class="table table-bordered   table-striped table-hover" >
-	<tr class="info"><td colspan="6" align="center">卡记灰信息</td></tr>
-	<tr class="info">
-		<td width="15%">卡号</td>
-		<td ></td>
-		<td width="15%">车牌号</td>
-		<td ></td>
-		<td width="15%">所属部门</td>
-		<td ></td>
-	</tr>
-	<tr class="info">
-		<td>油品</td>
-		<td>&nbsp;</td>
-		<td>卡余额</td>
-		<td>&nbsp;</td>
-		<td>卡状态</td>
-		<td>&nbsp;</td>
-	</tr>
+<object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
+</div>
+</div>
+</div>
+</div>
+<div class="box">
+<div class="box-body">
+<table id="depart_infos" class="table table-hover  table-bordered table-condensed">
+	<thead>
+		<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+				<th style="width: 6%">序号</th>
+				<th style="width: 12%">卡号</th>
+				<th style="width: 12%">车牌号</th>
+				<th style="width: 8%">发放类型</th>
+				<th style="width: 8%">油品类型</th>
+				<th style="width: 8%">指标类型</th>
+				<th style="width: 8%">发放量</th>
+				<th style="width: 8%">发放日期</th>
+				<th style="width: 8%">发放次数</th>
+				<th style="width: 8%">写卡标志</th>
+				<th style="width: 8%">操作员</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
 </table>
 </div>
 </div>
-</div>
-</div>
-
 <th:block th:replace="head-js.html"></th:block>
 <script type='text/javascript' th:inline="javascript">
 	$("#btn_init_card").on('click',function(){

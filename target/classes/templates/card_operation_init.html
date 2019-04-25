@@ -8,7 +8,7 @@
 </head>
 <body>	
 <div class="row">
-<div class="col-md-7">
+<div class="col-md-6">
 <div class="box">
 <div class="box-header with-border">
 卡初始化
@@ -29,28 +29,32 @@
     </label>   
     </td>
     <td style="width:20%"><input class="form-control" type="text" id="card_no" value="" placeholder="请输入卡号" /></td>
-    <td style="width:20%"><input class="form-control" type="text" id="card_password" value="0000" placeholder="请输密码"/></td>
+    <td style="width:20%"><input class="form-control" type="text" id="card_password" value="0000" placeholder="请输密码" disabled/></td>
     <td style="width:20%"><button id="btn_init_card" class="btn btn-block btn-info"  >初始化卡</button></td>
     </tr>
 </table>
 </div>
 </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-4">
 <div class="box"> 
 <div class="box-header with-border">
 卡清除
 </div>
 <div class="box-body with-border">
-    <button style="width:45%" class="btn btn-success" >读卡</button>
-    <button style="width:45%" class="btn btn-danger" >卡清除</button>
+<table style="width:100%"><tr>
+    <td style="width:30%"><button id="btn_clear_read_card" class="btn btn-success btn-block" >读卡</button></td>
+    <td style="width:40%"><input type="text" class="form-control" disabled id="cardno_clear" value="" placeholder="卡号"/></td>
+    <td style="width:30%"><button id="btn_clear_card" class="btn btn-danger btn-block" >清卡</button></td>
+</tr></table>
 </div>
 </div>
 </div>
 <div class="col-md-2">
 <div class="box"> 
 <div class="box-body with-border">
-    <object id="card"  CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
+	读卡器驱动信息
+    <object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
 </div>
 </div>
 </div>
@@ -65,12 +69,12 @@
 <table>
     <tr>
         <td style="width:20%">
-            <button class="btn btn-success btn-block" onClick="card.Conn();document.getElementById('w_25').value = card.ReadCardInfo(25);card.DisConn();">读卡</button>
+            <button id="btn_valid_read_card" class="btn btn-success btn-block" >读卡</button>
         </td>
-        <td><input type="text" class="form-control" name="card_no" value="" placeholder="卡号"/></td>
-        <td><input type="text" class="form-control" name="card_no" value="" placeholder="有效 标志"/></td>
+        <td><input type="text" class="form-control" disabled id="cardno_vaild" value="" placeholder="卡号"/></td>
+        <td><input type="text" class="form-control" disabled id="flag_valid" value="" placeholder="有效 标志"/></td>
         <td style="width:20%">
-           <button class="btn btn-success btn-info" >修改卡有效</button>
+           <button id="btn_valid_card"  class="btn btn-success btn-info" >修改卡有效</button>
         </td>
      </tr>
 </table>
@@ -86,12 +90,12 @@
 <table>
 <tr>
 <td style="width:20%">
-<button class="btn btn-success btn-block" >读卡</button>
+<button id="btn_valid_date_read_card" class="btn btn-success btn-block" >读卡</button>
 </td>
-<td><input type="text" class="form-control" name="card_no" value="" placeholder="卡号"/></td>
-<td><input type="text" class="form-control" name="card_no" value="" placeholder="有效期"/></td>
+<td><input type="text" class="form-control" disabled id="cardno_date" value="" placeholder="卡号"/></td>
+<td><input type="text" class="form-control" disabled id="valid_date"  value="" placeholder="有效期"/></td>
 <td style="width:20%">
-<button class="btn btn-success btn-info" >修改卡有效期</button>
+<button id="btn_valid_date_card" class="btn btn-success btn-info" >修改卡有效期</button>
 </td>
 </tr>
 </table>
@@ -99,62 +103,48 @@
 </div>
 </div>
 </div>
-<!-- <div class="row">
-<div class="col-md-12">
+
 <div class="box"> 
 <div class="box-header with-border">
 卡解灰
-<input type="button" class="btn btn-info" value="读卡" id="btn1" onmouseover="add('btn1',h_10_3_1);" onmouseout="remove(h_10_3_1);" onclick="if(OpenCard(card.Conn())){readCard();if(document.getElementById('c_6').value==''){alert('请放置IC卡');card.DisConn();}else{ajaxrefesh('search','/iccard/cardjiehui.do?method=view&mileage='+document.getElementById('c_23').value+'&cardcode='+document.getElementById('c_6').value.replace(/ /g,''));}}"/>
-<input type="button" class="btn btn-success" value=" 解灰 " disabled/>
+<input id="btn_read_gray_card" style="width:10%" type="button" class="btn btn-success " value="读卡"/>
+<input id="btn_gray_card" style="width:10%" type="button" class="btn btn-info " value="解灰 " disabled/>
 </div>
 <div class="box-body with-border">
-<table border="1" width="100%" cellspacing="0" cellpadding="0">
-	<tr>
-		<td>卡号</td>
-		<td><input type="text" id="c_6" class="inputtxt" readonly/></td>
-		<td>卡类型</td>
-		<td><input type="text" id="c_2" class="inputtxt" readonly/></td>
-		<td>指标类型</td>
-		<td><input type="text" id="Gtype" class="inputtxt" readonly/></td>
-	</tr>
-	<tr>
-		<td>车牌号</td>
-		<td><input type="text" id="c_9" class="inputtxt" readonly/></td>
-		<td>车类型</td>
-		<td><input type="text" id="c_10" class="inputtxt" readonly/></td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>有效标志</td>
-		<td><input type="text" id="c_4" class="inputtxt" readonly/></td>
-		<td>有效期</td>
-		<td><input type="text" id="c_3" class="inputtxt" readonly/></td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>记灰标志</td>
-		<td><input type="text" id="c_5" class="inputtxt" readonly/></td>
-		<td>记灰日期</td>
-		<td><input type="text" id="c_22" class="inputtxt" readonly/></td>
-		<td>记灰时间</td>
-		<td><input type="text" id="5" class="inputtxt" readonly/></td>
+<div class="row">
+<div class="col-md-6">
+<table class="table table-bordered   table-striped table-hover" >
+	<tr class="success"><td colspan="6" align="center">卡信息</td></tr>
+	<tr class="success">
+		<td style="width:15%">卡号</td>
+		<td><span id="cardcode"></span></td>
+		<td style="width:15%">卡类型</td>
+		<td><span id="cardtype"></span></td>
+		<td style="width:15%">车辆号牌</td>
+		<td><span id="carno"></span></td>
+	</tr>	
+	<tr class="success">
+		<td style="width:15%">油品类型</td>
+		<td><span id="oiltype"></span></td>
+		<td style="width:15%">记灰标志</td>
+		<td><span id="grayflag"></span></td>
+		<td style="width:15%">记灰日期</td>
+		<td><span id="graydate"></span></td>		
 	</tr>
 </table>
-
-<div id="search"> 
-<table border="1" class="table table-border">
-	<tr>卡记灰信息</tr>
-	<tr>
-		<td width="13%">卡号</td>
-		<td width="20%">&nbsp;</td>
-		<td width="13%">车牌号</td>
-		<td width="20%">&nbsp;</td>
-		<td width="13%">所属部门</td>
-		<td width="21%">&nbsp;</td>
+</div>
+<div class="col-md-6">
+<table class="table table-bordered   table-striped table-hover" >
+	<tr class="info"><td colspan="6" align="center">卡记灰信息</td></tr>
+	<tr class="info">
+		<td width="15%">卡号</td>
+		<td ></td>
+		<td width="15%">车牌号</td>
+		<td ></td>
+		<td width="15%">所属部门</td>
+		<td ></td>
 	</tr>
-	<tr>
+	<tr class="info">
 		<td>油品</td>
 		<td>&nbsp;</td>
 		<td>卡余额</td>
@@ -166,7 +156,7 @@
 </div>
 </div>
 </div>
-</div>-->
+</div>
 
 <th:block th:replace="head-js.html"></th:block>
 <script type='text/javascript' th:inline="javascript">
@@ -176,7 +166,103 @@
 		$(this).attr('disabled',false);
 		
 	});
-	//初始化函数
+	$("#btn_clear_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_clear();
+		$(this).attr('disabled',false);
+		
+	});
+	$("#btn_valid_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_valid();
+		$(this).attr('disabled',false);
+		
+	});//btn_valid_date_read_card
+	$("#btn_clear_read_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			var cardcode=dukaqi.readcardinfo(6);
+			$('#cardno_clear').val(cardcode);
+		});
+		$(this).attr('disabled',false);
+	});
+	$("#btn_valid_read_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			console.info(flag);
+			var cardcode=dukaqi.readcardinfo(6);
+			var vaildflag=dukaqi.readcardinfo(4);
+			$('#cardno_vaild').val(cardcode);
+			$('#flag_valid').val(vaildflag==0?'正常卡':'无效卡');
+			/* if(flag!=7){
+				$('#cardno_vaild').val(cardcode);
+				$('#flag_vaild').val('不是无效卡');
+			} */
+		});
+		$(this).attr('disabled',false);
+	});
+	$("#btn_valid_date_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			//console.info(flag);
+			var cardcode=$('#cardno_date').val();
+			var vailddate=$('#valid_date').val();
+			var cardcode_read=dukaqi.readcardinfo(6);
+			if(cardcode_read==cardcode){
+				//console.info(cardcode_read+" "+cardcode+" "+vailddate);
+				//console.info(vailddate.replace(/-/g,""));替换字符-
+				dukaqi.writecardinfo(3,vailddate.replace(/-/g,""));
+			}			
+		});
+		$(this).attr('disabled',false);
+	});
+	$("#btn_valid_date_read_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			//console.info(flag);
+			var cardcode=dukaqi.readcardinfo(6);
+			var vailddate=dukaqi.readcardinfo(3);
+			$('#cardno_date').val(cardcode);
+			$('#valid_date').val(vailddate.substr(0,4)+"-"+vailddate.substr(4,2)+"-"+vailddate.substr(6,2));
+		});
+		$(this).attr('disabled',false);
+	});
+	//有效 
+	function card_valid(){
+	card_operation(function(flag){
+		console.info(flag);
+		var result;
+		if(flag==7){//无效卡
+			result=dukaqi.writecardinfo(4,0);
+		}else{
+			alert('不是无效卡！！！');
+			return;
+		}
+		if(result==1) alert('卡已有效！！！');
+		else alert('有效操作失败！！！');
+	});
+	}
+	//清卡 回收 参数卡 发行卡
+	function card_clear(){
+	card_operation(function(flag){
+		console.info("卡状态: "+flag);
+		console.debug(dukaqi);
+		console.info($("#dukaqi"));
+		switch(flag){
+			case 0: alert('正常卡，无法清除！！！');return;
+			//case 1: alert('正常卡，无法初始化！！！');return;
+			//case 2: alert('参数卡，无法初始化！！！');return;
+			//case 4: alert('卡已经发放，无法初始化！！！');return;
+			case 3: alert('卡已清除！！！');return;
+			case 6: alert('灰卡，无法清除！！！');return;
+			case 7: alert('无效卡，无法清除！！！');return;		
+		}
+		var result=dukaqi.clearcard('0000');
+		if(result==0) alert('卡已清除！！！');
+		else alert('清除操作失败！！！');
+	});
+	}
+	//初始化函数 
 	function card_init(){		
 	card_operation(function(flag){		
 		//alert(flag);
@@ -191,7 +277,6 @@
 		var card_no=$("#card_no").val();	
 		if(card_no.length==0){
 			alert('输入值为空');
-			$("#init").addClass('has-warning');
 			return;
 		}else if(isNaN(card_no)){
 			alert('请输入数字');
@@ -201,8 +286,8 @@
 		
 		var card_type=$("input[name='card_type']:checked").val();
 		if(card_type==1){
-			card.InitCard(card_no, card_password);
-			var cardcode=card.ReadCardInfo(6);
+			dukaqi.InitCard(card_no, card_password);
+			var cardcode=dukaqi.ReadCardInfo(6);
 			var result="";
 			for(var i=0;i<cardcode.length;i++){
 				if(i==6)
@@ -210,19 +295,46 @@
 				else	
 					result=result+cardcode[i];
 			}
-			card.WriteCardInfo(6,result);
-			card.WriteCardInfo(2,'1');
+			dukaqi.WriteCardInfo(6,result);
+			dukaqi.WriteCardInfo(2,'1');
 		}
 		else if(card_type==2){
-			card.InitCard(card_no, card_password);
-			card.WriteCardInfo(2,'2');
+			dukaqi.InitCard(card_no, card_password);
+			dukaqi.WriteCardInfo(2,'2');
 		}
 		else 
-			card.InitCard(card_no, card_password);
+			dukaqi.InitCard(card_no, card_password);
+		alert('初始化成功');
 		$("#card_no").val(parseInt(card_no)+1);
 		});	
 	}
-	
+	$("#btn_read_gray_card").on('click',function(){
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			$("#cardcode").text(dukaqi.readcardinfo(6));
+			$("#cardtype").text(dukaqi.readcardinfo(2));
+			$("#oiltype").text(dukaqi.readcardinfo(11));
+			$("#grayflag").text(dukaqi.readcardinfo(5));
+			$("#graydate").text(dukaqi.readcardinfo(22));
+			$("#carno").text(dukaqi.readcardinfo(9));
+		});
+		$(this).attr('disabled',false);
+		$("#btn_gray_card").attr('disabled',false);
+	});
+	$("#btn_gray_card").on('click',function(){
+		
+		$(this).attr('disabled',true);
+		card_operation(function(flag){
+			console.info(flag);
+			if(flag!=6){
+				alert("不是灰卡！！！");
+				return;
+			}
+			dukaqi.writecardinfo(5,0);
+			dukaqi.writecardinfo(25,1234);
+		});
+		$(this).attr('disabled',false);
+	});
 </script>
 </body>
 </html>
