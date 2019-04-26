@@ -113,23 +113,23 @@
 <div class="box-body with-border">
 <div class="row">
 <div class="col-md-6">
-<table class="table table-bordered   table-striped table-hover" >
+<table class="table table-bordered table-hover" >
 	<tr class="success"><td colspan="6" align="center">卡信息</td></tr>
 	<tr class="success">
 		<td style="width:15%">卡号</td>
-		<td><span id="cardcode"></span></td>
+		<td ><span id="cardcode"  ></span></td>
 		<td style="width:15%">卡类型</td>
-		<td><span id="cardtype"></span></td>
+		<td ><span id="cardtype"></span></td>
 		<td style="width:15%">车辆号牌</td>
-		<td><span id="carno"></span></td>
+		<td ><span id="carno"></span></td>
 	</tr>	
 	<tr class="success">
-		<td style="width:15%">油品类型</td>
-		<td><span id="oiltype"></span></td>
-		<td style="width:15%">记灰标志</td>
-		<td><span id="grayflag"></span></td>
-		<td style="width:15%">记灰日期</td>
-		<td><span id="graydate"></span></td>		
+		<td>油品类型</td>
+		<td class="bg-green disabled color-palette"><span id="oiltype"></span></td>
+		<td>记灰标志</td>
+		<td class="bg-green disabled color-palette"><span id="grayflag"></span></td>
+		<td>记灰日期</td>
+		<td class="bg-green disabled color-palette"><span id="graydate"></span></td>		
 	</tr>
 </table>
 </div>
@@ -137,20 +137,20 @@
 <table class="table table-bordered   table-striped table-hover" >
 	<tr class="info"><td colspan="6" align="center">卡记灰信息</td></tr>
 	<tr class="info">
-		<td width="15%">卡号</td>
-		<td ></td>
-		<td width="15%">车牌号</td>
-		<td ></td>
-		<td width="15%">所属部门</td>
-		<td ></td>
+		<td width="10%">卡号</td>
+		<td width="20%"><span id="query_cardcode"></span></td>
+		<td width="10%">车牌号</td>
+		<td width="20%"><span id="query_carno"></span></td>
+		<td width="10%">所属部门</td>
+		<td width="20%"><span id="query_depart"></span></td>
 	</tr>
 	<tr class="info">
 		<td>油品</td>
-		<td>&nbsp;</td>
+		<td ><span id="query_oiltype"></span></td>
+		<td>加油量</td>
+		<td><span id="query_volumn"></span></td>
 		<td>卡余额</td>
-		<td>&nbsp;</td>
-		<td>卡状态</td>
-		<td>&nbsp;</td>
+		<td><span id="query_balance"></span></td>		
 	</tr>
 </table>
 </div>
@@ -308,32 +308,112 @@
 		$("#card_no").val(parseInt(card_no)+1);
 		});	
 	}
+	var cardcode,counter,oiltype,mileage,balance,volumn;
 	$("#btn_read_gray_card").on('click',function(){
 		$(this).attr('disabled',true);
+		//var cardcode,counter,oiltype,card_status;
 		card_operation(function(flag){
-			$("#cardcode").text(dukaqi.readcardinfo(6));
-			$("#cardtype").text(dukaqi.readcardinfo(2));
-			$("#oiltype").text(dukaqi.readcardinfo(11));
-			$("#grayflag").text(dukaqi.readcardinfo(5));
-			$("#graydate").text(dukaqi.readcardinfo(22));
+			card_status=flag
+			if(flag!=6){
+				//alert("不是灰卡！！！");
+				return;
+			}		
+			cardcode=dukaqi.readcardinfo(6);
+			$("#cardcode").text(cardcode);
+			var cardtype=dukaqi.readcardinfo(2);
+			switch(cardtype){
+			case '0': cardtype='实物卡';break;
+			case '1': cardtype='价拨卡';break;
+			case '2': cardtype='机动卡';break;
+			}
+			$("#cardtype").text(cardtype);
+			oiltype=dukaqi.readcardinfo(11);
+			$("#oiltype").text(oiltype);
+			gray_flag=dukaqi.readcardinfo(5);
+			var gray_str;
+			switch(gray_flag){
+			case '0': gray_str='正常卡';break;
+			case '3': gray_str='圈存记灰';break;
+			case '4': gray_str='加油记灰';break;
+			default:gray_str='未知类型';
+			}
+			$("#grayflag").text(gray_str);
+			var gray_datetime=dukaqi.readcardinfo(22);
+			gray_datetime=gray_datetime.substr(0,4)+"-"+gray_datetime.substr(4,2)+"-"+gray_datetime.substr(6,2)+" "+gray_datetime.substr(8,2)+":"+gray_datetime.substr(10,2);
+			$("#graydate").text(gray_datetime);
 			$("#carno").text(dukaqi.readcardinfo(9));
+			counter=dukaqi.ReadCardInfo(23);
+			balance=dukaqi.ReadCardInfo(25);
+			mileage=parseInt(counter)+1;
 		});
 		$(this).attr('disabled',false);
+		if(card_status!=6){
+			alert("不是灰卡！！！");
+			//$("#btn_gray_card").attr('disabled',false);
+			return;
+		}		
+		$.ajax({
+			url:'query_gray_card_trade',
+			type:'post',
+			data:{'cardcode':cardcode,'mileage':mileage,'oiltype':oiltype,'tradetype':gray_flag},
+			success:function(data){
+				if(data==""){
+					$("#query_cardcode").text('查询不到数据');
+					$("#query_carno").text("");
+					$("#query_depart").text("");
+					$("#query_oiltype").text("");
+					$("#query_balance").text("");
+					$("#query_volumn").text("");
+				}
+				else{
+					$("#query_cardcode").text(data.cardcode);
+					$("#query_carno").text(data.carcode);
+					$("#query_depart").text(data.departmentname);
+					$("#query_oiltype").text(data.oiltypeName);
+					$("#query_balance").text(data.balance);
+					$("#query_volumn").text(data.volumn);
+					balance=data.balance;
+					volumn=data.volumn;
+				}
+			},
+			error:function(xhr){
+				alert("错误提示： " + xhr.status + " " + xhr.statusText);
+			}
+		});
 		$("#btn_gray_card").attr('disabled',false);
 	});
-	$("#btn_gray_card").on('click',function(){
-		
-		$(this).attr('disabled',true);
+	$("#btn_gray_card").on('click',function(){		
+		$(this).attr('disabled',true);		
 		card_operation(function(flag){
 			console.info(flag);
 			if(flag!=6){
-				alert("不是灰卡！！！");
+				alert(cardcode.substr(6,6)+": 不是灰卡！！！");
 				return;
 			}
-			dukaqi.writecardinfo(5,0);
-			dukaqi.writecardinfo(25,1234);
+			var ccode=dukaqi.readcardinfo(6);
+			console.info(ccode+" "+cardcode);
+			if(ccode!=cardcode){
+				alert('请放置卡号为:  '+cardcode.substr(6,6));
+				return;
+			}
+			console.info("--"+mileage+"--"+balance+"--"+volumn);
+			dukaqi.writecardinfo(23,mileage);	//消费次数
+			dukaqi.writecardinfo(21,String(balance).replace('.',''));	//余额
+			dukaqi.writecardinfo(20,String(volumn).replace('.',''));	//加油量
+			dukaqi.writecardinfo(5,0);			//记灰标志
+			$.ajax({
+				url:'update_gray_card_trade',
+				type:'post',
+				data:{'cardcode':cardcode,'mileage':mileage},
+				success:function(data){
+					alert(data);
+				},
+				error:function(xhr){
+					alert("错误提示： " + xhr.status + " " + xhr.statusText);
+				}
+			});
 		});
-		$(this).attr('disabled',false);
+		//$(this).attr('disabled',false);
 	});
 </script>
 </body>

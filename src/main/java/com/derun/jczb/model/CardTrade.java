@@ -309,4 +309,18 @@ public class CardTrade {
 	public void setStationname(String stationname) {
 		this.stationname = stationname;
 	}
+
+	@Override
+	public String toString() {
+		return "CardTrade [rn=" + rn + ", carcode=" + carcode + ", cardtypename=" + cardtypename + ", oiltypeName="
+				+ oiltypeName + ", owner=" + owner + ", guidelinecount=" + guidelinecount + ", guncode=" + guncode
+				+ ", cardstatus=" + cardstatus + ", stationname=" + stationname + ", departmentname=" + departmentname
+				+ ", id=" + id + ", cardcode=" + cardcode + ", tradedate=" + tradedate + ", tradetime=" + tradetime
+				+ ", tradetype=" + tradetype + ", stationid=" + stationid + ", recno=" + recno + ", autoCarCode="
+				+ autoCarCode + ", oiltype=" + oiltype + ", volumn=" + volumn + ", mileage=" + mileage + ", balance="
+				+ balance + ", sendflag=" + sendflag + ", account=" + account + ", operator=" + operator + ", tflag="
+				+ tflag + ", shougongdanweiid=" + shougongdanweiid + ", zhugongdanweiid=" + zhugongdanweiid
+				+ ", jiaoyijine=" + jiaoyijine + ", sign=" + sign + ", cardType=" + cardType + ", volumnt=" + volumnt
+				+ ", remark=" + remark + ", ifchongdi=" + ifchongdi + "]";
+	}
 }
