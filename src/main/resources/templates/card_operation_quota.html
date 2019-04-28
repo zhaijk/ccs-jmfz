@@ -131,9 +131,16 @@ function load_data(cardcode,sendflag){
 			$("#carno").text(dukaqi.readcardinfo(9));
 		});
 		$(this).attr('disabled',false);
+		//if(table==null)
 		load_data(cardcode,sendflag);
+		//else{
+			//table.fnClearTable();
+		//	table.ajax.reload();
+		//}
+			table.draw(true);
 		//console.info(table);
 		//if(table.length>0)
+		if(table.data().length>0)
 			$("#btn_quota_card").attr('disabled',false);
 	});
 	$("#btn_quota_card").on('click',function(){
@@ -162,8 +169,8 @@ function load_data(cardcode,sendflag){
 						}
 						//dukaqi.writecardinfo(5,0);
 						//dukaqi.writecardinfo(25,1234);
-						dukaqi.writecardinfo(8,data.sendflag);			//发放次数
-						dukaqi.writecardinfo(17,'20190427');			//入款日期
+						dukaqi.writecardinfo(8,data.sendflag);			//发放次数						
+						dukaqi.writecardinfo(17,getSystemDate());	//入款日期
 						dukaqi.writecardinfo(18,data.guidelinecount);	//发放量
 						
 						var counter=dukaqi.readcardinfo(23);//消费次数
@@ -180,6 +187,7 @@ function load_data(cardcode,sendflag){
 							data:{"cardcode":card_code,"sendflag":send_flag},
 							success:function(){								
 								alert('圈存操作成功');
+								$("#btn_quota_card").attr('disabled',true);
 							},
 							error:function(xhr){
 								alert("错误提示： " + xhr.status + " " + xhr.statusText);
@@ -194,6 +202,7 @@ function load_data(cardcode,sendflag){
 			
 		});
 		$(this).attr('disabled',false);
+		$("#btn_quota_card").attr('disabled',true);
 	});
 </script>
 </body>

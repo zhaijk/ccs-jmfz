@@ -51,3 +51,10 @@ function card_operation(oper)
 	}
 	dukaqi.DisConn();
 }
+function getSystemDate(){
+	var today=new Date();
+	var strYear=String(today.getFullYear())		
+	var strMonth=String(today.getMonth()+1).length==2?String(today.getMonth()+1):'0'+String(today.getMonth()+1)
+	var strDay=String(today.getDate()).length==2?String(today.getDate()):'0'+String(today.getDate())
+	return strYear+strMonth+strDay;
+}
