@@ -5,6 +5,31 @@ public class CardProvideReport {
 	private int rn;
 	private String cardcode;
 	private String carcode;
+	private String oiltypename;
+	private String guidelinecount;
+	private String providedate;
+	private String sendflag;
+	private int writecard;
+	private String writecardflag;
+	private String guidelinetypename;
+	private String sendtypeFlag;	
+	private Long provideID;
+	private Integer oilType;
+	private String cardCode;
+	private String provideDate;
+	private String provideTime;
+	private Integer guidelineType;
+	private Double guidelineCount;
+	private Integer sendType;
+	private Integer sendFlag;
+	private Integer writeCard;
+	private Integer account;
+	private String operator;
+	private Integer tflagUp;
+	private Integer tflagDown;
+	private String fillCardterm;
+	private String shenpiren;
+	
 	public String getCarcode() {
 		return carcode;
 	}
@@ -60,32 +85,6 @@ public class CardProvideReport {
 	public void setGuidelinetypename(String guidelinetypename) {
 		this.guidelinetypename = guidelinetypename;
 	}
-
-	private String oiltypename;
-	private String guidelinecount;
-	private String providedate;
-	private String sendflag;
-	private int writecard;
-	private String writecardflag;
-	private String guidelinetypename;
-	private String sendtypeFlag;
-	
-	private Long provideID;
-	private Integer oilType;
-	private String cardCode;
-	private String provideDate;
-	private String provideTime;
-	private Integer guidelineType;
-	private Double guidelineCount;
-	private Integer sendType;
-	private Integer sendFlag;
-	private Integer writeCard;
-	private Integer account;
-	private String operator;
-	private Integer tflagUp;
-	private Integer tflagDown;
-	private String fillCardterm;
-	private String shenpiren;
 
 	public String getShenpiren() {
 		return shenpiren;

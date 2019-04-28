@@ -48,6 +48,11 @@ public interface CardProvideMapper {
 	public List<CardProvideReport>  queryBy(String cardcode,String jiezhuanDate,String departmentcode,String oiltypes,String guidelinetype,String sendtype,String writecard,String datestart,String datestop);
 	@Delete("")
 	public int deleteOne();
-	@Update("")
-	public int updateOne();
+	@Update("update iccard.card_providereport set writecard=1 where cardcode=#{cardcode} and sendflag>#{sendflag} and (sendtype=1 or sendtype=2)")
+	public int updateOne(CardProvideReport obj);
+	@Select("select rownum as rn , a.* from (select * from iccard.card_providereport a where cardcode=#{cardcode} and sendflag>#{sendflag} and (sendtype=1 or sendtype=2) order by sendflag) a")
+	public List<CardProvideReport>  queryQuotaByCardcodeSendFlag(CardProvideReport obj);
+	// 1.固定发放 2.单卡发放	3.补贴发放  4.作废发放
+	@Select("select cardcode,sum(guidelinecount) as guidelinecount,max(sendflag) as sendflag from iccard.card_providereport where cardcode=#{cardcode} and sendflag>#{sendflag} and (sendtype=1 or sendtype=2) group by cardcode")
+	public CardProvideReport  queryQuotaTotalByCardcodeSendFlag(CardProvideReport obj);
 }

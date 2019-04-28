@@ -10,8 +10,8 @@
 <div class="box"> 
 <div class="box-header with-border">
 
-<input id="btn_read_gray_card" style="width:10%" type="button" class="btn btn-success " value="读卡信息"/>
-<input id="btn_gray_card" style="width:10%" type="button" class="btn btn-info " value="圈&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp存" disabled/>
+<input id="btn_read_card" style="width:10%" type="button" class="btn btn-success " value="读卡信息"/>
+<input id="btn_quota_card" style="width:10%" type="button" class="btn btn-info " value="圈&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp存" disabled/>
 </div>
 <div class="box-body with-border">
 <div class="row">
@@ -30,9 +30,9 @@
 		<td style="width:15%">油品类型</td>
 		<td><span id="oiltype"></span></td>
 		<td style="width:15%">记灰标志</td>
-		<td><span id="grayflag"></span></td>
+		<td><span id="sendflag"></span></td>
 		<td style="width:15%">记灰日期</td>
-		<td><span id="graydate"></span></td>		
+		<td><span id="senddate"></span></td>		
 	</tr>
 </table>
 </div>
@@ -44,7 +44,7 @@
 </div>
 <div class="box">
 <div class="box-body">
-<table id="depart_infos" class="table table-hover  table-bordered table-condensed">
+<table id="quota_table" class="table table-hover  table-bordered table-condensed">
 	<thead>
 		<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
 				<th style="width: 6%">序号</th>
@@ -67,178 +67,131 @@
 </div>
 <th:block th:replace="head-js.html"></th:block>
 <script type='text/javascript' th:inline="javascript">
-	$("#btn_init_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_init();
-		$(this).attr('disabled',false);
-		
-	});
-	$("#btn_clear_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_clear();
-		$(this).attr('disabled',false);
-		
-	});
-	$("#btn_valid_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_valid();
-		$(this).attr('disabled',false);
-		
-	});//btn_valid_date_read_card
-	$("#btn_clear_read_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_operation(function(flag){
-			var cardcode=dukaqi.readcardinfo(6);
-			$('#cardno_clear').val(cardcode);
-		});
-		$(this).attr('disabled',false);
-	});
-	$("#btn_valid_read_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_operation(function(flag){
-			console.info(flag);
-			var cardcode=dukaqi.readcardinfo(6);
-			var vaildflag=dukaqi.readcardinfo(4);
-			$('#cardno_vaild').val(cardcode);
-			$('#flag_valid').val(vaildflag==0?'正常卡':'无效卡');
-			/* if(flag!=7){
-				$('#cardno_vaild').val(cardcode);
-				$('#flag_vaild').val('不是无效卡');
-			} */
-		});
-		$(this).attr('disabled',false);
-	});
-	$("#btn_valid_date_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_operation(function(flag){
-			//console.info(flag);
-			var cardcode=$('#cardno_date').val();
-			var vailddate=$('#valid_date').val();
-			var cardcode_read=dukaqi.readcardinfo(6);
-			if(cardcode_read==cardcode){
-				//console.info(cardcode_read+" "+cardcode+" "+vailddate);
-				//console.info(vailddate.replace(/-/g,""));替换字符-
-				dukaqi.writecardinfo(3,vailddate.replace(/-/g,""));
-			}			
-		});
-		$(this).attr('disabled',false);
-	});
-	$("#btn_valid_date_read_card").on('click',function(){
-		$(this).attr('disabled',true);
-		card_operation(function(flag){
-			//console.info(flag);
-			var cardcode=dukaqi.readcardinfo(6);
-			var vailddate=dukaqi.readcardinfo(3);
-			$('#cardno_date').val(cardcode);
-			$('#valid_date').val(vailddate.substr(0,4)+"-"+vailddate.substr(4,2)+"-"+vailddate.substr(6,2));
-		});
-		$(this).attr('disabled',false);
-	});
-	//有效 
-	function card_valid(){
-	card_operation(function(flag){
-		console.info(flag);
-		var result;
-		if(flag==7){//无效卡
-			result=dukaqi.writecardinfo(4,0);
-		}else{
-			alert('不是无效卡！！！');
-			return;
-		}
-		if(result==1) alert('卡已有效！！！');
-		else alert('有效操作失败！！！');
-	});
-	}
-	//清卡 回收 参数卡 发行卡
-	function card_clear(){
-	card_operation(function(flag){
-		console.info("卡状态: "+flag);
-		console.debug(dukaqi);
-		console.info($("#dukaqi"));
-		switch(flag){
-			case 0: alert('正常卡，无法清除！！！');return;
-			//case 1: alert('正常卡，无法初始化！！！');return;
-			//case 2: alert('参数卡，无法初始化！！！');return;
-			//case 4: alert('卡已经发放，无法初始化！！！');return;
-			case 3: alert('卡已清除！！！');return;
-			case 6: alert('灰卡，无法清除！！！');return;
-			case 7: alert('无效卡，无法清除！！！');return;		
-		}
-		var result=dukaqi.clearcard('0000');
-		if(result==0) alert('卡已清除！！！');
-		else alert('清除操作失败！！！');
-	});
-	}
-	//初始化函数 
-	function card_init(){		
-	card_operation(function(flag){		
-		//alert(flag);
-		switch(flag){
-			case 0: alert('正常卡，无法初始化！！！');return;
-			//case 1: alert('正常卡，无法初始化！！！');return;
-			case 2: alert('参数卡，无法初始化！！！');return;
-			//case 4: alert('卡已经发放，无法初始化！！！');return;
-			case 6: alert('灰卡，无法初始化！！！');return;
-			case 7: alert('无效卡，无法初始化！！！');return;		
-		}
-		var card_no=$("#card_no").val();	
-		if(card_no.length==0){
-			alert('输入值为空');
-			return;
-		}else if(isNaN(card_no)){
-			alert('请输入数字');
-			return;
-		}
-		var card_password=$("#card_password").val();
-		
-		var card_type=$("input[name='card_type']:checked").val();
-		if(card_type==1){
-			dukaqi.InitCard(card_no, card_password);
-			var cardcode=dukaqi.ReadCardInfo(6);
-			var result="";
-			for(var i=0;i<cardcode.length;i++){
-				if(i==6)
-					result=result+'j';
-				else	
-					result=result+cardcode[i];
+var table,cardcode,sendflag;
+//加载数据
+function load_data(cardcode,sendflag){
+	table=$('#quota_table').DataTable({	
+		//'pageLength': 6,
+		'bDestroy': 		true,  
+		'processing': 		true,
+		'searching' : 		false,
+		'lengthChange' : 	false,
+		/* "select": {
+	   	     style: 'single',
+	   	        info: false
+	   	}, */
+	   	"ordering": false, // 禁止排序		
+	  	"ajax": {
+	        "url": "query_quota_card_trade/datas",
+	        "type": "post",
+	        "data":{"cardcode":cardcode,"sendflag":sendflag}
+	  	},
+	  	"columns":[
+	  		{ "data": "rn"},
+	        { "data": "cardcode" },
+	        { "data": "carcode"  },
+	        { "data": "guidelineType" },
+	        { "data": "oilType" },
+	        { "data": "sendType" },
+	        { "data": "guidelinecount"},
+	        { "data": "provideDate"},
+	        { "data": "sendflag"},
+	        { "data": "writecard"},
+	        { "data": "operator"}
+	    ],		
+		"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
 			}
-			dukaqi.WriteCardInfo(6,result);
-			dukaqi.WriteCardInfo(2,'1');
-		}
-		else if(card_type==2){
-			dukaqi.InitCard(card_no, card_password);
-			dukaqi.WriteCardInfo(2,'2');
-		}
-		else 
-			dukaqi.InitCard(card_no, card_password);
-		alert('初始化成功');
-		$("#card_no").val(parseInt(card_no)+1);
-		});	
-	}
-	$("#btn_read_gray_card").on('click',function(){
+		}    	
+	});	
+}
+	$("#btn_read_card").on('click',function(){
 		$(this).attr('disabled',true);
 		card_operation(function(flag){
-			$("#cardcode").text(dukaqi.readcardinfo(6));
+			cardcode=dukaqi.readcardinfo(6);
+			$("#cardcode").text(cardcode);
 			$("#cardtype").text(dukaqi.readcardinfo(2));
 			$("#oiltype").text(dukaqi.readcardinfo(11));
-			$("#grayflag").text(dukaqi.readcardinfo(5));
-			$("#graydate").text(dukaqi.readcardinfo(22));
+			sendflag=dukaqi.readcardinfo(8);
+			$("#sendflag").text(sendflag);
+			$("#senddate").text(dukaqi.readcardinfo(17));
 			$("#carno").text(dukaqi.readcardinfo(9));
 		});
 		$(this).attr('disabled',false);
-		$("#btn_gray_card").attr('disabled',false);
+		load_data(cardcode,sendflag);
+		//console.info(table);
+		//if(table.length>0)
+			$("#btn_quota_card").attr('disabled',false);
 	});
-	$("#btn_gray_card").on('click',function(){
-		
+	$("#btn_quota_card").on('click',function(){
+		var senddate,guidelinecount;
 		$(this).attr('disabled',true);
 		card_operation(function(flag){
 			console.info(flag);
-			if(flag!=6){
-				alert("不是灰卡！！！");
+			if(flag==6){
+				alert("灰卡，请处理！！！");
 				return;
-			}
-			dukaqi.writecardinfo(5,0);
-			dukaqi.writecardinfo(25,1234);
+			}			
+			$.ajax({
+				url:'query_quota_card_trade/value',
+				type:'post',
+				data:{"cardcode":cardcode,"sendflag":sendflag},
+				success:function(data){
+					card_operation(function(flag){
+						var card_code=dukaqi.readcardinfo(6);
+						var send_flag=dukaqi.readcardinfo(8);					
+						//console.info(data.cardcode+" "+data.sendflag+" "+data.guidelinecount)
+						//console.info(card_code+" "+data.cardcode)
+						if(card_code!=data.cardcode){
+							alert('卡号不一致，请放置卡号：'+cardcode);	
+							$("#btn_quota_card").attr('disabled',true);
+							return ;
+						}
+						//dukaqi.writecardinfo(5,0);
+						//dukaqi.writecardinfo(25,1234);
+						dukaqi.writecardinfo(8,data.sendflag);			//发放次数
+						dukaqi.writecardinfo(17,'20190427');			//入款日期
+						dukaqi.writecardinfo(18,data.guidelinecount);	//发放量
+						
+						var counter=dukaqi.readcardinfo(23);//消费次数
+						counter=parseInt(counter)+1;
+						dukaqi.writecardinfo(23,counter);	//发放量
+						
+						var balance=dukaqi.readcardinfo(21);//读卡余额
+						console.info(balance+" "+data.guidelinecount);
+						balance=parseFloat(balance)+parseFloat(data.guidelinecount)*100;
+						dukaqi.writecardinfo(21,balance);	//写余额
+						$.ajax({
+							url:'update_quota_card_trade',
+							type:'post',
+							data:{"cardcode":card_code,"sendflag":send_flag},
+							success:function(){								
+								alert('圈存操作成功');
+							},
+							error:function(xhr){
+								alert("错误提示： " + xhr.status + " " + xhr.statusText);
+							}
+						});
+					});
+				},
+				error:function(xhr){
+					alert("错误提示： " + xhr.status + " " + xhr.statusText);
+				}
+			});
+			
 		});
 		$(this).attr('disabled',false);
 	});

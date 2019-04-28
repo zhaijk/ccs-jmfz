@@ -377,7 +377,14 @@
 				}
 			},
 			error:function(xhr){
-				alert("错误提示： " + xhr.status + " " + xhr.statusText);
+				//alert("错误提示： " + xhr.status + " " + xhr.statusText);
+				$("#query_cardcode").text("错误提示： " + xhr.status + " " + xhr.statusText);
+				$("#query_carno").text("");
+				$("#query_depart").text("");
+				$("#query_oiltype").text("");
+				$("#query_balance").text("");
+				$("#query_volumn").text("");
+
 			}
 		});
 		$("#btn_gray_card").attr('disabled',false);
