@@ -134,9 +134,9 @@ public interface CardTradeMapper {
 	public List<CardSumInfos>  queryCardSumBy(String cardcode,String sumdate,String sumDepartmentcode,String departmentcode,String oiltype,String carcode,String cardtype,String datestart,String datestop);
 	@Select("select zhugongdanweiid as code,sum(t.volumnt) as jyl from jiangsu.card_trade t where t.tradedate between #{niandubegin} and #{nianduend} and t.shougongdanweiid='' and t.zhugongdanweiid!='' group by zhugongdanweiid")
 	public List<ZhuandaigongTotal> queryZdgSumBy(String niandubegin,String nianduend);
-	@Select("select a.cardcode,(select d.name from  wujing.oil_dictionary@remote d where a.oiltype=d.code) as oiltypeName,volumn,balance,(select b.bumen from  wujing.depar_dictionary@remote b where b.bumen_code like substr(a.cardcode,0,4)||'%') as departmentname ,(select c.autocarcode from iccard.card_main@remote c  where  c.cardcode=a.cardcode) as carcode from wujing.card_trade@remote a where cardcode=#{cardcode}  and mileage=#{mileage} and tradetype=#{tradetype}")
+	@Select("select a.cardcode,(select d.name from  wujing.oil_dictionary d where a.oiltype=d.code) as oiltypeName,volumn,balance,(select b.bumen from  wujing.depar_dictionary b where b.bumen_code like substr(a.cardcode,0,4)||'%') as departmentname ,(select c.autocarcode from iccard.card_main c  where  c.cardcode=a.cardcode) as carcode from wujing.card_trade a where cardcode=#{cardcode}  and mileage=#{mileage} and tradetype=#{tradetype}")
 	//@Select("select * from  wujing.card_trade@remote where id=301417") 
 	public CardTrade queryGrayTrade(CardTrade obj);
-	@Update("update wujing.card_trade@remote set tradetype=0 where cardcode=#{cardcode}  and mileage=#{mileage}")
+	@Update("update wujing.card_trade set tradetype=0 where cardcode=#{cardcode}  and mileage=#{mileage}")
 	public int updateGrayTrade(CardTrade obj);
 }

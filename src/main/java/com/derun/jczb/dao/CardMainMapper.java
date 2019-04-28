@@ -29,4 +29,6 @@ public interface CardMainMapper {
 	public List<CardMain>  queryCardInfos(String departmentCode,String date);
 	@Select("select * from iccard.card_main_view where cardcode  like #{departmentCode}||'%' and cardtype=0 and (destineGuideline>0 or buzhuzhibiao>0)  and cardstatus='正常' order by cardcode")
 	public List<CardMain>  queryCardMainInfos(String departmentCode);
+	@Select("select rownum as id,a.* from (select * from iccard.card_main where cardcode like #{code} || '%' order by cardcode ) a ")
+	public List<CardMain>  queryCardinfos(String code);
 }

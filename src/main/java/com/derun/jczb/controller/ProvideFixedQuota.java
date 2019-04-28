@@ -235,16 +235,16 @@ public class ProvideFixedQuota {
 				for(CardMain obj:cardMains) {
 					//固定指标发放
 					CardProvideReport cardProvideReport = new CardProvideReport();
-					cardProvideReport.setCardCode(obj.getCardCode());
+					cardProvideReport.setCardCode(obj.getCardcode());
 					cardProvideReport.setOilType(obj.getOilType());
-					cardProvideReport.setGuidelineType(obj.getGuidelineType());
+					cardProvideReport.setGuidelineType(obj.getGuidelinetype());
 					cardProvideReport.setProvideDate(strTodayDate);
 					cardProvideReport.setProvideTime(strTodayTime);
 					cardProvideReport.setSendType(1);
-					int sendFlag=cardTradeMapper.queryCardMaxSendFlag(obj.getCardCode());
+					int sendFlag=cardTradeMapper.queryCardMaxSendFlag(obj.getCardcode());
 					cardProvideReport.setSendFlag(sendFlag + 1);					
 					//获取卡号
-					String cardCode=obj.getCardCode();					
+					String cardCode=obj.getCardcode();					
 					// 查看卡上的最大限额指标,这里只有固定做处理
 					double maxCount = obj.getMaxcount();					
 					if(maxCount>0) {

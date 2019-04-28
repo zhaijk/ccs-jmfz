@@ -308,11 +308,12 @@
 		$("#card_no").val(parseInt(card_no)+1);
 		});	
 	}
-	var cardcode,counter,oiltype,mileage,balance,volumn;
+	var cardcode,counter,oiltype,mileage,balance,volumn,card_status;
 	$("#btn_read_gray_card").on('click',function(){
 		$(this).attr('disabled',true);
 		//var cardcode,counter,oiltype,card_status;
 		card_operation(function(flag){
+			//alert(flag);
 			card_status=flag
 			if(flag!=6){
 				//alert("不是灰卡！！！");

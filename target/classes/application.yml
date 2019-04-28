@@ -13,7 +13,7 @@ spring:
     cache: false
   data-source:    
     driver-class-name: oracle.jdbc.OracleDriver    
-    url: jdbc:oracle:thin:@localhost:1521:orcl
+    url: jdbc:oracle:thin:@localhost:1521:oraclejczb
     username: wujing
     password: wujing
     maximumPoolSize: 30

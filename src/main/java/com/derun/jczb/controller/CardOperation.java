@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.derun.jczb.dao.CardMainMapper;
 import com.derun.jczb.dao.CardProvideMapper;
 import com.derun.jczb.dao.CardTradeMapper;
+import com.derun.jczb.model.CardMain;
 import com.derun.jczb.model.CardProvideReport;
 import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.JunquDictionary;
@@ -32,6 +34,8 @@ public class CardOperation {
 	private CardTradeMapper cardTradeMapper;
 	@Autowired
 	private CardProvideMapper cardProvideMapper;
+	@Autowired
+	private CardMainMapper cardMainMapper;
 	
 	@GetMapping("card_operation_init.htm")
 	public String init() {
@@ -78,5 +82,19 @@ public class CardOperation {
 		//System.out.println(obj);
 		int result=cardProvideMapper.updateOne(obj);
 		return result==1? "操作成功" : "操作失败" ;		
+	}
+	@GetMapping("card_operation_provide.htm")
+	public String provide() {
+		
+		return "card_operation_provide";
+	}
+	@GetMapping("card_operation_provide/datas")
+	@ResponseBody
+	public DataTableDO<CardMain> queryCardInfos() {
+		String danwei="7200";
+		DataTableDO<CardMain>  dataTableDO=new DataTableDO<CardMain>();
+		List<CardMain> objs=cardMainMapper.queryCardinfos(danwei);
+		dataTableDO.setData(objs);
+		return dataTableDO;		
 	}
 }

@@ -140,8 +140,10 @@ function load_data(cardcode,sendflag){
 			table.draw(true);
 		//console.info(table);
 		//if(table.length>0)
-		if(table.data().length>0)
-			$("#btn_quota_card").attr('disabled',false);
+		setTimeout(function(){			
+			if(table.data().length>0)
+				$("#btn_quota_card").attr('disabled',false);
+		},500)
 	});
 	$("#btn_quota_card").on('click',function(){
 		var senddate,guidelinecount;

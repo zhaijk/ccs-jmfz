@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class CardMain {
 	
-	private String cardCode;
+	private long  id;
+	private String cardcode;
 	private String stationID;
 	private String autoCarCode;	
 	private String employee;
@@ -15,9 +16,9 @@ public class CardMain {
 	private double noOperateCount;
 	private double destineGuideline;
 	private double carLimit;
-	private int guidelineType;
+	private int guidelinetype;
 	private int fillFlag;
-	private String cardStatus;
+	private String cardstatus;
 	private String editDate;
 	private String buildDate;
 	private String fillCardCode;
@@ -109,14 +110,6 @@ public class CardMain {
 		this.buildDate = buildDate;
 	}
 
-	public String getCardCode() {
-		return cardCode;
-	}
-
-	public void setCardCode(String cardCode) {
-		this.cardCode = cardCode;
-	}
-
 	public double getCardCount() {
 		return cardCount;
 	}
@@ -131,14 +124,6 @@ public class CardMain {
 
 	public void setCardPassword(String cardPassword) {
 		this.cardPassword = cardPassword;
-	}
-
-	public String getCardStatus() {
-		return cardStatus;
-	}
-
-	public void setCardStatus(String cardStatus) {
-		this.cardStatus = cardStatus;
 	}
 
 	public double getCarLimit() {
@@ -179,14 +164,6 @@ public class CardMain {
 
 	public void setFillFlag(int fillFlag) {
 		this.fillFlag = fillFlag;
-	}
-
-	public int getGuidelineType() {
-		return guidelineType;
-	}
-
-	public void setGuidelineType(int guidelineType) {
-		this.guidelineType = guidelineType;
 	}
 
 	public String getMemo() {
@@ -355,5 +332,37 @@ public class CardMain {
 
 	public void setMileage(double mileage) {
 		this.mileage = mileage;
+	}
+
+	public String getCardcode() {
+		return cardcode;
+	}
+
+	public void setCardcode(String cardcode) {
+		this.cardcode = cardcode;
+	}
+
+	public int getGuidelinetype() {
+		return guidelinetype;
+	}
+
+	public void setGuidelinetype(int guidelinetype) {
+		this.guidelinetype = guidelinetype;
+	}
+
+	public String getCardstatus() {
+		return cardstatus;
+	}
+
+	public void setCardstatus(String cardstatus) {
+		this.cardstatus = cardstatus;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }
