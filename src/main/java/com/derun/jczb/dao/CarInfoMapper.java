@@ -14,7 +14,11 @@ import org.apache.ibatis.annotations.Update;
 
 import com.derun.jczb.model.CarInfo;
 //import com.derun.jczb.model.CarTypeDictionary;
-
+/**
+ * info 车辆信息查询
+ * @author Administrator
+ *
+ */
 public interface CarInfoMapper {
 	@Select("select * from iccard.car_info  order by fastDate")
 	public List<CarInfo> queryALL();
@@ -34,6 +38,8 @@ public interface CarInfoMapper {
 	public int deleteOne(CarInfo obj);
 	@Select("select count(*)  from iccard.car_info")
 	public int counter();
+	@Select("select * from iccard.car_info where departmentcode like #{code} || '%' and autocarcode not in (select autocarcode from iccard.card_main where autocarcode is not null and cardcode like #{code} || '%')")
+	public List<CarInfo> queryUnuseCar(String code);
 	
 //	@Delete("delete fomr iccard.car_info where autoCarCode=#{autoCarCode}")
 //	public int deleteOne(String autoCarCode);

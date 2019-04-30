@@ -4,17 +4,24 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.derun.jczb.dao.CarInfoMapper;
 import com.derun.jczb.dao.CardMainMapper;
 import com.derun.jczb.dao.CardProvideMapper;
 import com.derun.jczb.dao.CardTradeMapper;
+import com.derun.jczb.dao.DepartmentInfoMapper;
+import com.derun.jczb.dao.OilInfoMapper;
+import com.derun.jczb.model.CarInfo;
 import com.derun.jczb.model.CardMain;
 import com.derun.jczb.model.CardProvideReport;
 import com.derun.jczb.model.CardTrade;
-import com.derun.jczb.model.JunquDictionary;
+import com.derun.jczb.model.DepartmentInfo;
+//import com.derun.jczb.model.JunquDictionary;
+import com.derun.jczb.model.OilInfo;
 
 /**
  *     info:卡操作 清卡 初始化 有效  有效期 更换油品 更换车号  
@@ -36,6 +43,10 @@ public class CardOperation {
 	private CardProvideMapper cardProvideMapper;
 	@Autowired
 	private CardMainMapper cardMainMapper;
+	@Autowired
+	private CarInfoMapper carInfoMapper;
+	@Autowired
+	private DepartmentInfoMapper departInfoMapper;
 	
 	@GetMapping("card_operation_init.htm")
 	public String init() {
@@ -84,10 +95,21 @@ public class CardOperation {
 		return result==1? "操作成功" : "操作失败" ;		
 	}
 	@GetMapping("card_operation_provide.htm")
-	public String provide() {
+	public String provide(ModelMap model) {		
+		String departmentCode="72";
 		
+		List<OilInfo> oilInfos=oilInfoMapper.queryByOilInfo(departmentCode);
+		List<CarInfo> carInfos=carInfoMapper.queryUnuseCar(departmentCode);
+		List<DepartmentInfo> departInfos=departInfoMapper.queryByDepartmentCode(departmentCode);
+		
+		model.put("departInfos", departInfos);
+		model.put("oilInfos",oilInfos);
+		model.put("carInfos",carInfos);
 		return "card_operation_provide";
 	}
+	@Autowired
+	private OilInfoMapper oilInfoMapper;
+	
 	@GetMapping("card_operation_provide/datas")
 	@ResponseBody
 	public DataTableDO<CardMain> queryCardInfos() {

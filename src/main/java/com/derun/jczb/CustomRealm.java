@@ -3,7 +3,7 @@ package com.derun.jczb;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.shiro.SecurityUtils;
+//import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -50,7 +50,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
     	logger.info("————权限认证————");
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        //String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
         //String role = userMapper.getRole(username);

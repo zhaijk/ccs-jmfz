@@ -1,6 +1,6 @@
 /**
 *  0.为正确 1.没有连接 2.维护卡 3.不是本系统的卡 
-*  4.密码错误 5.卡没有经过发放 6.灰卡 7.无效卡
+*  4.密码错误 5.卡没有经过发行 6.灰卡 7.无效卡
 *  只有状态为0,5,6,7可以进行读卡和修改卡
 *	OpenCard(dukaqi.conn())
 */
@@ -14,9 +14,10 @@ function card_operation(oper)
 	var result=0;
 	for(var i=0;i<4;i++){
 		result=dukaqi.Conn();		
-		if(result==0) break;
-		if(result<0)
+		if(result==0) break;		
+		if(result<0){
 			dukaqi.Disconn();
+		}
 	}
 	switch(result){
 		case -1:alert('没有检测到读卡器！！！'); break;

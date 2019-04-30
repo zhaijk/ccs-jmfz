@@ -20,7 +20,7 @@ import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
 import com.derun.jczb.model.ZhuandaigongTotal;
 import com.derun.jczb.service.CommitService;
-import com.derun.util.DataTypeConverter;
+//import com.derun.util.DataTypeConverter;
 /**
  *     油料调拨 解放军 油库  武警油库 转代供  
  * @author Administrator

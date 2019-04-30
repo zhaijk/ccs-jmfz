@@ -24,6 +24,7 @@ public class QuotaTotalReport {
 	@Autowired 
 	private DepartmentIncomeMapper departmentIncome;
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("quota_total_report.htm")
 	public String init(ModelMap model) {
 		
@@ -42,6 +43,7 @@ public class QuotaTotalReport {
 		model.put("cur_oil", cur_oil);
 		return "quota_total_report";
 	}
+	@SuppressWarnings("unchecked")
 	private String getXmlString() {
 		StringBuffer result = new StringBuffer();
 		List<YouliaozhibiaoReport> cur_youliaozhibiao=new ArrayList<YouliaozhibiaoReport>();

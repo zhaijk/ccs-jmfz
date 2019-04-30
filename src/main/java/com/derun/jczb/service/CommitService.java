@@ -5,7 +5,7 @@ import java.util.List;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Diaobodan;
 import com.derun.jczb.model.OilDictionary;
-import com.derun.jczb.model.YouKuSunHao;
+
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
 

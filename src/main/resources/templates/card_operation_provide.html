@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <th:block th:replace="head-css.html"></th:block>
@@ -7,14 +7,22 @@
 <body>	
 <div class="box">
 <div class="box-header with-border">
-	 请输入卡信息
+	 <table style="width:60%">
+	 <tr>
+	 	<td align="center" style="width:20%">IC卡管理</td>
+	 	<td style="width:20%"><button  id="readcardinfo"  class="btn btn-info btn-block" >读卡</button></td>
+    	<td style="width:20%"><button  id="validcard" class="btn btn-info btn-block" >验证</button></td>
+    	<td style="width:20%"><button  id="resetcardinfo"  class="btn btn-info btn-block" >重置</button></td>
+    	<td style="width:20%"><button  id="providecard"  class="btn btn-info btn-block" >新增</button></td>
+	 </tr>
+	 </table>
 </div>
 <div class="box-body with-border">
     <table style="width:100%">
     	<tr>
     		<td><input type="text" class="form-control pull-right" disabled id="cardcode" placeholder="请输入卡号"></td>
 			<td>
-				<select class="form-control" id="departs">
+				<select class="form-control" id="cardtype">
 					<option value="all">选择卡类型</option>
 					<option value="0">实物卡</option>
 					<option value="1">价拨卡</option>
@@ -22,57 +30,59 @@
 				</select>
 			</td>
 			<td>
-				<select class="form-control" id="departs">
+				<select class="form-control" id="carcode">
 					<option value="all">选择车辆</option>
-					<th:block th:each="obj:${departmentInfos}">
+					<th:block th:each="obj:${carInfos}">
+					<option th:value="${obj.departmentCode}" th:text="${obj.autoCarCode}"></option>
+					</th:block>					
+				</select>
+			</td> 
+			<td>
+				<select class="form-control" id="departmentcode">
+					<option value="all">选择部门</option>
+					<th:block th:each="obj:${departInfos}">
 					<option th:value="${obj.departmentCode}" th:text="${obj.departmentName}"></option>
 					</th:block>					
 				</select>
 			</td> 
 			<td>
-				<select class="form-control" id="departs">
+				<select class="form-control" id="oiltype">
 					<option value="all">选择油品</option>
-					<th:block th:each="obj:${departmentInfos}">
-					<option th:value="${obj.departmentCode}" th:text="${obj.departmentName}"></option>
+					<th:block th:each="obj:${oilInfos}">
+					<option th:value="${obj.oilType}" th:text="${obj.name}"></option>
 					</th:block>					
 				</select>
 			</td>  
 			<td>
-				<select class="form-control" id="departs">
+				<select class="form-control" id="vailddate">
 					<option value="all">选择卡有效期</option>
-					<option value="all">当年</option>
-					<option value="all">两年</option>
-					<option value="all">十年</option>
+					<option value="0">当年</option>
+					<option value="2">一年</option>
+					<option value="10">十年</option>
 				</select>
-			</td> 
-			<td><input type="text" class="form-control pull-right" id="inputcardcode" placeholder="请输入联系人"></td>
-			<td><input type="text" class="form-control pull-right" id="inputcardcode" placeholder="请输入联系电话"></td>		</tr>
+			</td>
+			<td rowspan="3"><object id="dukaqi"  CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object></td>
+		</tr>	
 		<tr>	
 			
-			<td><input type="text" class="form-control pull-right" id="inputcardcode" placeholder="每月固定性指标"></td>
-			<td><input type="text" class="form-control pull-right" id="fixcount" placeholder="单次加油限额"></td>
-			<td><input type="text" class="form-control pull-right" id="buzhucount" placeholder="补助指标"></td>
+			<td><input type="text" class="form-control pull-right" id="fixedquota" placeholder="每月固定性指标"></td>
+			<td><input type="text" class="form-control pull-right" id="maxoil" placeholder="单次加油限额"></td>
+			<td><input type="text" class="form-control pull-right" id="owner" placeholder="请输入联系人"></td>
+			<td><input type="text" class="form-control pull-right" id="phone" placeholder="请输入联系电话"></td>		
+    		<td colspan="2"><input type="text" class="form-control pull-right" id="memo" placeholder="备注"></td>		 
+    	</tr>
+    	<tr>    		
+    		<td><input type="text" class="form-control pull-right" id="allowancequota" placeholder="补助指标"></td>
+			<td><input type="text" class="form-control pull-right" id="maxcount" placeholder="卡限额指标"></td> 
 			<td>
 				<div class="input-group date">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar" ></i>
                   </div>
-                  <input type="text" readonly class="form-control pull-right" id="buzhudate" placeholder='补助过期日期'>
+                  <input type="text" readonly class="form-control pull-right" id="allowancedate" placeholder='补助过期日期'>
                 </div>
-            </td>  
-			<td><input type="text" class="form-control pull-right" id="maxcount" placeholder="卡限额指标"></td> 
-			<td colspan="2"><input type="text" class="form-control pull-right" id="memo" placeholder="备注"></td>		
-    	</tr>
-    	<tr>
-    		<td colspan="4">
-    			<button  id="readcardinfo" style="width:20%" class="btn btn-info " >读卡</button>
-    			<button  id="validcard" style="width:20%" class="btn btn-info " >验证</button>
-    			<button  id="resetcardinfo" style="width:20%" class="btn btn-info " >重置</button>
-    			<button  id="providecard" style="width:20%" class="btn btn-info " >新增</button>
-    		</td>
-    		<td colspan="3">
-    			<object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
-    		</td>
+            </td>
+            
     	</tr>
     </table>
     </div>
@@ -105,7 +115,7 @@
 var table;
 function loaddata(){
 	table=$('#cardinfo_table').DataTable({	
-		//'pageLength': 		7,
+		'pageLength': 		6,
 		'bDestroy': 		true,  
 		'processing': 		true,
 		'searching' : 		true,
@@ -153,7 +163,7 @@ function loaddata(){
 }
 $(function(){
     loaddata()
-    $('#buzhudate').datepicker({
+    $('#allowancedate').datepicker({
         todayHighlight:true,    	
         keyboardNavigation:true,
         clearBtn:true,
@@ -161,17 +171,72 @@ $(function(){
         language:'zh-Cn',
         format:'yyyy-mm-dd'
     })
+    $('#cardtype').val('0');
+    $('#cardtype').trigger('change');
 }) 
-var cardcode;
+var cardcode,flag;
 $("#readcardinfo").on('click',function(){
-	card_operation(function(flag){
-		cardcode=dukaqi.readcardinfo(6);
-		console.info(cardcode);
-		$("#cardcode").val(cardcode);
+	card_operation(function(data){
+		flag=data;
+		cardcode=dukaqi.readcardinfo(6);		
+		$("#cardcode").val(cardcode.substr(6,6));
 	})
 })
 $("#validcard").on('click',function(){
-	alert('验证通过.....');
+	if(flag!=5){//未发行的卡
+		alert('卡号:'+cardcode.substr(6,6)+' 不是可发行的卡');
+		return;
+	}
+	//cardtype=$('#cardtype').val();
+	//console.info(cardtype);
+	/* switch(cardtype){
+	case '0':alert('实物卡') ;break;
+	case '1':alert('价拨卡') ;break;
+	case '2':alert('机动卡') ;break;
+	default:
+		alert('请选择卡类型！！！');
+		return;
+	} */
+	switch(cardtype){
+		case '0':
+			if(carcode=='all'){
+				alert('请选择车辆号牌');
+				return;
+			}
+			if(oiltype=='all'){
+				alert('请选择油品');
+				return;
+			}
+			if(oiltype=='all'){
+				alert('请选择卡有效期');
+				return;
+			}
+			break;
+		case '1':
+			if(carcode=='all'){
+				alert('请选择车辆号牌');
+				return;
+			}
+			if(oiltype=='all'){
+				alert('请选择油品');
+				return;
+			}
+			if(oiltype=='all'){
+				alert('请选择卡有效期');
+				return;
+			}
+			break;
+		case '2':
+			if(oiltype=='all'){
+				alert('请选择卡有效期');
+				return;
+			}
+			break;
+		default:
+			alert('请选择卡类型！！！');
+			return;
+	} 
+	
 })
 $("#resetcardinfo").on('click',function(){
 	$("#cardcode").val('');
@@ -179,7 +244,46 @@ $("#resetcardinfo").on('click',function(){
 $("#providecard").on('click',function(){
 	alert('卡发行成功.....');
 })
-
+var cardtype,carcode;
+$("#cardtype").on('change',function(){
+	//console.info($(this).val())
+	cardtype=$(this).val()
+	switch(cardtype){
+	case 'all':
+		$('#carcode').attr('disabled',false)
+		$('#departmentcode').attr('disabled',true)
+		$('#allowancequota').attr('disabled',false)
+		$('#maxcount').attr('disabled',false)
+		$('#allowancedate').attr('disabled',false)		
+		break
+	case '0'://实物
+		$('#carcode').attr('disabled',false)
+		$('#departmentcode').attr('disabled',true)
+		$('#allowancequota').attr('disabled',false)
+		$('#maxcount').attr('disabled',false)
+		$('#allowancedate').attr('disabled',false)		
+		break
+	case '1'://价拨
+		$('#carcode').attr('disabled',false)
+		$('#departmentcode').attr('disabled',true)
+		$('#allowancequota').attr('disabled',true)
+		$('#maxcount').attr('disabled',true)
+		$('#allowancedate').attr('disabled',true)		
+		break;
+	case '2': //机动
+		$('#carcode').attr('disabled',true)
+		$('#allowancequota').attr('disabled',true)
+		$('#maxcount').attr('disabled',true)
+		$('#allowancedate').attr('disabled',true)		
+		$('#departmentcode').attr('disabled',false)		
+		break
+	}
+})
+var departmentcode
+$('#carcode').on('change',function(){
+	carcode=$(this).find("option:selected").text()
+	$('#departmentcode').val($(this).val())
+});
 </script>
 </body>
 </html>

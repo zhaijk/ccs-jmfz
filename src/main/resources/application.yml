@@ -15,7 +15,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver    
     url: jdbc:oracle:thin:@localhost:1521:oraclejczb
     username: wujing
-    password: wujing
+    password: iccard
     maximumPoolSize: 30
     minimumIdle: 5
     connectionTimeout: 300
