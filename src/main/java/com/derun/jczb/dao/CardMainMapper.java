@@ -1,7 +1,9 @@
 package com.derun.jczb.dao;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import com.derun.jczb.model.CardMain;
@@ -29,6 +31,8 @@ public interface CardMainMapper {
 	public List<CardMain>  queryCardInfos(String departmentCode,String date);
 	@Select("select * from iccard.card_main_view where cardcode  like #{departmentCode}||'%' and cardtype=0 and (destineGuideline>0 or buzhuzhibiao>0)  and cardstatus='正常' order by cardcode")
 	public List<CardMain>  queryCardMainInfos(String departmentCode);
-	@Select("select rownum as id,a.* ,b.departmentname as departmentname from (select * from iccard.card_main where cardcode like #{code} || '%' order by cardcode ) a ,iccard.department_info  b where a.cardcode like substr(b.departmentcode,0,6) ||'%' ")
+	@Select("select rownum as id,a.* ,b.departmentname as departmentname from (select * from iccard.card_main where cardcode like #{code} || '%' order by builddate desc ) a ,iccard.department_info  b where a.cardcode like substr(b.departmentcode,0,6) ||'%' ")
 	public List<CardMain>  queryCardinfos(String code);
+	@Insert("insert into iccard.card_main (cardcode,stationid,autocarcode,oiltype,destineguideline,carlimit,guidelinetype,cardstatus,builddate,operator,owner,phone,memo,cardtype,buzhuzhibiao,buzhudate,maxcount,tflag,fillcardterm) values(#{cardcode},#{stationid},#{autoCarCode},#{oilType},#{destineGuideline},#{carLimit},#{guidelinetype},#{cardstatus},#{buildDate},#{operator},#{owner},#{phone},#{memo},#{cardType},#{buzhuzhibiao},#{buzhuDate},#{maxcount},#{tflag},#{fillCardterm})")
+	public int insertOne(CardMain obj);
 }

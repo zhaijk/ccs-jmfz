@@ -26,7 +26,11 @@ public class DataTypeConverter {
 	}
 	public static int getIntYear() {
 		return LocalDate.now().getYear();
-	}	
+	}
+	public static String getDate(String count) {
+		String year=String.valueOf(LocalDate.now().getYear()+Integer.parseInt(count));		
+		return year+"-12-25";
+	}
 //	public static void main(String[] args) {
 //		//String str=getDate();
 //		System.out.println(getDate()+getYear());

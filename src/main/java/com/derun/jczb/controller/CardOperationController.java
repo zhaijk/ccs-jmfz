@@ -22,6 +22,7 @@ import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.DepartmentInfo;
 //import com.derun.jczb.model.JunquDictionary;
 import com.derun.jczb.model.OilInfo;
+import com.derun.util.DataTypeConverter;
 
 /**
  *     info:卡操作 清卡 初始化 有效  有效期 更换油品 更换车号  
@@ -35,7 +36,7 @@ import com.derun.jczb.model.OilInfo;
  *
  */
 @Controller
-public class CardOperation {
+public class CardOperationController {
 	
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
@@ -118,5 +119,17 @@ public class CardOperation {
 		List<CardMain> objs=cardMainMapper.queryCardinfos(danwei);
 		dataTableDO.setData(objs);
 		return dataTableDO;		
+	}
+	@PostMapping("card_operation_provide/insert")
+	@ResponseBody
+	public String insertCardInfo(CardMain obj) {		
+		obj.setCardcode(obj.getDepartmentCode().substring(0,6)+obj.getCardcode().substring(6, 12));
+		obj.setStationid(obj.getDepartmentCode());
+		obj.setCardstatus("正常");
+		obj.setBuildDate(DataTypeConverter.getDate());
+		obj.setOperator("测试");
+		obj.setFillCardterm(DataTypeConverter.getDate(obj.getFillCardterm()));
+		int result=cardMainMapper.insertOne(obj);
+		return result==1?"success":"failure";
 	}
 }

@@ -6,7 +6,7 @@ public class CardMain {
 	
 	private long  id;
 	private String cardcode;
-	private String stationID;
+	private String stationid;
 	private String autoCarCode;	
 	private String employee;
 	private int oilType;
@@ -214,14 +214,6 @@ public class CardMain {
 		this.phone = phone;
 	}
 
-	public String getStationID() {
-		return stationID;
-	}
-
-	public void setStationID(String stationID) {
-		this.stationID = stationID;
-	}
-
 	public double getStorageCount() {
 		return storageCount;
 	}
@@ -364,5 +356,30 @@ public class CardMain {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "CardMain [id=" + id + ", cardcode=" + cardcode + ", stationid=" + stationid + ", autoCarCode="
+				+ autoCarCode + ", employee=" + employee + ", oilType=" + oilType + ", cardPassword=" + cardPassword
+				+ ", storageCount=" + storageCount + ", cardCount=" + cardCount + ", noOperateCount=" + noOperateCount
+				+ ", destineGuideline=" + destineGuideline + ", carLimit=" + carLimit + ", guidelinetype="
+				+ guidelinetype + ", fillFlag=" + fillFlag + ", cardstatus=" + cardstatus + ", editDate=" + editDate
+				+ ", buildDate=" + buildDate + ", fillCardCode=" + fillCardCode + ", fillCardterm=" + fillCardterm
+				+ ", operator=" + operator + ", owner=" + owner + ", phone=" + phone + ", memo=" + memo
+				+ ", subsidyTotal=" + subsidyTotal + ", subsidyOnce=" + subsidyOnce + ", subsidyAllow=" + subsidyAllow
+				+ ", subsidyReason=" + subsidyReason + ", subsidyType=" + subsidyType + ", tflag=" + tflag
+				+ ", cardType=" + cardType + ", carCard=" + carCard + ", departmentCode=" + departmentCode
+				+ ", departmentname=" + departmentname + ", buzhuzhibiao=" + buzhuzhibiao + ", buzhuDate=" + buzhuDate
+				+ ", maxcount=" + maxcount + ", bufadate=" + bufadate + ", loseDate=" + loseDate + ", reuseDate="
+				+ reuseDate + ", mileage=" + mileage + "]";
+	}
+
+	public String getStationid() {
+		return stationid;
+	}
+
+	public void setStationid(String stationid) {
+		this.stationid = stationid;
 	}
 }
