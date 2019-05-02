@@ -38,6 +38,8 @@ public interface CarInfoMapper {
 	public int deleteOne(CarInfo obj);
 	@Select("select count(*)  from iccard.car_info")
 	public int counter();
+	@Select("select * from iccard.car_info  where departmentcode like #{code} || '%' order by fastDate")
+	public List<CarInfo> queryALLByDepartmentCode(String code);
 	@Select("select * from iccard.car_info where departmentcode like #{code} || '%' and autocarcode not in (select autocarcode from iccard.card_main where autocarcode is not null and cardcode like #{code} || '%')")
 	public List<CarInfo> queryUnuseCar(String code);
 	

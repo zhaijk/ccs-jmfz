@@ -3,7 +3,6 @@ D:\work space\jczb\src\main\java\com\derun\jczb\dao\ZhuandaigongMapper.java
 D:\work space\jczb\src\main\java\com\derun\jczb\controller\ProvideDepartmentQuota.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\ZdgCardTrades.java
 D:\work space\jczb\src\main\java\com\derun\jczb\controller\ZigouShiwuYouliao.java
-D:\work space\jczb\src\main\java\com\derun\jczb\controller\CardOperation.java
 D:\work space\jczb\src\main\java\com\derun\jczb\controller\NonICTradeManager.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\CardTrade.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\Nidiaobodancishu.java
@@ -83,6 +82,7 @@ D:\work space\jczb\src\main\java\com\derun\jczb\model\YoukuDictionary.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\NidiaobodanRecord.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\Viewdiaobodanrecord.java
 D:\work space\jczb\src\main\java\com\derun\jczb\controller\QueryCardIncomePayment.java
+D:\work space\jczb\src\main\java\com\derun\jczb\controller\CardOperationController.java
 D:\work space\jczb\src\main\java\com\derun\jczb\controller\QuotaManager.java
 D:\work space\jczb\src\main\java\com\derun\jczb\dao\OilDepotMapper.java
 D:\work space\jczb\src\main\java\com\derun\jczb\model\ZhiBiaoZhuanXiang.java

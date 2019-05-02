@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.derun.jczb.dao.DepartmentInfoMapper;
 import com.derun.jczb.dao.DepartmentRecordMapper;
 import com.derun.jczb.dao.OilInfoMapper;
-import com.derun.jczb.model.CardTrade;
+//import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.DepartmentRecord;
-import com.derun.jczb.model.OilDictionary;
+//import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.QueryDataVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.sun.media.jfxmedia.logging.Logger;
+//import com.github.pagehelper.PageInfo;
+//import com.sun.media.jfxmedia.logging.Logger;
 /**
  *   查询部门指标
  * @author Administrator
@@ -33,7 +33,7 @@ import com.sun.media.jfxmedia.logging.Logger;
 @Controller
 public class QueryDepartmentQuota {
 	
-	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
+//	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
 	
 	@Autowired
 	private DepartmentRecordMapper departmentRecordMapper;

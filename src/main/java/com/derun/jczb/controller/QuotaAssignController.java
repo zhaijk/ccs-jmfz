@@ -22,7 +22,7 @@ public class QuotaAssignController {
 	@GetMapping("quota_assign_managment.htm")
 	public String  init(ModelMap model) {
 		String departmentCode="090000000000";
-		String niandu="2016";
+//		String niandu="2016";
 		//上级调拨
 		Zhibiaorecord sjdb=quotaMapper.queryBy(1, 2016,departmentCode);
 		//上级调整

@@ -1,10 +1,11 @@
 package com.derun.jczb.dao;
 
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.derun.jczb.model.CardMain;
 import com.derun.jczb.model.ProvideSumInfo;
@@ -35,4 +36,14 @@ public interface CardMainMapper {
 	public List<CardMain>  queryCardinfos(String code);
 	@Insert("insert into iccard.card_main (cardcode,stationid,autocarcode,oiltype,destineguideline,carlimit,guidelinetype,cardstatus,builddate,operator,owner,phone,memo,cardtype,buzhuzhibiao,buzhudate,maxcount,tflag,fillcardterm) values(#{cardcode},#{stationid},#{autoCarCode},#{oilType},#{destineGuideline},#{carLimit},#{guidelinetype},#{cardstatus},#{buildDate},#{operator},#{owner},#{phone},#{memo},#{cardType},#{buzhuzhibiao},#{buzhuDate},#{maxcount},#{tflag},#{fillCardterm})")
 	public int insertOne(CardMain obj);
+	@Select("select * from iccard.card_main where cardcode=#{cardcode}")
+	public CardMain queryOne(CardMain obj);
+	@Update("update iccard.card_main set fillcardterm=#{fillCardterm} where cardcode=#{cardcode}")
+	public int updateValidDate(CardMain obj);
+	@Update("update iccard.card_main set destineguideline=#{destineGuideline},carlimit=#{carLimit},owner=#{owner},phone=#{phone},memo=#{memo} ,buzhuzhibiao=#{buzhuzhibiao},buzhudate=#{buzhuDate},maxcount=#{maxcount} where cardcode=#{cardcode}")
+	public int updateQuotaInfo(CardMain obj);
+	@Update("update iccard.card_main set oiltype=#{oilType} where cardcode=#{cardcode}")
+	public int updateOiltype(CardMain obj);
+	@Update("update iccard.card_main set autocarcode=#{autoCarCode} where cardcode=#{cardcode}")
+	public int updateCarcode(CardMain obj);
 }

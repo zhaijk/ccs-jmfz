@@ -132,4 +132,44 @@ public class CardOperationController {
 		int result=cardMainMapper.insertOne(obj);
 		return result==1?"success":"failure";
 	}
+	@GetMapping("card_operation_modify.htm")
+	public String modify(ModelMap model) {		
+		String departmentCode="72";
+		
+		List<OilInfo> oilInfos=oilInfoMapper.queryByOilInfo(departmentCode);
+		List<CarInfo> carInfos=carInfoMapper.queryALLByDepartmentCode("");
+		List<DepartmentInfo> departInfos=departInfoMapper.queryByDepartmentCode(departmentCode);
+		
+		model.put("departInfos", departInfos);
+		model.put("oilInfos",oilInfos);
+		model.put("carInfos",carInfos);
+		return "card_operation_modify";
+	}	
+	@PostMapping("card_operation_modify/getcardinfo")
+	@ResponseBody
+	public CardMain getCardInfo(CardMain obj) {
+		CardMain result=cardMainMapper.queryOne(obj);		
+		return result;
+	}
+	@PostMapping("card_operation_modify/update")
+	@ResponseBody
+	public String  updateCardInfo(CardMain obj,String flag) {
+		int result=0;
+		System.out.println(obj.toString());
+		switch(flag) {
+		case "carcode":
+			result=cardMainMapper.updateCarcode(obj);
+			break;
+		case "oiltype":
+			result=cardMainMapper.updateOiltype(obj);
+			break;
+		case "valid_date":
+			result=cardMainMapper.updateValidDate(obj);
+			break;
+		case "quota_info":
+			result=cardMainMapper.updateQuotaInfo(obj);
+			break;
+		}				
+		return result==1?"success":"failure";
+	}
 }

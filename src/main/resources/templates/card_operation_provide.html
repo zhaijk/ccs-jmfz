@@ -338,7 +338,7 @@ function insertCardInfo(){
 		data:{"cardcode":card_code,"autoCarCode":car_code,"departmentCode":department_code,"oilType":oil_type,"carLimit":maxoil,"destineGuideline":fixedquota,"guidelinetype":card_type=='1'?'1':'0',"owner":owner,"phone":phone,"memo":memo,"cardType":card_type,"buzhuzhibiao":allowancequota,"buzhuDate":allowancedate,"maxcount":maxcount,"fillCardterm":valid_date},
 		success:function(data){
 			alert(data);
-			window.location.reload();
+			window.reload();
 		},
 		error:function(xhr){
 			alert(xhr.status + ' - ' + xhr.statusText);

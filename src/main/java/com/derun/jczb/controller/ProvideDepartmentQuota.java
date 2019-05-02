@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,7 +24,7 @@ import com.derun.jczb.dao.DepartmentIncomeMapper;
 import com.derun.jczb.dao.DepartmentInfoMapper;
 import com.derun.jczb.dao.DepartmentRecordMapper;
 import com.derun.jczb.dao.OilInfoMapper;
-import com.derun.jczb.dao.OilTypeMapper;
+//import com.derun.jczb.dao.OilTypeMapper;
 import com.derun.jczb.model.DepartmentInfo;
 import com.derun.jczb.model.DepartmentProvideInfo;
 import com.derun.jczb.model.DepartmentRecord;
@@ -36,13 +36,13 @@ import com.derun.util.DataTypeConverter;
 @Controller
 public class ProvideDepartmentQuota {
 	
-	private Logger logger=LoggerFactory.getLogger(ProvideDepartmentQuota.class);
+//	private Logger logger=LoggerFactory.getLogger(ProvideDepartmentQuota.class);
 	@Autowired 
 	private  DepartmentInfoMapper  departmentInfoMapper;
 	@Autowired 
 	private  DepartmentIncomeMapper  departmentIncomeMapper;
-	@Autowired 
-	private  OilTypeMapper  oilTypeMapper;
+//	@Autowired 
+//	private  OilTypeMapper  oilTypeMapper;
 	@Autowired 
 	private  OilInfoMapper  oilInfoMapper;
 	@Autowired
@@ -60,12 +60,12 @@ public class ProvideDepartmentQuota {
 		double shouRu = 0.0;
 		double zhiChu = 0.0;
 		double luRuZhiChu = 0.0;
-		double putValue = 0.0;
-		double sjValue = 0.0;
-		
-		double old = 0.0;
-		double put = 0.0;
-		double fafang = 0.0;
+//		double putValue = 0.0;
+//		double sjValue = 0.0;
+//		
+//		double old = 0.0;
+//		double put = 0.0;
+//		double fafang = 0.0;
 		
 		String departmentCode="7200";
 		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
@@ -130,7 +130,7 @@ public class ProvideDepartmentQuota {
 				}catch(NullPointerException e) {
 					luRuZhiChu=0;
 				}
-				try {
+				/*try {
 					putValue=kffs.get(oilCode);//固定发放量
 				}catch(NullPointerException e) {
 					putValue=0;
@@ -139,7 +139,7 @@ public class ProvideDepartmentQuota {
 					sjValue=ksjffs.get(oilCode);//实际发放量
 				}catch(NullPointerException e) {
 					sjValue=0;
-				}				
+				}				*/
 				/*logger.info(obj.getDepartmentName()+oil.getName()+":="+"*收入："+shouRu+"*支出："+zhiChu+"*录入"+luRuZhiChu+"*re"+(shouRu - zhiChu
 						- luRuZhiChu));*/
 				oiltypeSums.add(DataTypeConverter.d2d(shouRu - zhiChu	- luRuZhiChu));

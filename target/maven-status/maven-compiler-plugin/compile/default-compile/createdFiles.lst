@@ -82,8 +82,8 @@ com\derun\jczb\model\SwYlLzZbTjReport.class
 com\derun\jczb\ShiroConfig.class
 com\derun\jczb\WebSocketConfig.class
 com\derun\jczb\dao\OilTypeMapper.class
-com\derun\jczb\controller\CardOperation.class
 com\derun\jczb\controller\SupplyDepartmentManager.class
+com\derun\jczb\controller\CardOperationController.class
 com\derun\jczb\model\ZhiBiaoPutLinShi.class
 com\derun\jczb\controller\NonICTradeManager.class
 com\derun\jczb\model\FillCardTime.class

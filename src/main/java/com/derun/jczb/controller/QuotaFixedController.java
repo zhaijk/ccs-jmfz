@@ -7,7 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.derun.jczb.dao.QuotaMapper;
-import com.derun.jczb.model.DeparDictionary;
+//import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Zhibiaorecord;
 import com.derun.util.DataTypeConverter;
 
@@ -20,7 +20,7 @@ public class QuotaFixedController {
 	@GetMapping("quota_fixed_managment.htm")
 	public String  init(ModelMap model) {
 		String departmentCode="090000000000";
-		String niandu="2016";
+//		String niandu="2016";
 		//上级调拨
 		Zhibiaorecord sjdb=quotaMapper.queryBy(1, 2016,departmentCode);
 		//上级调整

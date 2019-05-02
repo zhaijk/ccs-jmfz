@@ -69,12 +69,12 @@ public class ProvideCardQuota {
 		double shouRu = 0.0;
 		double zhiChu = 0.0;
 		double luRuZhiChu = 0.0;
-		double putValue = 0.0;
-		double sjValue = 0.0;
-		
-		double old = 0.0;
-		double put = 0.0;
-		double fafang = 0.0;
+//		double putValue = 0.0;
+//		double sjValue = 0.0;
+//		
+//		double old = 0.0;
+//		double put = 0.0;
+//		double fafang = 0.0;
 		
 		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
 		//部门信息 油品信息
@@ -138,7 +138,7 @@ public class ProvideCardQuota {
 				}catch(NullPointerException e) {
 					luRuZhiChu=0;
 				}
-				try {
+				/*try {
 					putValue=kffs.get(oilCode);//固定发放量
 				}catch(NullPointerException e) {
 					putValue=0;
@@ -147,7 +147,7 @@ public class ProvideCardQuota {
 					sjValue=ksjffs.get(oilCode);//实际发放量
 				}catch(NullPointerException e) {
 					sjValue=0;
-				}				
+				}				*/
 				logger.info(obj.getDepartmentName()+oil.getName()+":="+"*收入："+shouRu+"*支出："+zhiChu+"*录入"+luRuZhiChu+"*re"+(shouRu - zhiChu
 						- luRuZhiChu));
 				oiltypeSums.add(DataTypeConverter.d2d(shouRu - zhiChu	- luRuZhiChu));
@@ -192,7 +192,7 @@ public class ProvideCardQuota {
 		//提取当前日期
 		String strTodayDate=LocalDate.now().toString();
 		String strTodayTime=LocalTime.now().withNano(0).toString();
-		String departmentCode="7200";
+//		String departmentCode="7200";
 //		System.out.println(cardcode+" "+oiltype+" "+guidline);
 //		//固定指标发放
 		CardProvideReport cardProvideReport = new CardProvideReport();
@@ -254,7 +254,7 @@ public class ProvideCardQuota {
 		String cardCode=departmentCode.substring(0, 6);
 		//部门收入合计
 		List<ProvideSumInfo> bmsr=departmentRecordMapper.queryDepartmentRecordSum(cardCode+"000000",jiezhuanDate);
-		Map<String,Double> bmsrs=new HashMap<String,Double>();
+//		Map<String,Double> bmsrs=new HashMap<String,Double>();
 		for(ProvideSumInfo objInfo:bmsr) {
 			//bmsrs.put(objInfo.getOilType(), objInfo.getSum());
 			if(objInfo.getOilType().equals(oilCode)) {
@@ -263,7 +263,7 @@ public class ProvideCardQuota {
 		}
 		//部门发放  实物卡 机动卡
 		List<ProvideSumInfo> bmff=cardProvideMapper.querySumCardProvideAllCard(cardCode,jiezhuanDate);
-		Map<String,Double> bmffs=new HashMap<String,Double>();
+//		Map<String,Double> bmffs=new HashMap<String,Double>();
 		for(ProvideSumInfo objInfo:bmff) {
 			//bmffs.put(objInfo.getOilType(), objInfo.getSum());
 			if(objInfo.getOilType().equals(oilCode)) {
@@ -271,14 +271,14 @@ public class ProvideCardQuota {
 			}
 		}
 		//卡发放量
-		List<ProvideSumInfo> kff=cardMainMapper.querySumCardProvideFix(cardCode);
-		Map<String,Double> kffs=new HashMap<String,Double>();
-		for(ProvideSumInfo objInfo:kff) {
+//		List<ProvideSumInfo> kff=cardMainMapper.querySumCardProvideFix(cardCode);
+//		Map<String,Double> kffs=new HashMap<String,Double>();
+		/*for(ProvideSumInfo objInfo:kff) {
 			//kffs.put(objInfo.getOilType(), objInfo.getSum());
 //			if(objInfo.getOilType().equals(oilCode)) {
 //				zhiChu=objInfo.getSum();
 //			}
-		}
+		}*/
 		//卡已发放量
 		List<ProvideSumInfo> ksjff=cardMainMapper.querySumCardProvide(departmentCode, jiezhuanDate);
 		Map<String,Double> ksjffs=new HashMap<String,Double>();
@@ -287,7 +287,7 @@ public class ProvideCardQuota {
 		}
 		//非IC卡消耗
 		List<ProvideSumInfo> ficxh=cardTradeMapper.querysumCardTradeNonIC(cardCode, jiezhuanDate);
-		Map<String,Double> ficxhs=new HashMap<String,Double>();
+//		Map<String,Double> ficxhs=new HashMap<String,Double>();
 		for(ProvideSumInfo objInfo:ficxh) {
 			//ficxhs.put(objInfo.getOilType(), objInfo.getSum());
 			if(objInfo.getOilType().equals(oilCode)) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.derun.jczb.dao.CardProvideMapper;
 import com.derun.jczb.dao.DepartmentInfoMapper;
-import com.derun.jczb.dao.DepartmentRecordMapper;
+//import com.derun.jczb.dao.DepartmentRecordMapper;
 import com.derun.jczb.dao.OilInfoMapper;
 import com.derun.jczb.model.CardProvideReport;
-import com.derun.jczb.model.CardTrade;
+//import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.DepartmentInfo;
-import com.derun.jczb.model.DepartmentRecord;
-import com.derun.jczb.model.OilDictionary;
+//import com.derun.jczb.model.DepartmentRecord;
+//import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.QueryDataVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.sun.media.jfxmedia.logging.Logger;
+//import com.github.pagehelper.PageInfo;
+//import com.sun.media.jfxmedia.logging.Logger;
 
 
 @Controller
 public class QueryCardQuota {
 	
-	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
+//	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
 	
 	@Autowired
 	private CardProvideMapper cardProvideMapper;
@@ -57,7 +57,7 @@ public class QueryCardQuota {
 	@PostMapping("card_quota_query/datas")
 	@ResponseBody
 	public QueryDataVO<CardProvideReport> query(String departs,String oiltypes,String sendtype,String cardcode,String writecard,String querydatestart,String querydatestop,String guidelinetype,HttpServletRequest request,int draw,int start ,int length){//,String[] columns,String[] order,String[] search){
-		String departmentCode="7200";
+//		String departmentCode="7200";
 		String jiezhuanDate="";
 
 //		logger.info(draw+" "+start+" "+length+" ");//+columns+" "+order+" "+search);

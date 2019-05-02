@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +30,7 @@ import com.github.pagehelper.PageHelper;
 @Controller
 public class QueryCardTradeNoLocal {
 	
-	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
+//	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
 	
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
@@ -55,7 +55,7 @@ public class QueryCardTradeNoLocal {
 	@PostMapping("card_trade_nolocal_query/datas")
 	@ResponseBody
 	public QueryDataVO<CardTrade> query(String departs,String oiltypes,String cardtype,String cardcode,String carcode,String querydatestart,String querydatestop,HttpServletRequest request,int draw,int start ,int length){//,String[] columns,String[] order,String[] search){
-		String departmentCode="7200";
+//		String departmentCode="7200";
 		String jiezhuanDate="";
 
 //		logger.info(draw+" "+start+" "+length+" ");//+columns+" "+order+" "+search);

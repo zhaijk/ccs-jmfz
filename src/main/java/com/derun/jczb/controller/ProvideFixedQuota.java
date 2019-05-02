@@ -1,25 +1,25 @@
 package com.derun.jczb.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
 //import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,7 +30,7 @@ import com.derun.jczb.dao.DepartmentIncomeMapper;
 import com.derun.jczb.dao.DepartmentInfoMapper;
 import com.derun.jczb.dao.DepartmentRecordMapper;
 import com.derun.jczb.dao.OilInfoMapper;
-import com.derun.jczb.dao.OilTypeMapper;
+//import com.derun.jczb.dao.OilTypeMapper;
 import com.derun.jczb.model.CardMain;
 import com.derun.jczb.model.CardProvideReport;
 import com.derun.jczb.model.DepartmentInfo;
@@ -44,13 +44,13 @@ import com.google.common.base.Optional;
 @Controller
 public class ProvideFixedQuota {
 	
-	private Logger logger=LoggerFactory.getLogger(ProvideFixedQuota.class);
+//	private Logger logger=LoggerFactory.getLogger(ProvideFixedQuota.class);
 	@Autowired 
 	private  DepartmentInfoMapper  departmentInfoMapper;
 	@Autowired 
 	private  DepartmentIncomeMapper  departmentIncomeMapper;
-	@Autowired 
-	private  OilTypeMapper  oilTypeMapper;
+//	@Autowired 
+//	private  OilTypeMapper  oilTypeMapper;
 	@Autowired 
 	private  OilInfoMapper  oilInfoMapper;
 	@Autowired
@@ -71,9 +71,9 @@ public class ProvideFixedQuota {
 		double putValue = 0.0;
 		double sjValue = 0.0;
 		
-		double old = 0.0;
-		double put = 0.0;
-		double fafang = 0.0;
+//		double old = 0.0;
+//		double put = 0.0;
+//		double fafang = 0.0;
 		
 		String departmentCode="7200";
 		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
@@ -220,7 +220,7 @@ public class ProvideFixedQuota {
 		for(DepartmentInfo departmentInfo:departmentInfos) {
 			departmentCode=departmentInfo.getDepartmentCode();
 			//判断部门剩余指标是否大于本次发放量
-			boolean flag=isProvide(departmentCode);
+//			boolean flag=isProvide(departmentCode);
 			//查询最后一次固定指标发放日期
 			boolean sendDateFlag=false;
 			try {
@@ -244,7 +244,7 @@ public class ProvideFixedQuota {
 					int sendFlag=cardTradeMapper.queryCardMaxSendFlag(obj.getCardcode());
 					cardProvideReport.setSendFlag(sendFlag + 1);					
 					//获取卡号
-					String cardCode=obj.getCardcode();					
+//					String cardCode=obj.getCardcode();					
 					// 查看卡上的最大限额指标,这里只有固定做处理
 					double maxCount = obj.getMaxcount();					
 					if(maxCount>0) {
@@ -283,9 +283,9 @@ public class ProvideFixedQuota {
 	 * @param departmentCode
 	 * @return
 	 */
-	private boolean isProvide(String departmentCode) {
+	/*private boolean isProvide(String departmentCode) {
 		
-		boolean ok = true;
+//		boolean ok = true;
 		double shouRu = 0.0;
 		double zhiChu = 0.0;
 		double luRuZhiChu = 0.0;
@@ -351,19 +351,19 @@ public class ProvideFixedQuota {
 				return false;
 		}
 		return true;
-	}	
+	}	*/
 	/**
 	 *   获取年月  每月25日之后算下一个月  12月25之后算下一年
 	 * @return
 	 */
-	private String getYearMonth() {
+	/*private String getYearMonth() {
 		int day=LocalDate.now().getDayOfMonth();
 		int month=LocalDate.now().getMonthValue();
 		int year=LocalDate.now().getYear();
 		if(day>=25) month=month+1;
 		if(month>12) year=year+1;
 		return year+String.format("-%02d", month);
-	}
+	}*/
 	private String getDate() {
 		int day=LocalDate.now().getDayOfMonth();
 		int month=LocalDate.now().getMonthValue();

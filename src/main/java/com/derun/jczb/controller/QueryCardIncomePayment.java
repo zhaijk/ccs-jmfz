@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.LoggerFactory;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +17,7 @@ import com.derun.jczb.dao.DepartmentInfoMapper;
 
 import com.derun.jczb.dao.OilInfoMapper;
 import com.derun.jczb.model.CardSumInfos;
-import com.derun.jczb.model.CardTrade;
+//import com.derun.jczb.model.CardTrade;
 import com.derun.jczb.model.DepartmentInfo;
 
 import com.derun.jczb.model.OilInfo;
@@ -34,7 +34,7 @@ import com.github.pagehelper.PageHelper;
 @Controller
 public class QueryCardIncomePayment {
 	
-	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
+//	private org.slf4j.Logger logger=LoggerFactory.getLogger(GasStationManager.class);
 	
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
