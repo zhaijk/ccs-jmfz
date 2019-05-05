@@ -66,18 +66,18 @@
 	</thead>
 	<tbody>
     	<tr th:each="cardInfo:${cardInfos}">
-    		<td th:text="${cardInfo.cardCode}"></td>
+    		<td th:text="${cardInfo.cardcode}"></td>
     		<td th:text="${cardInfo.cardType}"></td>
     		<td th:text="${cardInfo.autoCarCode}"></td>
     		<td th:text="${cardInfo.autoCarCode}"></td>
     		<td th:text="${cardInfo.oilType}"></td>
     		<td th:text="${cardInfo.fillCardterm}"></td>
-    		<td th:text="${cardInfo.cardStatus}"></td>    		
+    		<td th:text="${cardInfo.cardstatus}"></td>    		
     		<td th:text="${cardInfo.maxcount}"></td>
     		<td th:text="${cardInfo.cardCount}"></td>
     		<td th:text="${cardInfo.noOperateCount}"></td>
     		<td th:text="${cardInfo.cardCount}"></td>
-    		<td ><input type="text" style="width:50%"/><input type="button" style="width:50%" value="发放"   th:onclick="'javascript:privode('+${cardInfo.cardCode}+','+${cardInfo.oilType}+',$(this))'"/>
+    		<td ><input type="text" style="width:50%"/><input type="button" style="width:50%" value="发放"   th:onclick="'javascript:privode('+${cardInfo.cardcode}+','+${cardInfo.oilType}+',$(this))'"/>
     	    </td>
     	</tr>
 	</tbody>
