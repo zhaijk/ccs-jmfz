@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +28,12 @@ public class IndexController {
 	private ResoureUrlMapper resoureUrlMapper;
 	@PostMapping("welcome")
 	public String main(ModelMap model,UserInfo user) {
+		/*System.out.println(user.getLoginname()+" "+user.getUsername());
+		//JSONObject jsonObject = new JSONObject();
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+        subject.login(token);
+        
 		//根据用户登录权限加载菜单
 		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
@@ -32,7 +41,15 @@ public class IndexController {
 			List<ResourceUrl> objs=resoureUrlMapper.queryResource(obj.getLevelname());
 			menus.put(obj.getLevelname(), objs);
 		}
-		model.put("menus", menus);
+		model.put("menus", menus);*/
 		return "main";
+	}
+	@GetMapping("not_login")
+	public String notLogin() {
+		return "not_login";
+	}
+	@GetMapping("not_role")
+	public String notRole() {
+		return "not_role";
 	}
 }
