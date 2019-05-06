@@ -1,7 +1,7 @@
 http:
-  port: 8089
+  port: 8081
 https:
-  port: 9443  
+  port: 443  
   ssl:
     key-store: keystore.p12
     key-store-type: PKCS12
@@ -13,9 +13,9 @@ spring:
     cache: false
   data-source:    
     driver-class-name: oracle.jdbc.OracleDriver    
-    url: jdbc:oracle:thin:@18.4.35.111:1521:orcl
+    url: jdbc:oracle:thin:@localhost:1521:oraclejczb
     username: wujing
-    password: wujing
+    password: iccard
     maximumPoolSize: 30
     minimumIdle: 5
     connectionTimeout: 300

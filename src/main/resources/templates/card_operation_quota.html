@@ -29,9 +29,9 @@
 	<tr class="success">
 		<td style="width:15%">油品类型</td>
 		<td><span id="oiltype"></span></td>
-		<td style="width:15%">记灰标志</td>
+		<td style="width:15%">入款次数</td>
 		<td><span id="sendflag"></span></td>
-		<td style="width:15%">记灰日期</td>
+		<td style="width:15%">入款日期</td>
 		<td><span id="senddate"></span></td>		
 	</tr>
 </table>
@@ -126,8 +126,9 @@ function load_data(cardcode,sendflag){
 			$("#cardtype").text(dukaqi.readcardinfo(2));
 			$("#oiltype").text(dukaqi.readcardinfo(11));
 			sendflag=dukaqi.readcardinfo(8);
-			$("#sendflag").text(sendflag);
-			$("#senddate").text(dukaqi.readcardinfo(17));
+			$("#sendflag").text(parseInt(sendflag));
+			var strdate=String(dukaqi.readcardinfo(17));
+			$("#senddate").text(strdate.substr(0,4)+"-"+strdate.substr(4,2)+"-"+strdate.substr(6,2));
 			$("#carno").text(dukaqi.readcardinfo(9));
 		});
 		$(this).attr('disabled',false);

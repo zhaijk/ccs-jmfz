@@ -97,7 +97,7 @@ public class CardOperationController {
 	}
 	@GetMapping("card_operation_provide.htm")
 	public String provide(ModelMap model) {		
-		String departmentCode="72";
+		String departmentCode="09";
 		
 		List<OilInfo> oilInfos=oilInfoMapper.queryByOilInfo(departmentCode);
 		List<CarInfo> carInfos=carInfoMapper.queryUnuseCar(departmentCode);
@@ -114,7 +114,7 @@ public class CardOperationController {
 	@GetMapping("card_operation_provide/datas")
 	@ResponseBody
 	public DataTableDO<CardMain> queryCardInfos() {
-		String danwei="7200";
+		String danwei="09";
 		DataTableDO<CardMain>  dataTableDO=new DataTableDO<CardMain>();
 		List<CardMain> objs=cardMainMapper.queryCardinfos(danwei);
 		dataTableDO.setData(objs);
@@ -134,7 +134,7 @@ public class CardOperationController {
 	}
 	@GetMapping("card_operation_modify.htm")
 	public String modify(ModelMap model) {		
-		String departmentCode="72";
+		String departmentCode="09";
 		
 		List<OilInfo> oilInfos=oilInfoMapper.queryByOilInfo(departmentCode);
 		List<CarInfo> carInfos=carInfoMapper.queryALLByDepartmentCode("");
