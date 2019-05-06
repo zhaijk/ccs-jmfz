@@ -13,10 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.derun.jczb.dao.ResoureUrlMapper;
+import com.derun.jczb.dao.UserInfoMapper;
+import com.derun.jczb.model.UserInfoIccard;
+
+/*import com.derun.jczb.dao.ResoureUrlMapper;
 import com.derun.jczb.dao.UserInfoMapper;
 import com.derun.jczb.model.ResourceUrl;
-import com.derun.jczb.model.UserInfoIccard;
+import com.derun.jczb.model.UserInfoIccard;*/
 
 
 @Controller
@@ -26,8 +29,8 @@ public class IndexController {
 	public String index() {
 		return "login_page";
 	}
-	@Autowired
-	private ResoureUrlMapper resoureUrlMapper;
+	/*@Autowired
+	private ResoureUrlMapper resoureUrlMapper;*/
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
@@ -53,13 +56,13 @@ public class IndexController {
 	}
 	@GetMapping("welcome")
 	public String main(ModelMap model) {
-		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
+		/*List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
 		for(ResourceUrl res: resourceUrls) {
 			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname());
 			menus.put(res.getLevelname(), objs);
 		}
-		model.put("menus", menus);
+		model.put("menus", menus);*/
 		return "main";
 	}
 	@GetMapping("not_login")
