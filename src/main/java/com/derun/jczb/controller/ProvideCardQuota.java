@@ -77,7 +77,7 @@ public class ProvideCardQuota {
 //		double put = 0.0;
 //		double fafang = 0.0;
 		
-		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String jiezhuanDate=sessionInfo.getJieZhuanDate();
 		//部门信息 油品信息
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmentCode(departmentCode);
 		//List<OilDictionary> oils=oilTypeMapper.queryALL();		
@@ -249,7 +249,7 @@ public class ProvideCardQuota {
 		double shouRu = 0.0;
 		double zhiChu = 0.0;
 		double luRuZhiChu = 0.0;
-		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String jiezhuanDate=sessionInfo.getJieZhuanDate();
 		//部门汇总信息
 		//List<DepartmentProvideInfo> departmentProvideInfos=new ArrayList<DepartmentProvideInfo>();
 		String cardCode=departmentCode.substring(0, 6);

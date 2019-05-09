@@ -31,6 +31,7 @@ import com.derun.jczb.model.DepartmentRecord;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.ProvideSumInfo;
 import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 //部门指标发放
 @Controller
@@ -53,7 +54,8 @@ public class ProvideDepartmentQuota {
 	private CardMainMapper  cardMainMapper;
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
-	
+	@Autowired
+	private SessionInfo sessionInfo;
 	
 	@GetMapping("department-quota-provide.htm")
 	public String init(ModelMap model) {
@@ -68,7 +70,7 @@ public class ProvideDepartmentQuota {
 //		double fafang = 0.0;
 		
 		String departmentCode="7200";
-		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String jiezhuanDate=sessionInfo.getJieZhuanDate();
 		//部门信息 油品信息
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmentCode(departmentCode);
 		//List<OilDictionary> oils=oilTypeMapper.queryALL();		

@@ -14,6 +14,7 @@ import com.derun.jczb.dao.CardTradeMapper;
 import com.derun.jczb.dao.DepartmentInfoMapper;
 //import com.derun.jczb.dao.OilInfoMapper;
 import com.derun.jczb.model.CardTrade;
+import com.derun.jczb.util.SessionInfo;
 
 @Controller
 public class NonICTradeManager {
@@ -27,7 +28,8 @@ public class NonICTradeManager {
 	private DepartmentInfoMapper departmentInfoMapper;
 //	@Autowired 
 //	private OilInfoMapper oilInfoMapper;
-	
+	@Autowired
+	private SessionInfo session;
 	@GetMapping("card-trade-nonIC-manager.htm")
 	public String init(ModelMap model) {
 //		//Cookie cookie=session.getCookie();
@@ -42,7 +44,7 @@ public class NonICTradeManager {
 	@ResponseBody
 	public DataTableDO<CardTrade> datas() {		
 		DataTableDO<CardTrade> dataTableDO=new DataTableDO<CardTrade>();
-		dataTableDO.setData(cardTradeMapper.queryNonIcTradeBy("1", "2015-12-26", "7400"));
+		dataTableDO.setData(cardTradeMapper.queryNonIcTradeBy("1", session.getJieZhuanDate(), session.getDepartmentCode()));
 		return dataTableDO;
 	}	
 }

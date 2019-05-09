@@ -17,6 +17,7 @@ import com.derun.jczb.dao.ResoureUrlMapper;
 //import com.derun.jczb.dao.UserInfoMapper;
 import com.derun.jczb.model.ResourceUrl;
 import com.derun.jczb.model.UserInfoIccard;
+import com.derun.jczb.util.SessionInfo;
 
 /*import com.derun.jczb.dao.ResoureUrlMapper;
 import com.derun.jczb.dao.UserInfoMapper;
@@ -35,6 +36,8 @@ public class IndexController {
 	private ResoureUrlMapper resoureUrlMapper;
 //	@Autowired
 //	private UserInfoMapper userInfoMapper;
+	@Autowired
+	private SessionInfo session;
 	
 	@PostMapping("login")
 	public String login(UserInfoIccard user) {		
@@ -48,10 +51,16 @@ public class IndexController {
 		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
 		for(ResourceUrl res: resourceUrls) {
-			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname());
-			menus.put(res.getLevelname(), objs);
+			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname(),session.getUserInfo().getPower());
+			System.out.println(objs);
+			if(objs.size()==0)
+				menus.remove(res.getLevelname());
+			else
+				menus.put(res.getLevelname(), objs);
 		}
-		model.put("menus", menus);
+		model.put("menus", menus);		
+		model.put("departmentname", session.getDepartmentName());
+		model.put("username", session.getUserInfo().getPower());
 		return "main";
 	}
 	@GetMapping("not_login")

@@ -20,4 +20,6 @@ public interface DepartDictionaryMapper {
 	public int  deleteOne(DeparDictionary obj);
 	@Select("select * from  jiangsu.depar_dictionary order by bumen_code")
 	public List<DeparDictionary>  queryBy();
+	@Select("select * from  depar_dictionary where bumen_code=#{code}")
+	public  DeparDictionary queryByCode(String bumen_code);
 }

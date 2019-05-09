@@ -67,8 +67,8 @@ public interface DepartmentIncomeMapper {
 	//代供外部
 	@Select("select * from wujing.zhibiao_zdg where dwcode=#{departmentId}")
 	public List<Zhibiao> queryDaigongWaibu(String departmentId);
-	@Select("select max(riqi) from wujing.jiezhuandate")
-	public String jiezhuandate();
+	/*@Select("select max(riqi) from jiezhuandate")
+	public String queyJiezhuandate();*/
 	//@Select("select iccard.Department_Income_sequence.nextval  from dual")
 	//public int getNextValIncomeID();
 	@Select("select nvl(sum(shuliang),0) from zdglinshi where danwei like #{danwei}||'%'")

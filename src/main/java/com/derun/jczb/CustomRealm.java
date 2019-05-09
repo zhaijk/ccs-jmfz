@@ -16,15 +16,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 //import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
+//import org.apache.shiro.subject.Subject;
 //import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
-import com.derun.jczb.dao.UserInfoMapper;
+//import com.derun.jczb.dao.UserInfoMapper;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
 //import com.derun.jczb.dao.UserInfoMapper;
@@ -35,7 +35,7 @@ public class CustomRealm extends AuthorizingRealm {
 	 
     private final static Logger logger = LoggerFactory.getLogger(CustomRealm.class);
     //@Autowired
-    private UserInfoMapper userinfoMapper;
+    //private UserInfoMapper userinfoMapper;
     
     /**  身份认证    
      * @param authenticationToken 用户身份信息 token

@@ -26,6 +26,7 @@ import com.derun.jczb.model.ZdgCardTrades;
 import com.derun.jczb.model.Zhibiao;
 import com.derun.jczb.model.Zhuandaigong;
 import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 @Controller
 public class QuotaManager {
@@ -39,26 +40,28 @@ public class QuotaManager {
 	private OilInfoMapper oilInfoMapper;
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
+	@Autowired
+	private SessionInfo sessionInfo;
 	
    	@GetMapping("quota-manager.htm")
 	public String init(ModelMap model) {
-   		String departmentId="740000000000",jiezhuanDate="2015-12-26";
-   		jiezhuanDate=departmentIncomeMapper.jiezhuandate();   		
+   		String departmentId=sessionInfo.getUserInfo().getDanwei();
+   		String jiezhuanDate=sessionInfo.getJieZhuanDate();   		
    		double swjiecu = 0,zdgjiecu = 0,heji = 0,shouru = 0,zhuanhuan = 0,daigong=0,jiabo=0,oilloss=0,lsZdg=0,zdgzhuanhuanhj=0;  
    		//部门指标收入 决策系统 二级部门分配给三级部门
    		shouru=Double.parseDouble(departmentIncomeMapper.queryZhiBiaoheji(departmentId));
    		//转换的指标
    		zhuanhuan=Double.parseDouble(departmentIncomeMapper.queryZhuanhuanHeji(departmentId, jiezhuanDate));
    		//支队指标转代供他部
-   		daigong=Double.parseDouble(departmentIncomeMapper.queryZhiDuiZhiBiaoZdgTaBu(departmentId));
+   		daigong=0;//Double.parseDouble(departmentIncomeMapper.queryZhiDuiZhiBiaoZdgTaBu(departmentId));
    		//加拨支出合计
-   		jiabo=Double.parseDouble(departmentIncomeMapper.queryJiaobozhichuheji(departmentId));
+   		jiabo=0;//Double.parseDouble(departmentIncomeMapper.queryJiaobozhichuheji(departmentId));
    		//油料损耗
-   		oilloss=Double.parseDouble(oillossMapper.queryOilLossheji(departmentId, jiezhuanDate));
+   		oilloss=0;//Double.parseDouble(oillossMapper.queryOilLossheji(departmentId, jiezhuanDate));
    		//临时转代供
-   		lsZdg=Double.parseDouble(departmentIncomeMapper.queryLinshiZhuandaigong(departmentId));
+   		lsZdg=0;//Double.parseDouble(departmentIncomeMapper.queryLinshiZhuandaigong(departmentId));
    		//转代供转换合计
-   		zdgzhuanhuanhj=Double.parseDouble(departmentIncomeMapper.queryZhuandaigongZhuanhuanHeji(departmentId, jiezhuanDate));
+   		zdgzhuanhuanhj=0;//Double.parseDouble(departmentIncomeMapper.queryZhuandaigongZhuanhuanHeji(departmentId, jiezhuanDate));
    		
    		//实物结存=收入-转换-代供-价拨-损耗
    		swjiecu=shouru-zhuanhuan-daigong-jiabo-oilloss;
@@ -75,8 +78,8 @@ public class QuotaManager {
 	}
 	@GetMapping("quota-shiwuzhuanhuan.htm")
 	public String shiwuzhuanhuan(ModelMap model) {
-   		String departmentId="720000000000",jiezhuanDate="2015-12-26";
-   		jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String departmentId=sessionInfo.getDepartmentCode();
+   		String jiezhuanDate=sessionInfo.getJieZhuanDate();
    		//logger.info(jiezhuanDate);
    		double swjiecu = 0,zdgjiecu = 0,heji = 0,shouru = 0,zhuanhuan = 0,daigong=0,jiabo=0,oilloss=0,lsZdg=0,zdgzhuanhuanhj=0;  
    		shouru=Double.parseDouble(departmentIncomeMapper.queryZhiBiaoheji(departmentId)==null?"0.0":departmentIncomeMapper.queryZhiBiaoheji(departmentId));
@@ -302,13 +305,15 @@ public class QuotaManager {
     @PostMapping("quota/shiwuzhuanhuan")
     @ResponseBody
     public String change(String danjuhao,double changenumber,double balance,double density,int code) {
+    	String departmentId=sessionInfo.getUserInfo().getDanwei();
+   		//String jiezhuanDate=sessionInfo.getJieZhuanDate();  
     	logger.info(danjuhao+" "+changenumber+" "+balance+" "+density);
     	DepartmentIncome obj=new DepartmentIncome();
     	obj.setOilType(code);
     	obj.setTonNum(changenumber);
     	obj.setDanjuhao(danjuhao);
     	obj.setDensity(density);
-    	obj.setDepartmentCode("740000000000");
+    	obj.setDepartmentCode(departmentId);
     	obj.setInputGuideline2(changenumber*(density*1000));
     	obj.setIncomType(1);
     	obj.setProvideDate2(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -318,8 +323,9 @@ public class QuotaManager {
     }
 	@GetMapping("quota-zhuangongzhuanhuan.htm")
 	public String zhuangonginit(ModelMap model) {
-		String departmentId="720000000000",jiezhuanDate="2015-12-26";
-   		jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String departmentId=sessionInfo.getUserInfo().getDanwei();
+   		String jiezhuanDate=sessionInfo.getJieZhuanDate();  
+   		jiezhuanDate=sessionInfo.getJieZhuanDate();
 		//启用的油品类型   		
    		List<OilDictionary> objs=oilInfoMapper.queryBy(departmentId);
    		model.put("oilTypeInfos", objs);

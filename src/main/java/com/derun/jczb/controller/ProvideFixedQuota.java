@@ -63,7 +63,7 @@ public class ProvideFixedQuota {
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
 	@Autowired
-	private SessionInfo  session;
+	private SessionInfo  sessionInfo;
 	
 	@GetMapping("fixed_quota_provide.htm")
 	public String init(ModelMap model) {
@@ -77,8 +77,8 @@ public class ProvideFixedQuota {
 //		double put = 0.0;
 //		double fafang = 0.0;
 		
-		String departmentCode=session.getDepartmentCode();
-		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
+		String departmentCode=sessionInfo.getDepartmentCode();
+		String jiezhuanDate=sessionInfo.getJieZhuanDate();
 		//部门信息 油品信息
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmentCode(departmentCode);
 		//List<OilDictionary> oils=oilTypeMapper.queryALL();		
@@ -199,7 +199,7 @@ public class ProvideFixedQuota {
 				index++;
 			}
 		}
-		departmentCode=session.getDepartmentCode();
+		departmentCode=sessionInfo.getDepartmentCode();
 		List<ProvideSumInfo> provideSumInfos=departmentIncomeMapper.querySumGuideline(departmentCode,jiezhuanDate);
 		for(ProvideSumInfo obj:provideSumInfos) {
 			obj.setSum(DataTypeConverter.d2d(obj.getSum()));
@@ -217,7 +217,7 @@ public class ProvideFixedQuota {
 		//提取当前日期
 		String strTodayDate=LocalDate.now().toString();
 		String strTodayTime=LocalTime.now().withNano(0).toString();
-		String departmentCode=session.getDepartmentCode();
+		String departmentCode=sessionInfo.getDepartmentCode();
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmenInfo(objs);
 		for(DepartmentInfo departmentInfo:departmentInfos) {
 			departmentCode=departmentInfo.getDepartmentCode();
