@@ -1,11 +1,16 @@
 package com.derun.jczb.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Userbaseinfo{
+public class Userbaseinfo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long userId;// 主键
 	private String loginname;// 登录名
 	private String username;// 用户名

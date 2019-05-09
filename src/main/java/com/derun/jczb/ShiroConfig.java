@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+//import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import java.util.LinkedHashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import org.apache.shiro.mgt.SecurityManager;
 
-//@Configuration
+@Configuration
 //@ComponentScan("com.derun.jczb")
 public class ShiroConfig {
 	
@@ -55,7 +55,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/not_role", "anon");
         //其余接口一律拦截
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-        filterChainDefinitionMap.put("/**", "roles[admin]");//"authc");
+        filterChainDefinitionMap.put("/**", "ssl,authc,roles[admin]");//"authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         logger.info("Shiro拦截器工厂类注入成功");
@@ -70,11 +70,11 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         logger.info("Shiro 设置realm.....");
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(Realm);
         return securityManager;
     }
     @Autowired
-    private CustomRealm customRealm;
+    private JCZBRealm Realm;
     /**
      * 自定义身份认证 realm;
      * <p>

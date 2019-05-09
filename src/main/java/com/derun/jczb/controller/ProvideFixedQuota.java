@@ -37,7 +37,8 @@ import com.derun.jczb.model.DepartmentInfo;
 import com.derun.jczb.model.DepartmentProvideInfo;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.ProvideSumInfo;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 import com.google.common.base.Optional;
 
 //固定指标发放
@@ -61,7 +62,8 @@ public class ProvideFixedQuota {
 	private CardMainMapper  cardMainMapper;
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
-	
+	@Autowired
+	private SessionInfo  session;
 	
 	@GetMapping("fixed_quota_provide.htm")
 	public String init(ModelMap model) {
@@ -75,7 +77,7 @@ public class ProvideFixedQuota {
 //		double put = 0.0;
 //		double fafang = 0.0;
 		
-		String departmentCode="7200";
+		String departmentCode=session.getDepartmentCode();
 		String jiezhuanDate=departmentIncomeMapper.jiezhuandate();
 		//部门信息 油品信息
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmentCode(departmentCode);
@@ -197,7 +199,7 @@ public class ProvideFixedQuota {
 				index++;
 			}
 		}
-		departmentCode="7200";
+		departmentCode=session.getDepartmentCode();
 		List<ProvideSumInfo> provideSumInfos=departmentIncomeMapper.querySumGuideline(departmentCode,jiezhuanDate);
 		for(ProvideSumInfo obj:provideSumInfos) {
 			obj.setSum(DataTypeConverter.d2d(obj.getSum()));
@@ -215,7 +217,7 @@ public class ProvideFixedQuota {
 		//提取当前日期
 		String strTodayDate=LocalDate.now().toString();
 		String strTodayTime=LocalTime.now().withNano(0).toString();
-		String departmentCode="7200";
+		String departmentCode=session.getDepartmentCode();
 		List<DepartmentInfo> departmentInfos=departmentInfoMapper.queryByDepartmenInfo(objs);
 		for(DepartmentInfo departmentInfo:departmentInfos) {
 			departmentCode=departmentInfo.getDepartmentCode();

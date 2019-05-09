@@ -11,17 +11,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.derun.jczb.dao.QuotaMapper;
 import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Zhibiaorecord;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 @Controller
 public class QuotaAssignController {
 	
 	@Autowired
 	private QuotaMapper quotaMapper;
-	
+	@Autowired
+	private SessionInfo sessioninfo;
 	@GetMapping("quota_assign_managment.htm")
 	public String  init(ModelMap model) {
-		String departmentCode="090000000000";
+//		String departmentCode="090000000000";
+		String departmentCode=sessioninfo.getDepartmentCode();
 //		String niandu="2016";
 		//上级调拨
 		Zhibiaorecord sjdb=quotaMapper.queryBy(1, 2016,departmentCode);

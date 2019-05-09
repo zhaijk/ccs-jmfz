@@ -37,8 +37,8 @@ import com.derun.jczb.model.DepartmentInfo;
 import com.derun.jczb.model.DepartmentProvideInfo;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.ProvideSumInfo;
-import com.derun.util.DataTypeConverter;
-//import com.google.common.base.Optional;
+import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 //单卡指标发放
 @Controller
@@ -61,11 +61,12 @@ public class ProvideCardQuota {
 	private CardMainMapper  cardMainMapper;
 	@Autowired
 	private CardTradeMapper cardTradeMapper;
-	
+	@Autowired
+	private SessionInfo sessionInfo;
 	
 	@GetMapping("card_quota_provide.htm")
 	public String init(ModelMap model) {
-		String departmentCode="7200";
+		String departmentCode=sessionInfo.getDepartmentCode();
 		double shouRu = 0.0;
 		double zhiChu = 0.0;
 		double luRuZhiChu = 0.0;
@@ -171,7 +172,7 @@ public class ProvideCardQuota {
 				index++;
 			}
 		}
-		departmentCode="7200";
+		//departmentCode="7200";
 		List<ProvideSumInfo> provideSumInfos=departmentIncomeMapper.querySumGuideline(departmentCode,jiezhuanDate);
 		for(ProvideSumInfo obj:provideSumInfos) {
 			obj.setSum(DataTypeConverter.d2d(obj.getSum()));
@@ -181,7 +182,7 @@ public class ProvideCardQuota {
 		model.put("departmentProvideInfos",departmentProvideInfos);
 		model.put("totalInfo", totalInfo);
 		
-		List<CardMain> cardInfos=cardMainMapper.queryCardMainInfos(departmentCode);
+		List<CardMain> cardInfos=cardMainMapper.queryCardMainInfos(sessionInfo.getDepartmentCode());
 		model.put("cardInfos", cardInfos);
 		return "card_quota_provide";
 	}

@@ -2,6 +2,9 @@ package com.derun.jczb;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -48,12 +51,26 @@ public class LogAspect {
         String url=request.getRequestURI();
         String menuStr=".htm";
         if(url.contains(menuStr)==true) {
-        	logger.info("日             志...................................");
+        	logger.info("加载或者刷新页面  日             志...................................");
         	logger.info(requestLog.toString());
+        	Subject subject = SecurityUtils.getSubject();
+        	String per=url.replace("/", "");        	
+        	logger.info(per+"   "+subject.isPermitted(per));
+        	//subject.isPermitted(per);
+        	if(subject.isPermitted(per)==false)
+        		throw new  AuthorizationException("没有访问权限..");
         }else {
         	logger.info("页面内部操作...................................");
         	logger.info(requestLog.toString());
         }
+        /*if(url.matches("(.*)htm")==true) {
+        	Subject subject = SecurityUtils.getSubject();
+        	String per=url.replace("/", "");        	
+        	System.out.println(per+"   "+subject.isPermitted(per));
+        	//subject.isPermitted(per);
+        	if(subject.isPermitted(per)==true)
+        		throw new  AuthorizationException("没有访问权限..");
+        }*/
     }
    /* @Before("controllerMethod()")
     public void releaseResource(JoinPoint point) {

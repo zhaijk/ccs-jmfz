@@ -140,74 +140,89 @@
 <script type='text/javascript' th:inline="javascript">
 $(function(){	
 	initTable();
-	$('#cardinfo_table').on('search.dt',function(settings) {
-	   	var cardcode=$("#cardinfo_table").DataTable().rows( {page:'current'} ).data()[0][0];
-	   	if(null!=cardcode){
-	   		$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
-	   	}
-		//console.info(this);
-		//var cardcode = $('#cardinfo_table tr td')[0].innerText;
-		//var cardcode = $("#cardinfo_table").DataTable().row(data).data();
-		
-		//var keyword=$("#cardinfo_table").DataTable().search();
-		//console.info(keyword);
-		//$('#sum_infos').DataTable().search(keyword).draw();
-		//$('#filterInfo').html( 'Currently applied global search: '+table.search() );
-		//$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
-		// var api = new $.fn.dataTable.Api( settings );
-		 
-	        // Output the data for the visible rows to the browser's console
-	        // You might do something more useful with it!
-	   	//console.log( api.rows( {page:'current'} ).data() );
-	   	//var cardcode=$("#cardinfo_table").DataTable().rows( {page:'current'} ).data()[0][0];
-	   	//if(null!=cardcode){
-	   	//	$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
-	   	//}
-	   	//$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
-	   	//console.info(datas[0][0]);
-	   	//.each( function (d) {
-	   	//    console.info(d);
-	   	//} );
-	});
+});
+//var flag=0;
+$('#cardinfo_table').on('search.dt',function(data) {
+	var len=$("#cardinfo_table tr").length;
+	if(len>1){
+   		var cardcode=$("#cardinfo_table").DataTable().rows( {page:'current'} ).data()[0][0];
+   		//if(flag!=2)
+   		$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
+   		//else 
+   		//	flag=flag+1;
+   		//alert(flag);
+	}
+   	//console.info(cardcode);
+   	/* if(typeof(cardcode)!='undefined'){
+   		$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
+   		console.info("关联");
+   	} */
+	//console.info(this);
+	//var cardcode = $('#cardinfo_table tr td')[0].innerText;
+	//var cardcode = $("#cardinfo_table").DataTable().row(data).data();
+	
+	//var keyword=$("#cardinfo_table").DataTable().search();
+	//console.info(keyword);
+	//$('#sum_infos').DataTable().search(keyword).draw();
+	//$('#filterInfo').html( 'Currently applied global search: '+table.search() );
+	//$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
+	// var api = new $.fn.dataTable.Api( settings );
+	 
+        // Output the data for the visible rows to the browser's console
+        // You might do something more useful with it!
+   	//console.log( api.rows( {page:'current'} ).data() );
+   	//var cardcode=$("#cardinfo_table").DataTable().rows( {page:'current'} ).data()[0][0];
+   	//if(null!=cardcode){
+   	//	$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
+   	//}
+   	//$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
+   	//console.info(datas[0][0]);
+   	//.each( function (d) {
+   	//    console.info(d);
+   	//} );
 });
 function initTable(){
 	$("#sum_infos").DataTable({		
  		"scrollY": 100,			//垂直滚动 		
-		'paging': false,
-		'ordering':  false,
-		'lengthChange' : false,
-		'info' : false,
+		'paging': 			false,
+		'ordering':  		false,
+		'lengthChange' : 	false,
+		'info' : 			false,
+		'bDestroy': 		true,  
+		'processing': 		true,
 		'searching' : true,
 		"oLanguage":{  				//语言转换
 			"sInfo": "显示第 _START_ 至 _END_ 项结果，共_TOTAL_ 项",
 			"sLengthMenu": "每页显示 _MENU_ 项结果",
 			"sSearch": "搜索:",
-			                    "oPaginate": {
-			                        "sFirst": "首页",
-			                        "sPrevious": "前一页",
-			                        "sNext": "后一页",
-			                        "sLast": "尾页"
-			                        }
-			                }
+			    "oPaginate": {
+			        "sFirst": "首页",
+			        "sPrevious": "前一页",
+			        "sNext": "后一页",
+			        "sLast": "尾页"
+			     }
+		 }
 	});
 	$("#cardinfo_table").DataTable({
 		'iDisplayLength': 6, 		//每页初始显示5条记录
-		'paging': true,
-		'ordering':  false,
-		'lengthChange' : false,
-		'info' : true,
-		'searching' : true,
+		'bDestroy': 	  true,  
+		'processing': 	  true,
+		'paging': 		  true,
+		'ordering':  	  false,
+		'lengthChange' :  false,
+		'info' : 		  true,
+		'searching' : 	  true,
 		"oLanguage":{  				//语言转换
 			"sInfo": "显示第 _START_ 至 _END_ 项结果，共_TOTAL_ 项",
 			"sLengthMenu": "每页显示 _MENU_ 项结果",
 			"sSearch": "搜索:",
-			                    "oPaginate": {
-			                        "sFirst": "首页",
-			                        "sPrevious": "前一页",
-			                        "sNext": "后一页",
-			                        "sLast": "尾页"
-			                        }
-			                }
+			"oPaginate": {
+			    "sFirst": "首页",
+			    "sPrevious": "前一页",
+			    "sNext": "后一页",
+			    "sLast": "尾页"
+			}
+		}
 	});
 }	
 

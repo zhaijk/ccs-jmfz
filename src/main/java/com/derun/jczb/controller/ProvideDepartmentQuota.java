@@ -30,7 +30,7 @@ import com.derun.jczb.model.DepartmentProvideInfo;
 import com.derun.jczb.model.DepartmentRecord;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.ProvideSumInfo;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
 
 //部门指标发放
 @Controller

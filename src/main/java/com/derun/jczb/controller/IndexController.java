@@ -13,7 +13,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.derun.jczb.dao.UserInfoMapper;
+import com.derun.jczb.dao.ResoureUrlMapper;
+//import com.derun.jczb.dao.UserInfoMapper;
+import com.derun.jczb.model.ResourceUrl;
 import com.derun.jczb.model.UserInfoIccard;
 
 /*import com.derun.jczb.dao.ResoureUrlMapper;
@@ -29,40 +31,27 @@ public class IndexController {
 	public String index() {
 		return "login_page";
 	}
-	/*@Autowired
-	private ResoureUrlMapper resoureUrlMapper;*/
 	@Autowired
-	private UserInfoMapper userInfoMapper;
+	private ResoureUrlMapper resoureUrlMapper;
+//	@Autowired
+//	private UserInfoMapper userInfoMapper;
 	
 	@PostMapping("login")
-	public String main(UserInfoIccard user) {
-		System.out.println("------------------------------------");
-		System.out.println(user.getLogin_name()+" "+user.getLogin_password());
-		//JSONObject jsonObject = new JSONObject();
-		//UserInfoIccard obj=userInfoMapper.queryByUsername(user);
-        //Subject subject = SecurityUtils.getSubject();
-        //UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getLogin_password());
-        //subject.login(token);
-        //System.out.println("..............  subject    ..............");
-		//根据用户登录权限加载菜单
-		/*List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
-		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
-		for(ResourceUrl res: resourceUrls) {
-			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname());
-			menus.put(res.getLevelname(), objs);
-		}
-		model.put("menus", menus);*/
+	public String login(UserInfoIccard user) {		
+        Subject currentUser = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getLogin_password());
+        currentUser.login(token);        
 		return "redirect:welcome";
 	}
 	@GetMapping("welcome")
-	public String main(ModelMap model) {
-		/*List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
+	public String welcome(ModelMap model) {
+		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
 		for(ResourceUrl res: resourceUrls) {
 			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname());
 			menus.put(res.getLevelname(), objs);
 		}
-		model.put("menus", menus);*/
+		model.put("menus", menus);
 		return "main";
 	}
 	@GetMapping("not_login")

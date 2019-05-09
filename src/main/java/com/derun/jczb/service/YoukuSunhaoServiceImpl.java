@@ -15,7 +15,7 @@ import com.derun.jczb.dao.YoukuSunhaoMapper;
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.YouKuSunHao;
 import com.derun.jczb.model.YoukuDictionary;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
 
 @Service
 public class YoukuSunhaoServiceImpl implements YoukuSunhaoService{

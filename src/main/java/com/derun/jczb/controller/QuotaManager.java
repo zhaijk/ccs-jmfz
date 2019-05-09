@@ -25,7 +25,7 @@ import com.derun.jczb.model.SunHao;
 import com.derun.jczb.model.ZdgCardTrades;
 import com.derun.jczb.model.Zhibiao;
 import com.derun.jczb.model.Zhuandaigong;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
 
 @Controller
 public class QuotaManager {

@@ -24,7 +24,7 @@ import com.derun.jczb.model.OilDictionary;
 
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
 
 /**
  **    调拨 解放军换单 

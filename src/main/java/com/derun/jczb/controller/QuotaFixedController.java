@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.derun.jczb.dao.QuotaMapper;
 //import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Zhibiaorecord;
-import com.derun.util.DataTypeConverter;
+import com.derun.jczb.util.DataTypeConverter;
 
 @Controller
 public class QuotaFixedController {

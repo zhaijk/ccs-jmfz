@@ -16,6 +16,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 //import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 //import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,17 +30,14 @@ import com.derun.jczb.dao.UserInfoMapper;
 //import com.derun.jczb.dao.UserInfoMapper;
 import com.derun.jczb.model.UserInfoIccard;
 
-@Component
+//@Component
 public class CustomRealm extends AuthorizingRealm {
 	 
     private final static Logger logger = LoggerFactory.getLogger(CustomRealm.class);
-    @Autowired
+    //@Autowired
     private UserInfoMapper userinfoMapper;
     
-    /**
-     *   info 获取身份验证信息
-     * Shiro中，最终是通过 Realm 来获取应用程序中的用户、角色及权限信息的。
-     *
+    /**  身份认证    
      * @param authenticationToken 用户身份信息 token
      * @return 返回封装了用户信息的 AuthenticationInfo 实例
      */
@@ -53,7 +51,13 @@ public class CustomRealm extends AuthorizingRealm {
     	user.setLogin_name(token.getUsername());
     	user.setLogin_password(new String(token.getPassword()));
     	//System.out.println("user:    "+user.getLogin_name()+" "+user.getLogin_password());
-    	UserInfoIccard obj=userinfoMapper.queryByUsername(user);
+    	//UserInfo obj=userinfoMapper.queryByUsername(user);
+    	/*if(null==obj)
+    		return null;
+    	else {
+    		Subject currentUser = SecurityUtils.getSubject();
+    		
+    	}*/
         //Subject subject = SecurityUtils.getSubject();
         //UsernamePasswordToken token = new UsernamePasswordToken(obj.getLogin_name(), obj.getLogin_password());
         //subject.login(token);
@@ -90,7 +94,7 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     /**
-     * 获取授权信息
+     * 权限控制
      *
      * @param principalCollection
      * @return
@@ -103,7 +107,7 @@ public class CustomRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(null);
 		authorizationInfo.setStringPermissions(null);*/
-    	logger.info("————权限认证————"+SecurityUtils.getSubject().getPrincipal());
+    	logger.info("————权限控制————"+SecurityUtils.getSubject().getPrincipal());
 //    	String userName=(String)principalCollection.getPrimaryPrincipal();
     	
     	//logger.info(userName+": "+principalCollection+" "+SecurityUtils.getSubject().getSession());

@@ -1,7 +1,14 @@
 package com.derun.jczb.model;
 
-public class UserInfoIccard {
+import java.io.Serializable;
 
+public class UserInfoIccard implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long user_id;
 	private String  login_name;
 	private String  user_name;
@@ -10,7 +17,7 @@ public class UserInfoIccard {
 	private String  phone;
 	private String  auditingpw;
 	private String  bankazhibiaocount;
-	
+	//private String  
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -58,5 +65,11 @@ public class UserInfoIccard {
 	}
 	public void setBankazhibiaocount(String bankazhibiaocount) {
 		this.bankazhibiaocount = bankazhibiaocount;
+	}
+	@Override
+	public String toString() {
+		return "UserInfoIccard [user_id=" + user_id + ", login_name=" + login_name + ", user_name=" + user_name
+				+ ", login_password=" + login_password + ", danwei=" + danwei + ", phone=" + phone + ", auditingpw="
+				+ auditingpw + ", bankazhibiaocount=" + bankazhibiaocount + "]";
 	}
 }

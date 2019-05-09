@@ -1,116 +1,67 @@
 package com.derun.jczb.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class UserInfo{
+public class UserInfo  implements Serializable{
 	
-	private Long userId;
-	private String oldPassword;
-	private String loginname;
-	private String username;
-	private String password;
-	private Long operatortype;
-	private String power;
-	private Date builddate;
-	private String operator;
-	private String note;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Long user_id;
+	private String login_name;
+	private String user_name;
+	private String login_password;
 	private String danwei;	
+	private String phone;
+	private String auditingpw;	
 	private Long   dankazhibiaocount;
-
-	public Date getBuilddate() {
-		return builddate;
+	public Long getUser_id() {
+		return user_id;
 	}
-
-	public void setBuilddate(Date builddate) {
-		this.builddate = builddate;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
-
+	public String getLogin_name() {
+		return login_name;
+	}
+	public void setLogin_name(String login_name) {
+		this.login_name = login_name;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getLogin_password() {
+		return login_password;
+	}
+	public void setLogin_password(String login_password) {
+		this.login_password = login_password;
+	}
 	public String getDanwei() {
 		return danwei;
 	}
-
 	public void setDanwei(String danwei) {
 		this.danwei = danwei;
 	}
-
-	public String getLoginname() {
-		return loginname;
+	public String getPhone() {
+		return phone;
 	}
-
-	public void setLoginname(String loginname) {
-		this.loginname = loginname;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-
-	public String getNote() {
-		return note;
+	public String getAuditingpw() {
+		return auditingpw;
 	}
-
-	public void setNote(String note) {
-		this.note = note;
+	public void setAuditingpw(String auditingpw) {
+		this.auditingpw = auditingpw;
 	}
-
-	public String getOperator() {
-		return operator;
-	}
-
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
-
-	public Long getOperatortype() {
-		return operatortype;
-	}
-
-	public void setOperatortype(Long operatortype) {
-		this.operatortype = operatortype;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPower() {
-		return power;
-	}
-
-	public void setPower(String power) {
-		this.power = power;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getOldPassword() {
-		return oldPassword;
-	}
-
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-
 	public Long getDankazhibiaocount() {
 		return dankazhibiaocount;
 	}
-
 	public void setDankazhibiaocount(Long dankazhibiaocount) {
 		this.dankazhibiaocount = dankazhibiaocount;
 	}
-	
 }
