@@ -52,7 +52,6 @@ public class IndexController {
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
 		for(ResourceUrl res: resourceUrls) {
 			List<ResourceUrl> objs=resoureUrlMapper.queryResource(res.getLevelname(),session.getUserInfo().getPower());
-			System.out.println(objs);
 			if(objs.size()==0)
 				menus.remove(res.getLevelname());
 			else
@@ -60,7 +59,8 @@ public class IndexController {
 		}
 		model.put("menus", menus);		
 		model.put("departmentname", session.getDepartmentName());
-		model.put("username", session.getUserInfo().getPower());
+		model.put("rolename", session.getUserInfo().getPower());
+		model.put("username", session.getUserInfo().getLoginname());
 		return "main";
 	}
 	@GetMapping("not_login")

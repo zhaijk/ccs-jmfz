@@ -1,20 +1,22 @@
-  <!-- Left side column. contains the sidebar -->
-  <div class="main-header">
-	<a href="#" class="sidebar-toggle brand-link" data-toggle="push-menu" role="button">
-    </a>
-  </div>
   <aside class="main-sidebar">   
   <section class="sidebar">      
   <ul class="sidebar-menu" data-widget="tree"> 
   <li class="treeview" th:each="sub_menu:${menus}">
       <a href="#">
-      <i class="fa fa-th"></i> <span th:text="${sub_menu.key}"></span>
+      <!-- <img th:src="${'img/'+sub_menu.key+'.jpg'}"> -->
+      <i class="fa fa-folder"></i>
+      <span th:text="${sub_menu.key}"></span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
       </span>
       </a>
       <ul class="treeview-menu">
-          <li th:each="res:${sub_menu.value}"><a href="#" th:onclick="|javascript:loadhtml('${res.url}')|"><i class="fa fa-square-o"></i><th:block th:text="${res.name}"></a></li>
+          <li th:each="res:${sub_menu.value}">
+          <a href="#" th:onclick="|javascript:loadhtml('${res.url}')|">
+          <i class="fa fa-folder-open"></i>
+          <th:block th:text="${res.name}">
+          </a>
+          </li>
       </ul>
   </li>        
   </ul>

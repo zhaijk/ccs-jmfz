@@ -23,6 +23,7 @@ import com.derun.jczb.model.DepartmentInfo;
 //import com.derun.jczb.model.JunquDictionary;
 import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 /**
  *     info:卡操作 清卡 初始化 有效  有效期 更换油品 更换车号  
@@ -48,6 +49,8 @@ public class CardOperationController {
 	private CarInfoMapper carInfoMapper;
 	@Autowired
 	private DepartmentInfoMapper departInfoMapper;
+	@Autowired
+	private SessionInfo sesionInfo;
 	
 	@GetMapping("card_operation_init.htm")
 	public String init() {
@@ -114,7 +117,7 @@ public class CardOperationController {
 	@GetMapping("card_operation_provide/datas")
 	@ResponseBody
 	public DataTableDO<CardMain> queryCardInfos() {
-		String danwei="0901";
+		String danwei=sesionInfo.getDepartmentCode();
 		DataTableDO<CardMain>  dataTableDO=new DataTableDO<CardMain>();
 		List<CardMain> objs=cardMainMapper.queryCardinfos(danwei);
 		dataTableDO.setData(objs);
@@ -134,7 +137,7 @@ public class CardOperationController {
 	}
 	@GetMapping("card_operation_modify.htm")
 	public String modify(ModelMap model) {		
-		String departmentCode="09";
+		String departmentCode=sesionInfo.getDepartmentCode();
 		
 		List<OilInfo> oilInfos=oilInfoMapper.queryByOilInfo(departmentCode);
 		List<CarInfo> carInfos=carInfoMapper.queryALLByDepartmentCode("");

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
 <head>
   <meta charset="utf-8">
-  <!--  <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+ <!--  <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
   <meta name=renderer  content=ie-stand>
   <title>油料管理综合系统</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -10,9 +10,9 @@
   <th:block th:replace="head-css.html"></th:block>
 </head>
 <!-- ADD THE CLASS sidebar-collapse TO HIDE THE SIDEBAR PRIOR TO LOADING THE SITE -->
-<body class="skin-blue sidebar-collapse sidebar-mini" ><!-- style="back-ground:url(img/system-operator.jpg) no-repeat fixed;background-size:cover;" -->
+<body class="skin-blue sidebar-collapse sidebar-mini" style="back-ground:url(img/system-operator.jpg) no-repeat fixed;background-size:cover;">
 	<div class="wrapper">
-       	<th:block th:include="top-nav.html"></th:block>
+		<th:block th:include="top-nav.html"></th:block>
 		<th:block th:include="menu-left-current.html"></th:block>
 		
   <!-- =============================================== -->
@@ -20,18 +20,6 @@
   <!-- Content Wrapper. Contains page content -->
   <!-- <div class="content-wrapper" style="background:url('img/work-flow.jpg') no-repeat fixed; background-size:100% 100%;"> -->
   		<div class="content-wrapper" >
-  		<section class="content-header">
-      	<h1>
-        	Sidebar Collapsed
-        	<small>Layout with collapsed sidebar on load</small>
-      	</h1>
-      	<ol class="breadcrumb">
-        	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        	<li><a href="#">Layout</a></li>
-        	<li class="active">Collapsed Sidebar</li>
-      	</ol>
-    	</section>
-  		
   <!-- Site wrapper -->
   		<section class="content"> <!-- style="background: url('img/system-operator.jpg') no-repeat fixed center; " -->
 		<!-- <div class="box">
@@ -79,15 +67,15 @@
       </div>
   	</section>
 	</div>
-	<!-- <footer class="main-footer">
-	<div class="pull-right hidden-xs">
+	<footer class="main-footer">
+<!-- 	<div class="pull-right hidden-xs">
 	<object id="dukaqi" width="100" height="100" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
-	</div>
+	</div> -->
     	<strong th:text="${departmentname}"><a href="https://127.0.0.1">德润科技</a>.
     	</strong>
     	<span th:text="${username}"></span>
     	<object id="dukaqi" style="width:100%;height:100%" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
-	</footer> -->
+	</footer>
 	<div class="control-sidebar-bg"></div>
 </div>
 <th:block th:replace="head-js.html"></th:block>
