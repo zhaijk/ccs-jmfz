@@ -13,7 +13,7 @@
       <ul class="treeview-menu">
           <li th:each="res:${sub_menu.value}">
           <a href="#" th:onclick="|javascript:loadhtml('${res.url}')|">
-          <i class="fa fa-folder-open"></i>
+          &nbsp&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i>
           <th:block th:text="${res.name}">
           </a>
           </li>
