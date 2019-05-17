@@ -6,8 +6,55 @@
   <title>卡操作</title>
   <th:block th:replace="head-css.html"></th:block>
 </head>
-<body>	
+<body>
 <div class="row">
+<div class="col-md-6">
+<div class="box">
+<div class="box-header with-border">
+读卡信息 
+<input id="btn_read_gray_card" style="width:20%" type="button" class="btn btn-success" value="读卡"/>
+</div>
+<div class="box-body with-border">
+<table class="table table-bordered table-hover" >
+	<tr class="success">
+		<td colspan="3" align="center">卡信息</td>
+		<td colspan="1" align="center">卡状态</td>
+		<td class="info" colspan="2" align="center" id="card_status"></td>
+	</tr>
+	<tr class="info">
+		<td style="width:15%">卡号</td>
+		<td ><span id="cardcode"  ></span></td>
+		<td style="width:15%">卡类型</td>
+		<td ><span id="cardtype"></span></td>
+		<td style="width:15%">车辆号牌</td>
+		<td ><span id="carno"></span></td>
+	</tr>	
+	<tr class="info">
+		<td>油品类型</td>
+		<td  ><span id="oiltype"></span></td>
+		<td>记灰标志</td>
+		<td  ><span id="grayflag"></span></td>
+		<td>记灰日期</td>
+		<td  ><span id="graydate"></span></td>		
+	</tr>
+	<tr class="info">
+		<td>卡上余额</td>
+		<td  ><span id="balance"></span></td>
+		<td>消费次数</td>
+		<td  ><span id="tradecounter"></span></td>
+		<td>有效期</td>
+		<td  ><span id="validdate"></span></td>		
+	</tr>
+	<tr class="success">
+		<td colspan="6" align="center">
+		<object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object>
+		</td>
+	</tr>
+</table>
+</div>
+</div>
+</div>
+
 <div class="col-md-6">
 <div class="box">
 <div class="box-header with-border">
@@ -36,7 +83,7 @@
 </div>
 </div>
 </div>
-<div class="col-md-4">
+<div class="col-md-6">
 <div class="box"> 
 <div class="box-header with-border">
 卡清除
@@ -50,17 +97,7 @@
 </div>
 </div>
 </div>
-<div class="col-md-2">
-<div class="box"> 
-<div class="box-body with-border">
-	读卡器驱动信息
-    <!-- <object id="dukaqi" CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object> -->
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-md-6">
+<div class="col-md-6 ">
 <div class="box"> 
 <div class="box-header with-border">
 卡有效
@@ -81,7 +118,7 @@
 </div>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-6 col-md-offset-6">
 <div class="box"> 
 <div class="box-header with-border">
 卡有效期
@@ -102,8 +139,8 @@
 </div>
 </div>
 </div>
-</div>
 
+<!-- <div class="col-md-6 col-md-offset-6">
 <div class="box"> 
 <div class="box-header with-border">
 卡解灰
@@ -111,29 +148,6 @@
 <input id="btn_gray_card" style="width:10%" type="button" class="btn btn-info " value="解灰 " disabled/>
 </div>
 <div class="box-body with-border">
-<div class="row">
-<div class="col-md-6">
-<table class="table table-bordered table-hover" >
-	<tr class="success"><td colspan="6" align="center">卡信息</td></tr>
-	<tr class="success">
-		<td style="width:15%">卡号</td>
-		<td ><span id="cardcode"  ></span></td>
-		<td style="width:15%">卡类型</td>
-		<td ><span id="cardtype"></span></td>
-		<td style="width:15%">车辆号牌</td>
-		<td ><span id="carno"></span></td>
-	</tr>	
-	<tr class="success">
-		<td>油品类型</td>
-		<td class="bg-green disabled color-palette"><span id="oiltype"></span></td>
-		<td>记灰标志</td>
-		<td class="bg-green disabled color-palette"><span id="grayflag"></span></td>
-		<td>记灰日期</td>
-		<td class="bg-green disabled color-palette"><span id="graydate"></span></td>		
-	</tr>
-</table>
-</div>
-<div class="col-md-6">
 <table class="table table-bordered   table-striped table-hover" >
 	<tr class="info"><td colspan="6" align="center">卡记灰信息</td></tr>
 	<tr class="info">
@@ -155,7 +169,7 @@
 </table>
 </div>
 </div>
-</div>
+</div> -->
 </div>
 
 <th:block th:replace="head-js.html"></th:block>
@@ -424,6 +438,71 @@
 		});
 		//$(this).attr('disabled',false);
 	});
+	var ccc=0;
+    setInterval(function(){
+    	card_operation(function(flag){
+			//alert(flag);
+			
+			card_status=flag
+			$("#card_status").html(flag+': '+ccc);
+			ccc++;
+			/* if(flag!=6){
+				//alert("不是灰卡！！！");
+				return;
+			} */
+			var s=(String(flag)).length;
+			console.info(flag+' '+s)
+			if(s>1){
+				$("#cardcode").text('');
+				$("#cardtype").text('');
+				$("#carno").text('');
+				$("#oiltype").text('');
+				$("#grayflag").text('');
+				$("#graydate").text('');
+				return;
+			}
+			switch(parseInt(flag)){
+				case 0: $("#card_status").text('正常卡');break;
+				case 1: $("#card_status").text('没有连接');break;
+				case 2: $("#card_status").text('参数卡');break;
+				case 3: $("#card_status").text('不是本系统的卡');break;
+				case 4: $("#card_status").text('密码错误');break;
+				case 5: $("#card_status").text('卡没有经过发行');break;
+				case 6: $("#card_status").text('灰卡');break;
+				case 7: $("#card_status").text('无效卡');break;
+			}
+			cardcode=dukaqi.readcardinfo(6);
+			$("#cardcode").text(cardcode);
+			var cardtype=dukaqi.readcardinfo(2);
+			switch(cardtype){
+			case '0': cardtype='实物卡';break;
+			case '1': cardtype='价拨卡';break;
+			case '2': cardtype='机动卡';break;
+			}
+			$("#cardtype").text(cardtype);
+			oiltype=dukaqi.readcardinfo(11);
+			$("#oiltype").text(oiltype);
+			gray_flag=dukaqi.readcardinfo(5);
+			var gray_str;
+			switch(gray_flag){
+			case '0': gray_str='正常卡';break;
+			case '3': gray_str='圈存记灰';break;
+			case '4': gray_str='加油记灰';break;
+			default:gray_str='未知类型';
+			}
+			$("#grayflag").text(gray_str);
+			var gray_datetime=dukaqi.readcardinfo(22);
+			gray_datetime=gray_datetime.substr(0,4)+"-"+gray_datetime.substr(4,2)+"-"+gray_datetime.substr(6,2)+" "+gray_datetime.substr(8,2)+":"+gray_datetime.substr(10,2);
+			$("#graydate").text(gray_datetime);
+			$("#carno").text(dukaqi.readcardinfo(9));
+			counter=dukaqi.ReadCardInfo(23);
+			balance=dukaqi.ReadCardInfo(25);
+			mileage=parseInt(counter)+1;
+			$("#balance").text(dukaqi.readcardinfo(21));
+			$("#tradecounter").text(dukaqi.readcardinfo(23));
+			$("#validdate").text(dukaqi.readcardinfo(3));
+		});
+    }, 5000);
 </script>
 </body>
 </html>

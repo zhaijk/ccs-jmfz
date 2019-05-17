@@ -1,10 +1,31 @@
   <aside class="main-sidebar">   
   <section class="sidebar">      
   <ul class="sidebar-menu" data-widget="tree"> 
-  <li class="treeview" th:each="sub_menu:${menus}">
+  <li class="treeview" th:each="sub_menu,status:${menus}">
       <a href="#">
-      <!-- <img th:src="${'img/'+sub_menu.key+'.jpg'}"> -->
-      <i class="fa fa-folder"></i>
+      <th:block th:switch="${sub_menu.key}">
+      		<th:block th:case="'指标管理'">
+      		<i class="fa fa-pie-chart"></i>
+      		</th:block>
+      		<th:block th:case="'加油管理'">
+      		<i class="fa fa-exchange"></i>
+      		</th:block>
+      		<th:block th:case="'加油卡管理'">
+      		<i class="fa fa-credit-card"></i>
+      		</th:block>
+      		<th:block th:case="'数据管理'">
+      		<i class="fa fa-gear"></i>
+      		</th:block>
+      		<th:block th:case="'油料管理'">
+      		<i class="fa fa-retweet"></i>
+      		</th:block>
+      		<th:block th:case="'油料收发'">
+      		<i class="fa fa-download"></i>
+      		</th:block>
+      		<th:block th:case="'油料库存'">
+      		<i class="fa fa-tachometer"></i>
+      		</th:block>
+      </th:block>     
       <span th:text="${sub_menu.key}"></span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -13,7 +34,7 @@
       <ul class="treeview-menu">
           <li th:each="res:${sub_menu.value}">
           <a href="#" th:onclick="|javascript:loadhtml('${res.url}')|">
-          &nbsp&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i>
+          &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i>
           <th:block th:text="${res.name}">
           </a>
           </li>

@@ -20,10 +20,10 @@ function card_operation(oper)
 		}
 	}
 	switch(result){
-		case -1:alert('没有检测到读卡器！！！'); break;
-		case -2:alert('打开读卡器失败！！！');break;
-		case -3:alert('没有检测到卡');break;
-	}
+		case -1:flag='没有检测到读卡器！！！';break;
+		case -2:flag='打开读卡器失败！！！';break;
+		case -3:flag='没有检测到卡';break;
+	}	
 	if(result==0) {
 		var flag=0;
 		var cardtype=dukaqi.ReadCardInfo(2);
@@ -48,8 +48,9 @@ function card_operation(oper)
 		if(validflag!='0')	//无效卡
 			flag=7;
 		}}}}
-		oper && oper(flag);
+		//oper && oper(flag);
 	}
+	oper && oper(flag);
 	dukaqi.DisConn();
 }
 function getSystemDate(){

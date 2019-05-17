@@ -60,7 +60,8 @@ public class IndexController {
 		model.put("menus", menus);		
 		model.put("departmentname", session.getDepartmentName());
 		model.put("rolename", session.getUserInfo().getPower());
-		model.put("username", session.getUserInfo().getLoginname());
+		model.put("username", session.getUserInfo().getUsername());
+		model.put("loginname", session.getUserInfo().getLoginname());
 		return "main";
 	}
 	@GetMapping("not_login")
