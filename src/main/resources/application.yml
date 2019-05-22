@@ -1,7 +1,7 @@
 http:
   port: 8081
 https:
-  port: 443  
+  port: 9443  
   ssl:
     key-store: keystore.p12
     key-store-type: PKCS12

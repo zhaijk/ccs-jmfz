@@ -55,7 +55,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/not_role", "anon");
         //其余接口一律拦截
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-        filterChainDefinitionMap.put("/**", "ssl,authc,roles[admin]");//"authc");
+        filterChainDefinitionMap.put("/**", "authc,roles[admin]");//"authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         logger.info("Shiro拦截器工厂类注入成功");

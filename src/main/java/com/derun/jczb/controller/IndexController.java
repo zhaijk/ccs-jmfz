@@ -44,9 +44,9 @@ public class IndexController {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getLogin_password());
         currentUser.login(token);        
-		return "redirect:/welcome";
+		return "redirect:welcome";
 	}
-	@GetMapping("/welcome")
+	@GetMapping("welcome")
 	public String welcome(ModelMap model) {
 		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
