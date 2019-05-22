@@ -63,21 +63,18 @@ public class CardOperationController {
 	@PostMapping("query_gray_card_trade")
 	@ResponseBody
 	public CardTrade queryGrayRecord(CardTrade obj) {		
-		//System.out.println(obj);
 		CardTrade cardTradeGray=cardTradeMapper.queryGrayTrade(obj);
 		return cardTradeGray;		
 	}
 	@PostMapping("update_gray_card_trade")
 	@ResponseBody
-	public String updateGrayRecord(CardTrade obj) {		
-		//System.out.println(obj);
+	public String updateGrayRecord(CardTrade obj) {
 		int result=cardTradeMapper.updateGrayTrade(obj);
 		return result==1? "操作成功" : "操作失败" ;		
 	}
 	@PostMapping("query_quota_card_trade/datas")
 	@ResponseBody
 	public DataTableDO<CardProvideReport> queryQuotaRecord(CardProvideReport obj) {	
-		System.out.println(obj.getCarcode()+" "+obj.getSendflag());
 		DataTableDO<CardProvideReport>  dataTableDO=new DataTableDO<CardProvideReport>();
 		List<CardProvideReport> objs=cardProvideMapper.queryQuotaByCardcodeSendFlag(obj);
 		dataTableDO.setData(objs);
@@ -86,7 +83,6 @@ public class CardOperationController {
 	@PostMapping("query_quota_card_trade/value")
 	@ResponseBody
 	public CardProvideReport queryQuotaRecordTotal(CardProvideReport obj) {	
-		//System.out.println(obj.getCarcode()+" "+obj.getSendflag());
 		//DataTableDO<CardProvideReport>  dataTableDO=new DataTableDO<CardProvideReport>();
 		CardProvideReport objr=cardProvideMapper.queryQuotaTotalByCardcodeSendFlag(obj);
         return objr;		
@@ -157,8 +153,7 @@ public class CardOperationController {
 	@PostMapping("card_operation_modify/update")
 	@ResponseBody
 	public String  updateCardInfo(CardMain obj,String flag) {
-		int result=0;
-		System.out.println(obj.toString());
+		int result=0;		
 		switch(flag) {
 		case "carcode":
 			result=cardMainMapper.updateCarcode(obj);
@@ -171,6 +166,37 @@ public class CardOperationController {
 			break;
 		case "quota_info":
 			result=cardMainMapper.updateQuotaInfo(obj);
+			break;
+		}				
+		return result==1?"success":"failure";
+	}
+	@GetMapping("card_status_manager.htm")
+	public String card_operation_manager() {
+		
+		return "card_status_manager";		
+	}	
+	@PostMapping("vailddate/query")
+	@ResponseBody
+	public String queryvaildate(String cardcode) {
+		String result=cardMainMapper.queryValidDate(cardcode);
+		return result==null?"":result;
+	}
+	@PostMapping("card_status_modify/update")
+	@ResponseBody
+	public String  card_status_modify(CardMain obj,String flag) {
+		int result=0;		
+		switch(flag) {
+		case "lock":
+			obj.setCardstatus("挂失");
+			result=cardMainMapper.updateStatus(obj);
+			break;
+		case "unlock":
+			obj.setCardstatus("正常");
+			result=cardMainMapper.updateStatus(obj);
+			break;
+		case "invalid":
+			obj.setCardstatus("删除");
+			result=cardMainMapper.updateStatus(obj);
 			break;
 		}				
 		return result==1?"success":"failure";

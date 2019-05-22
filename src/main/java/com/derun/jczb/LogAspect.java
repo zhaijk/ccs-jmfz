@@ -66,7 +66,7 @@ public class LogAspect {
         /*if(url.matches("(.*)htm")==true) {
         	Subject subject = SecurityUtils.getSubject();
         	String per=url.replace("/", "");        	
-        	System.out.println(per+"   "+subject.isPermitted(per));
+        	//System.out.println(per+"   "+subject.isPermitted(per));
         	//subject.isPermitted(per);
         	if(subject.isPermitted(per)==true)
         		throw new  AuthorizationException("没有访问权限..");

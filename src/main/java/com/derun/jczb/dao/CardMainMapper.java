@@ -47,4 +47,8 @@ public interface CardMainMapper {
 	public int updateOiltype(CardMain obj);
 	@Update("update iccard.card_main set autocarcode=#{autoCarCode} where cardcode=#{cardcode}")
 	public int updateCarcode(CardMain obj);
+	@Update("update iccard.card_main set cardstatus=#{cardstatus} where cardcode=#{cardcode}")
+	public int updateStatus(CardMain obj);
+	@Select("select fillcardterm from iccard.card_main where cardcode=#{cardcode}")
+	public String queryValidDate(String cardcode);
 }

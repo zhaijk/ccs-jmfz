@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <th:block th:replace="head-css.html"></th:block>
+</head>
+<body>	
+<div class="box">
+<div class="box-header with-border">
+	<table style="width:80%">
+	<tr>
+	<td align="center" style="width:20%"><!-- 卡状态管理 --></td>
+	<td style="width:20%"><button  id="card_lock"  class="btn btn-info btn-block" >卡挂失</button></td>
+	<td style="width:20%"><button  id="card_unlock"  class="btn btn-info btn-block" >解挂</button></td>
+	<td style="width:20%"><button  id="card_kill"  class="btn btn-info btn-block" >卡作废</button></td>
+	<td style="width:20%"><button  id="card_renew"  class="btn btn-info btn-block" >补发</button></td>
+	<td style="width:20%"><object id="dukaqi"  CLASSID="CLSID:A9C48ED1-F5BB-4E90-B78E-31E076B92838" ></object></td>
+	</tr>
+    </table>
+</div>
+<div class="box-body with-border">
+<table id="cardinfo_table" class="table table-hover  table-bordered table-condensed" style="width:100%">
+	<thead>
+	<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+	    <th style="width:3%">序号</th>
+		<th style="width:5%">卡号</th>
+	    <th style="width:5%">车牌号</th>
+	    
+		<th style="width:5%">部门</th>				
+		<th style="width:5%">油品</th>				
+        <th style="width:5%">固定指标</th>
+		<th style="width:5%">指标类型</th>
+	    <th style="width:5%">库余额</th>
+		<th style="width:5%">卡有效期</th>
+		<th style="width:5%">卡状态</th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</div>
+</div>    
+<th:block th:replace="head-js.html"></th:block>
+<script type='text/javascript' th:inline="javascript">
+var table;
+function loaddata(){
+	table=$('#cardinfo_table').DataTable({	
+		'pageLength': 		10,
+		'bDestroy': 		true,  
+		'processing': 		true,
+		'searching' : 		true,
+		'lengthChange' : 	false,
+		'select': {
+   	        style: 'single',
+   	        info: false
+   	    },
+   	    "ordering": false, // 禁止排序
+		"ajax": {
+        	"url": "card_operation_provide/datas",
+        	"type": "get"
+    	},
+  		"columns": [
+  			{data:"id"},
+  			{data:"cardcode"},
+  			{data:"autoCarCode"},
+  			{data:"departmentname"},
+  			{data:"oilType"},
+  			{data:"destineGuideline"},
+  			{data:"guidelinetype"},
+  			{data:"cardCount"},
+  			{data:"fillCardterm"},
+  			{data:"cardstatus"}
+  		],
+		"oLanguage": { //国际化配置  
+			"sProcessing" : "正在获取数据，请稍候...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "记录数为 _TOTAL_ 条    当前 _PAGE_页",// _PAGE_ _START_ 到  _END_ 条记录 ",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "搜索",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+		}    	
+	})	
+}
+$(function(){
+    loaddata()
+})
+var cardinfo;
+function getselecteddata(){
+	cardinfo=table.rows(['.selected']).data()[0];
+}
+$("#cardinfo_table").on("click","tr",function(){
+	
+});
+//info 挂失
+$('#card_lock').on('click',function(){
+	$(this).attr('disabled',true)
+	cardinfo=table.rows(['.selected']).data()[0];
+	if(typeof cardinfo=="undefined"){
+		alert('请选择一行数据')
+	}else{
+		var cardcode =cardinfo.cardcode;
+		//console.info(cardcode);
+		$.ajax({
+			url:'card_status_modify/update',
+	    	type:'post',
+	    	data:{"cardcode":cardcode,'flag':'lock'},
+	    	success:function(data){
+	    		alert(data);
+	    	},
+	    	error:function(xhr){
+	    		alert(xhr.status+' '+xhr.repsonseText);
+	    	}
+		});
+	}
+	$(this).attr('disabled',false)	
+});
+//info 解挂
+$('#card_unlock').on('click',function(){
+	$(this).attr('disabled',true)
+	cardinfo=table.rows(['.selected']).data()[0];
+	if(typeof cardinfo=="undefined"){
+		alert('请选择一行数据')
+	}else{
+		var cardcode =cardinfo.cardcode
+		//console.info(cardcode)
+		$.ajax({
+			url:'card_status_modify/update',
+	    	type:'post',
+	    	data:{"cardcode":cardcode,'flag':'unlock'},
+	    	success:function(data){
+	    		alert(data);
+	    	},
+	    	error:function(xhr){
+	    		alert(xhr.status+' '+xhr.repsonseText);
+	    	}
+		});
+	}
+	$(this).attr('disabled',false)
+});
+//info 卡作废
+$('#card_kill').on('click',function(){
+	$(this).attr('disabled',true)
+	cardinfo=table.rows(['.selected']).data()[0];
+	if(typeof cardinfo=="undefined"){
+		alert('请选择一行数据')
+	}else{
+		var cardcode =cardinfo.cardcode
+		//console.info(cardcode)
+		$.ajax({
+			url:'card_status_modify/update',
+	    	type:'post',
+	    	data:{"cardcode":cardcode,'flag':'invalid'},
+	    	success:function(data){
+	    		alert(data);
+	    	},
+	    	error:function(xhr){
+	    		alert(xhr.status+' '+xhr.repsonseText);
+	    	}
+		});
+	}
+	$(this).attr('disabled',false)
+});
+//info 补发卡???
+$('#card_renew').on('click',function(){
+	$(this).attr('disabled',true)
+	cardinfo=table.rows(['.selected']).data()[0];
+	if(typeof cardinfo=="undefined"){
+		alert('请选择一行数据')
+	}else{
+		var cardcode =cardinfo.cardcode		
+		$.ajax({
+			url:'card_operation_modify/getcardinfo',
+	    	type:'post',
+	    	data:{"cardcode":cardcode},
+	    	async:false,
+	    	success:function(data){
+	    		//cardinfo=data;
+	    		/* console.info(data.cardcode+' '+
+	    				data.autoCarCode+' '+
+	    				data.cardType+' '+
+	    				data.fillCardterm+' '+
+	    				data.oilType ) */
+				// info写卡
+				/* data.cardcode
+				data.autoCarCode
+				data.cardType
+				data.fillCardterm
+				data.oilType */
+	    		writecard(data)
+	    	},
+	    	error:function(xhr){
+	    		alert(xhr.status+' '+xhr.repsonseText);
+	    	}
+		});
+	}
+	$(this).attr('disabled',false)
+});
+function writecard(cardinfo){
+card_operation(function(flag){
+	card_status=flag
+    var flaglen=(String(card_status)).length;
+    //console.info(card_status);
+	if(flaglen>1) {
+		alert(card_status)
+		return;
+	}
+	var card_status=parseInt(flag);		
+	switch(card_status){			
+		case 0: $("#card_status").text('正常卡');break;
+		case 1: $("#card_status").text('没有连接');break;
+		case 2: $("#card_status").text('参数卡');break;
+		case 3: $("#card_status").text('未初始化卡');break;
+		case 4: $("#card_status").text('密码错误');break;
+		case 5: $("#card_status").text('初始化卡');break;
+		case 6: $("#card_status").text('灰卡');break;
+		case 7: $("#card_status").text('无效卡');break;
+	}		
+	if(card_status!=5 ){			
+		alert('卡类型错误 不是未初始化卡')
+		return;
+	}
+	//data.cardcode
+	//data.autoCarCode
+	//data.cardType
+	//data.fillCardterm
+	//data.oilType
+	var result=dukaqi.writecardinfo(6,cardinfo.cardcode);//卡号
+	result=dukaqi.writecardinfo(9,cardinfo.autoCarCode);//车号
+	result=dukaqi.writecardinfo(2,cardinfo.cardType);//卡类型
+	//console.info(cardinfo.fillCardterm.replace(/-/g,""))
+	result=dukaqi.writecardinfo(3,cardinfo.fillCardterm.replace(/-/g,""));//卡有效期
+	result=dukaqi.writecardinfo(11,cardinfo.oilType);//油品类型
+	alert('补卡成功：'+cardinfo.cardcode);
+	});
+}
+</script>
+</body>
+</html>

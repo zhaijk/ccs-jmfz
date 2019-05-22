@@ -13,7 +13,7 @@
     <th:block th:include="top-nav.html"></th:block>
 	<th:block th:include="menu-left-current.html"></th:block>
 	<div class="content-wrapper" >
-  	<section class="content-header">
+  	<section class="content-header ">
       	<h1>主页<small>操作页面</small>	</h1>
       	<ol class="breadcrumb">
         	<li><a href="#"><i class="fa fa-dashboard"></i>主页</a></li>
@@ -21,7 +21,7 @@
         	<li class="active">操作</li>
       	</ol>
     </section>
-	<section class="content">
+	<section class="content overlay">
 	<div class="box" style="background:url(img/system-operator.jpg) no-repeat fixed;background-size:cover;">
 		<div class="row">
 		<div class="col-md-3 ">
@@ -186,7 +186,10 @@
 <script type="text/javascript">		
 function loadhtml(url){	
 	$.ajaxSetup ({ cache: false });
-	$(".content").html("<i class='fa fa-refresh fa-spin'></i>");
+	/* $(".content").load("<i class='fa fa-refresh fa-spin'></i>"); */
+	$(".content").load('loading',function(response,status,xhr){
+		$(".content").html(response);
+	});
 	$(".content").load(url,function(response,status,xhr){
 		$(".content").html(response);
 	});

@@ -28,7 +28,7 @@ import com.derun.jczb.model.UserInfoIccard;*/
 @Controller
 public class IndexController {
 
-	@GetMapping("")
+	@GetMapping({"","/"})
 	public String index() {
 		return "login_page";
 	}
@@ -44,9 +44,9 @@ public class IndexController {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getLogin_name(), user.getLogin_password());
         currentUser.login(token);        
-		return "redirect:welcome";
+		return "redirect:/welcome";
 	}
-	@GetMapping("welcome")
+	@GetMapping("/welcome")
 	public String welcome(ModelMap model) {
 		List<ResourceUrl> resourceUrls=resoureUrlMapper.queryLevename();
 		Map<String ,List<ResourceUrl>> menus=new LinkedHashMap<String ,List<ResourceUrl>>();
@@ -71,5 +71,9 @@ public class IndexController {
 	@GetMapping("not_role")
 	public String notRole() {
 		return "not_role";
+	}
+	@GetMapping("loading")
+	public String loading() {
+		return "loading";
 	}
 }
