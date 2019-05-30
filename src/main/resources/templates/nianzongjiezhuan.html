@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">
+  <th:block th:replace="head-css.html"></th:block>
+  <style type="text/css">
+  .consoned{
+      padding: 5px;
+  }
+  </style>
+</head>
+<body>
+<div class="box">          
+<div class="box-header with-border">
+<div class="row">
+    <div class="col-md-2" style="font-size:20px">年终结转</div>
+    <div class="col-md-5">
+    <div class="form-inline">
+    	<div id="inputname" class="form-group">
+            <label  >选择单位</label>
+            <input id="name" type="text" class="form-control" placeholder="请输入审批人姓名"/>
+    	</div>    	
+    	<button id="jiezhuan" style="width:36%"class="btn btn-info">结转</button>
+    </div>
+    </div>    
+</div>
+</div>
+<div class="box-body with-border ">
+<div class="pre-scrollable">
+<table id="title_table" class="table-bordered table-condensed" style="width:100%">
+<thead>
+	<tr style="font-size:12px;background-color:rgb(237, 241, 244);text-align:center;">
+    	<th style="text-align:center;width:5%;" rowspan="2">记账标志</th>
+		<th style="text-align:center;width:5%;" rowspan="2">单位</th>
+		<th colspan="4" style="text-align:center">油料指标(吨)</th>
+		<th colspan="7" style="text-align:center">油料经费(万元)</th>
+	</tr>
+	<tr style="font-size:12px;background-color:rgb(237, 241, 244);text-align:center;">
+		<th style="text-align:center">油料小计</th>
+		<th style="text-align:center">军队助供</th>
+		<th style="text-align:center">自购主油</th>
+		<th style="text-align:center">自购附油</th>
+		<th style="text-align:center">经费小计</th>
+		<th style="text-align:center">油料管理费</th>
+		<th style="text-align:center">自购主油费</th>
+		<th style="text-align:center">自购附油费</th>
+		<th style="text-align:center">油库管理费</th>
+		<th style="text-align:center">加油站管理费</th>
+		<th style="text-align:center">业务管理费</th>
+	</tr>
+</thead>
+<tbody>
+	
+</tbody>
+</table>
+</div>
+<div class="pre-scrollable">
+<table id="bjfp_table" class="table-condensed table-hover table-bordered">
+ 	<tbody>
+  				
+  	</tbody>
+</table>
+</div>
+</div>
+</div>
+<th:block th:replace="head-js.html"></th:block>
+<script type='text/javascript' th:inline="javascript">
+/* var flag=0
+$('#jiezhuan').on('click',function(){
+	if(flag==0){
+		$("#inputname").addClass('has-warning')
+		flag=1
+	}else{
+		$("#inputname").removeClass('has-warning')
+		flag=0;
+	}
+		
+})
+$(function(){
+    
+}) */
+</script>
+</body>
+</html>

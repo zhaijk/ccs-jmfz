@@ -1,27 +1,19 @@
 package com.derun.jczb.controller;
 
 import java.util.List;
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-//import com.derun.jczb.dao.DepartDictionaryMapper;
-
 import com.derun.jczb.model.Diaobodan;
-
 import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.QueryDataVO;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.service.CommitService;
+import com.derun.jczb.util.SessionInfo;
 
 //import com.derun.jczb.service.CommitService;
 /**
@@ -44,16 +36,20 @@ public class HuandanController {
 //	private DiaobodanRecordMapper diaobodanRecordMapper;
 	@Autowired 
 	private CommitService commitService;
+	@Autowired
+	private SessionInfo sessioninfo;
 	
 	@RequestMapping("youliao_huandan.htm")
 	public String init(ModelMap model) {
+		String departmentCode=sessioninfo.getDepartmentCode();
+		int jiezhuanDate=Integer.parseInt(sessioninfo.getJieZhuanDate());
 		//List<String> danjuhaos=diaobodanMapper.queryDanjuhao("2016");
-		List<String> danjuhaos=commitService.queryDanjuhao("2016");
+		List<String> danjuhaos=commitService.queryDanjuhao(sessioninfo.getJieZhuanDate());
 		//List<DiaobodanRecord> oils=null;
 		//List<OilDictionary> oils=oilDictionaryMapper.queryBy("1");
 		List<OilDictionary> oils=commitService.queryByOil("1");
 		
-		List<YoukuDictionary> youkus=commitService.queryByYouku(1, 2);
+		List<YoukuDictionary> youkus=commitService.queryByYouku(1, 1);
 		//List<DeparDictionary> departs=departDictionaryMapper.queryBy();
 		//List<Diaobodan> diaobodans=diaobodanMapper.queryByModel("all", "all", "all", "2016");		
 		//model.put("diaobodans", diaobodans);

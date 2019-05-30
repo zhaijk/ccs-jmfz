@@ -53,10 +53,10 @@
     		<th>卡号</th>
     		<th>卡类型</th>
     		<th>车牌号</th>
-    		<th>车辆类型</th>
+    	<!-- 	<th>车辆类型</th> -->
     		<th>油品</th>
     		<th>有效期</th>
-    		<th>卡有效标志</th>
+    		<th>卡状态</th>
     		<th>卡最大限额</th>
     		<th>卡余额</th>
     		<th>未实入指标</th>
@@ -67,10 +67,10 @@
 	<tbody>
     	<tr th:each="cardInfo:${cardInfos}">
     		<td th:text="${cardInfo.cardcode}"></td>
-    		<td th:text="${cardInfo.cardType}"></td>
+    		<td th:text="${cardInfo.cardType==0?'实物':'价拨'}"></td>
     		<td th:text="${cardInfo.autoCarCode}"></td>
-    		<td th:text="${cardInfo.autoCarCode}"></td>
-    		<td th:text="${cardInfo.oilType}"></td>
+    		<!-- <td th:text="${cardInfo.autoCarCode}"></td> -->
+    		<td th:text="${cardInfo.oilName}"></td>
     		<td th:text="${cardInfo.fillCardterm}"></td>
     		<td th:text="${cardInfo.cardstatus}"></td>    		
     		<td th:text="${cardInfo.maxcount}"></td>
@@ -150,7 +150,7 @@ $('#cardinfo_table').on('search.dt',function(data) {
    		$('#sum_infos').DataTable().search(cardcode.substring(0,6)).draw();
    		//else 
    		//	flag=flag+1;
-   		//alert(flag);
+   		//alert_advance_info(flag);
 	}
    	//console.info(cardcode);
    	/* if(typeof(cardcode)!='undefined'){
@@ -230,7 +230,7 @@ function privode(cardcode,oiltype,guidline){
 	var guidelineCount=guidline.parent("td").find("input").val();
 	//console.info(guidelineCount);
 	if(""==guidelineCount){
-		alert('请输入发放量');return;
+		alert_advance_info('请输入发放量');return;
 	}
 	console.info(guidelineCount);
 	//console.info(cardcode+' '+oiltype+' '+guidline);
@@ -242,10 +242,10 @@ function privode(cardcode,oiltype,guidline){
 		dataType:'text',
 		data:{cardcode:cardcode,oiltype:oiltype,guidline:guidelineCount},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 		},
 		error:function(result){
-			alert(result);
+			alert_advance_info(result);
 		}
 	});
 }

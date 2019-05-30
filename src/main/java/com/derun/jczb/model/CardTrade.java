@@ -37,7 +37,8 @@ public class CardTrade {
 	private double volumnt = 0.0;	
 	private String remark;	
 	private double ifchongdi;
-
+	private String oilname;
+	
 	public Long getAccount() {
 		return account;
 	}
@@ -322,5 +323,13 @@ public class CardTrade {
 				+ tflag + ", shougongdanweiid=" + shougongdanweiid + ", zhugongdanweiid=" + zhugongdanweiid
 				+ ", jiaoyijine=" + jiaoyijine + ", sign=" + sign + ", cardType=" + cardType + ", volumnt=" + volumnt
 				+ ", remark=" + remark + ", ifchongdi=" + ifchongdi + "]";
+	}
+
+	public String getOilname() {
+		return oilname;
+	}
+
+	public void setOilname(String oilname) {
+		this.oilname = oilname;
 	}
 }

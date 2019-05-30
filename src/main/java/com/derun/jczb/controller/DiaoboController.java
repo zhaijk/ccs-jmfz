@@ -34,8 +34,8 @@ public class DiaoboController {
 	
 	@RequestMapping("youliao_diaobo.htm")
 	public String init(ModelMap model) {
-		List<YoukuDictionary> jfjyoukus=commitService.queryByYouku(1, 2);
-		List<YoukuDictionary> wjyoukus=commitService.queryByYouku(2, 2);
+		List<YoukuDictionary> jfjyoukus=commitService.queryByYouku(1, 1);
+		List<YoukuDictionary> wjyoukus=commitService.queryByYouku(2, 1);
 		List<DeparDictionary> departs=commitService.queryDepartInfo();
 		List<OilDictionary> oils=commitService.queryByOil("1");
 		model.put("jfjyoukus", jfjyoukus);

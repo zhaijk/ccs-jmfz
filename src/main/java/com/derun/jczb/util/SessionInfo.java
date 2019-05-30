@@ -23,9 +23,17 @@ public class SessionInfo {
 	public String getDepartmentCode() {
 		Subject subject = SecurityUtils.getSubject();
 		Userbaseinfo obj=(Userbaseinfo) subject.getPrincipal();
-		String code=obj.getDanwei().substring(0,4);
-		//logger.info("部门代码......"+code);
-		return code;
+		//System.out.println(obj.toString());
+		if(obj.getDanwei().equals("本单位")) {
+			String code=systemconfigMapper.queyZDInfo().getDanwei_code().substring(0,4);
+			//System.out.println("本单位部门代码......"+code);
+			return code;
+		}else {			
+			//return systemconfigMapper.queyZDInfo().getDanweiCode();
+			String code=obj.getDanwei().substring(0,4);
+			//System.out.println("部门代码......"+code);
+			return code;
+		}
 	}
 	public Userbaseinfo getUserInfo() {
 		Subject subject = SecurityUtils.getSubject();
@@ -40,8 +48,12 @@ public class SessionInfo {
 	public String getDepartmentName() {
 		Subject subject = SecurityUtils.getSubject();
 		Userbaseinfo obj=(Userbaseinfo) subject.getPrincipal();	
-		DeparDictionary depart=departDictionaryMapper.queryByCode(obj.getDanwei());
-		return depart.getBumen();
+		if(obj.getDanwei().equals("本单位")) {
+			return systemconfigMapper.queyZDInfo().getDanwei();
+		}else {
+			DeparDictionary depart=departDictionaryMapper.queryByCode(obj.getDanwei());
+			return depart.getBumen();
+		}
 	}
 	public String getRoleName() {
 		Subject subject = SecurityUtils.getSubject();
@@ -49,6 +61,9 @@ public class SessionInfo {
 		return obj.getPower();
 	}
 	public String getJieZhuanDate() {		
-		return systemconfigMapper.queyJiezhuandate();
+		return systemconfigMapper.queyJiezhuandate().substring(0,4);
+	}
+	public int getIntJieZhuanDate() {		
+		return Integer.parseInt(systemconfigMapper.queyJiezhuandate().substring(0,4));
 	}
 }

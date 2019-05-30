@@ -234,7 +234,7 @@ $(function(){
     $('#add_oil_depot').on('click',function(){
     	var youkucode=$("#oil_depot_select").val();
     	if(youkucode=='all'){
-    		alert('请选择油库');
+    		alert_advance_info('请选择油库');
     		return;
     	}
     	$.ajax({
@@ -242,7 +242,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"add","youku_code":youkucode},
     		success:function(result){
-				alert(result);
+				alert_advance_info(result);
 				//table.draw( true );
 				//loadtable();
 				//loadList();
@@ -265,7 +265,7 @@ $(function(){
     		}
     	});
     	if(code==null){
-    		alert('请选择一行'); 
+    		alert_advance_info('请选择一行'); 
     		return;
     	}
     	$.ajax({
@@ -273,7 +273,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"del","youku_code":code},
     		success:function(data){
-				alert(data);
+				alert_advance_info(data);
 				//table.row('.selected').remove().draw( false );
 				//loadList();
 				//loadtable();
@@ -287,7 +287,7 @@ $(function(){
     $('#add_oil_type').on('click',function(){
     	var code=$("#oil_type_select").val();
     	if(code=='all'){
-    		alert('请选择油品');
+    		alert_advance_info('请选择油品');
     		return;
     	}
     	$.ajax({
@@ -295,7 +295,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"add","code":code},
     		success:function(result){
-				alert(result);
+				alert_advance_info(result);
 				//table.draw( true );
 				//loadtable();
 				//loadList();
@@ -318,7 +318,7 @@ $(function(){
     		}
     	});
     	if(code==null){
-    		alert('请选择一行'); 
+    		alert_advance_info('请选择一行'); 
     		return;
     	}
     	$.ajax({
@@ -326,7 +326,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"del","code":code},
     		success:function(data){
-				alert(data);
+				alert_advance_info(data);
 				//table.row('.selected').remove().draw( false );
 				//loadList();
 				//loadtable();

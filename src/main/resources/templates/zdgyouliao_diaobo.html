@@ -147,22 +147,22 @@ $("#btn_submit").on('click',function(){
 	
 	var shougongdanwei=$("#shougongdanwei").val();	
 	if(shougongdanwei=='all'){
-		alert('请选择受供单位');$(this).attr('disabled',false);return;
+		alert_advance_info('请选择受供单位');$(this).attr('disabled',false);return;
 	}	
 	var inputvalue=$("#value").val();	
 	if(inputvalue==''){
-		alert('请输入调拨数量');$(this).attr('disabled',false);return;
+		alert_advance_info('请输入调拨数量');$(this).attr('disabled',false);return;
 	}	
 	$.ajax({
 		url:'zdgyouliao_diaobo/edit',
 		type:'post',
 		data:{'edit':'apply','shuliang':inputvalue,'sg_danwei':shougongdanwei},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$(this).attr('disabled',false);
 		},
 		error:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$(this).attr('disabled',false);
 		}
 	});	

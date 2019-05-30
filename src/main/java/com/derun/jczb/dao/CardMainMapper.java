@@ -31,7 +31,7 @@ public interface CardMainMapper {
 	@Select("select * from iccard.card_main_view where cardcode  like #{departmentCode}||'%' and cardtype=0 and (destineGuideline>0 or buzhuzhibiao>0) and fillcardterm > #{date} and cardstatus='正常' order by cardcode")
 	public List<CardMain>  queryCardInfos(String departmentCode,String date);
 	//@Select("select * from iccard.card_main_view where cardcode  like #{departmentCode}||'%' and cardtype=0 and (destineGuideline>0 or buzhuzhibiao>0)  and cardstatus='正常' order by cardcode")
-	@Select("select * from iccard.card_main where cardcode  like #{departmentCode}||'%' and cardtype=0  and cardstatus='正常'   order by cardcode")
+	@Select("select a.*, b.name as oilName from iccard.card_main a, iccard.oil_dictionary b where a.oiltype=b.code and cardcode  like #{departmentCode}||'%' and cardtype=0  and cardstatus='正常'   order by cardcode")
 	public List<CardMain>  queryCardMainInfos(String departmentCode);
 	@Select("select rownum as id,a.* ,b.departmentname as departmentname from (select * from iccard.card_main where cardcode like #{code} || '%' order by builddate desc ) a ,iccard.department_info  b where a.cardcode like substr(b.departmentcode,0,6) ||'%' ")
 	public List<CardMain>  queryCardinfos(String code);

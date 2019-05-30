@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
 <head>
   <meta charset="utf-8">
   <th:block th:replace="head-css.html"></th:block>
@@ -184,34 +184,34 @@ var fixedquota=0,maxoil=0,owner,phone,memo,allowancequota=0,allowancedate,maxcou
 $("#validcard").on('click',function(){
 	//$(this).attr('disabled',true);
 	if(typeof(card_code) == "undefined" ){
-		alert('请先读卡');
+		alert_advance_info('请先读卡');
 		return;
 	}
 	if(flag!=5){//未发行的卡
-		alert('卡号:'+card_code.substr(6,6)+' 不是可发行的卡');
+		alert_advance_info('卡号:'+card_code.substr(6,6)+' 不是可发行的卡');
 		return;
 	}
 	if(card_type=='all' || typeof(card_type) == "undefined" ){
-		alert('请选择卡类型');
+		alert_advance_info('请选择卡类型');
 		return;
 	}
 	//console.info(card_type);
 	if(card_type=='0')
 	if(car_code=='all' || typeof(car_code) == "undefined" ){
-		alert('请选择车辆号牌');
+		alert_advance_info('请选择车辆号牌');
 		return;
 	}
 	if(card_type=='2')
 	if(department_code=='all' || typeof(department_code) == "undefined" ){
-		alert('请选择部门');
+		alert_advance_info('请选择部门');
 		return;
 	}
 	if(oil_type=='all' || typeof(oil_type) == "undefined" ){
-		alert('请选择油品');
+		alert_advance_info('请选择油品');
 		return;
 	}
 	if(valid_date=='all' || typeof(valid_date) == "undefined" ){
-		alert('请选择卡有效期类型');
+		alert_advance_info('请选择卡有效期类型');
 		return;
 	}
 	fixedquota=$('#fixedquota').val();
@@ -229,7 +229,7 @@ $("#validcard").on('click',function(){
 		fixedquota=0;
 	}
 	else if(isNaN(fixedquota)){
-		alert('固定指标输入类型不正确,请重新输入');
+		alert_advance_info('固定指标输入类型不正确,请重新输入');
 		$('#fixedquota').val('');
 		return ;
 	}
@@ -239,7 +239,7 @@ $("#validcard").on('click',function(){
 		maxoil=0;
 	}
 	else if(isNaN(maxoil)){
-		alert('单次加油限额输入类型不正确,请重新输入');
+		alert_advance_info('单次加油限额输入类型不正确,请重新输入');
 		$('#maxoil').val('');
 		return ;
 	}
@@ -250,7 +250,7 @@ $("#validcard").on('click',function(){
 		allowancequota=0;
 	}
 	else if(isNaN(allowancequota)){
-		alert('补助指标输入类型不正确,请重新输入');
+		alert_advance_info('补助指标输入类型不正确,请重新输入');
 		$('#allowancequota').val('');
 		return ;
 	}
@@ -261,11 +261,11 @@ $("#validcard").on('click',function(){
 		maxcount=0;
 	}
 	else if(isNaN(maxcount)){
-		alert('最大限额输入类型不正确,请重新输入');
+		alert_advance_info('最大限额输入类型不正确,请重新输入');
 		$('#maxcount').val('');
 		return ;
 	}	
-	alert('验证通过：\n'+'卡号: '+card_code+"\n车牌号："+car_code+"\n油品："+oil_type);	
+	alert_advance_info('验证通过：\n'+'卡号: '+card_code+"\n车牌号："+car_code+"\n油品："+oil_type);	
 	$('#providecard').attr('disabled',false);
 	$('#resetcardinfo').attr('disabled',false);
 })
@@ -337,11 +337,11 @@ function insertCardInfo(){
 		type:'post',
 		data:{"cardcode":card_code,"autoCarCode":car_code,"departmentCode":department_code,"oilType":oil_type,"carLimit":maxoil,"destineGuideline":fixedquota,"guidelinetype":card_type=='1'?'1':'0',"owner":owner,"phone":phone,"memo":memo,"cardType":card_type,"buzhuzhibiao":allowancequota,"buzhuDate":allowancedate,"maxcount":maxcount,"fillCardterm":valid_date},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 			window.reload();
 		},
 		error:function(xhr){
-			alert(xhr.status + ' - ' + xhr.statusText);
+			alert_advance_info(xhr.status + ' - ' + xhr.statusText);
 		}
 	})
 }

@@ -167,16 +167,16 @@ $("#btn_submit").on('click',function(){
 	$(this).attr('disabled',true);
 	var jfjyoukus=$("#jfjyoukus").val();
 	if(jfjyoukus=='all'){
-		alert('请选择解放军油库');$(this).attr('disabled',false);return;
+		alert_advance_info('请选择解放军油库');$(this).attr('disabled',false);return;
 	}		
 	var shougongdanwei=$("#shougongdanwei").val();
 	var wjyoukus=$("#wjyoukus").val();
 	if(shougongdanwei=='all' && wjyoukus=='all'){
-		alert('请选择领油单位或者武警油库');$(this).attr('disabled',false);return;
+		alert_advance_info('请选择领油单位或者武警油库');$(this).attr('disabled',false);return;
 	}	
 	var dateselect=$("#dateselect").val();	
 	if(dateselect==''){
-		alert('请选择操作日期');$(this).attr('disabled',false);return;
+		alert_advance_info('请选择操作日期');$(this).attr('disabled',false);return;
 	}
 	var memo=$("#memo").val();
 	var oilsinputs=$("#table_oils td input");
@@ -196,14 +196,14 @@ $("#btn_submit").on('click',function(){
 	for(var i=0;i<offset;i++){
 		var sum=parseFloat(oilvals[i])+parseFloat(oilvals[offset+i]);
 		if(parseFloat(sum)>parseFloat(limit[i])){
-			alert(oils[i].name + " 输入值: "+sum+"大于结余值: "+limit[i]);
+			alert_advance_info(oils[i].name + " 输入值: "+sum+"大于结余值: "+limit[i]);
 			$(this).attr('disabled',false);
 			return;
 		}
 		total+=sum;
 	}
 	if(total<=0){
-		alert("请输入有效值");
+		alert_advance_info("请输入有效值");
 		$(this).attr('disabled',false);
 		return;
 	}
@@ -217,7 +217,7 @@ $("#btn_submit").on('click',function(){
 	console.info(typeof val +" "+typeof limit[counter])
 	if(parseFloat(val)>parseFloat(limit[counter])){		
 		flag=1;
-		alert(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+		alert_advance_info(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
 		$(this).val('');
 		return;
 		//break ;
@@ -236,7 +236,7 @@ $("#btn_submit").on('click',function(){
 		type:'post',
 		data:{'edit':'apply','jfjyoukus':jfjyoukus,'shougongdanwei':shougongdanwei,'wjyoukus':wjyoukus,'kaidanriqi':dateselect,'memo':memo,'oils':oilvals},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#btn_submit").attr('disabled',false);
 			$("#shougongdanwei").val('all');
 			$("#jfjyoukus").trigger("change");
@@ -250,7 +250,7 @@ $("#btn_submit").on('click',function(){
 			}); 
 		},
 		error:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#btn_submit").attr('disabled',false);
 		}
 	});

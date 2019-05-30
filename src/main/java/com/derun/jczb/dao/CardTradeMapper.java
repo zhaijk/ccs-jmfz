@@ -2,6 +2,9 @@ package com.derun.jczb.dao;
 
 import java.util.List;
 import java.util.HashMap;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 //import org.springframework.cache.annotation.CacheConfig;
 import org.apache.ibatis.annotations.Update;
@@ -30,7 +33,7 @@ public interface CardTradeMapper {
 	@Select("select t.oiltype,sum(t.volumn) from wujing.card_trade t where t.cardcode like '241805%' and t.sign=1 and t.cardtype=0 and  t.tradedate>='2017-12-26' group by t.oiltype")
 	List<HashMap<String,Object>> queryByxiaohao();
 	
-	@Select("select *  from card_trade where sign=#{type} and tradedate>#{date} and ZHUGONGDANWEIID like #{departmentCode}||'%' ")
+	@Select("select a.*,b.name as oilname ,c.departmentname as departmentname from card_trade a ,oil_dictionary b ,iccard.department_info c where a.cardcode=c.departmentcode and a.oiltype=b.code and sign=#{type} and tradedate>#{date} and ZHUGONGDANWEIID like #{departmentCode}||'%' order by a.id desc")
 	List<CardTrade> queryNonIcTradeBy(String type,String date,String departmentCode);
 	@Select("select t.oiltype as oiltype,sum(t.volumnt) as total from card_trade t "
 			+ "where substr(t.zhugongdanweiid,0,4)!=substr(t.shougongdanweiid,0,4) and "
@@ -132,11 +135,18 @@ public interface CardTradeMapper {
 			" and oiltype like #{oiltype} || '%' </if>"+
 			"</where> </script>")
 	public List<CardSumInfos>  queryCardSumBy(String cardcode,String sumdate,String sumDepartmentcode,String departmentcode,String oiltype,String carcode,String cardtype,String datestart,String datestop);
-	@Select("select zhugongdanweiid as code,sum(t.volumnt) as jyl from jiangsu.card_trade t where t.tradedate between #{niandubegin} and #{nianduend} and t.shougongdanweiid='' and t.zhugongdanweiid!='' group by zhugongdanweiid")
+	@Select("select zhugongdanweiid as code,sum(t.volumnt) as jyl from card_trade t where t.tradedate between #{niandubegin} and #{nianduend} and t.shougongdanweiid='' and t.zhugongdanweiid!='' group by zhugongdanweiid")
 	public List<ZhuandaigongTotal> queryZdgSumBy(String niandubegin,String nianduend);
 	@Select("select a.cardcode,(select d.name from  wujing.oil_dictionary d where a.oiltype=d.code) as oiltypeName,volumn,balance,(select b.bumen from  wujing.depar_dictionary b where b.bumen_code like substr(a.cardcode,0,4)||'%') as departmentname ,(select c.autocarcode from iccard.card_main c  where  c.cardcode=a.cardcode) as carcode from wujing.card_trade a where cardcode=#{cardcode}  and mileage=#{mileage} and tradetype=#{tradetype}")
 	//@Select("select * from  wujing.card_trade@remote where id=301417") 
 	public CardTrade queryGrayTrade(CardTrade obj);
 	@Update("update wujing.card_trade set tradetype=0 where cardcode=#{cardcode}  and mileage=#{mileage}")
 	public int updateGrayTrade(CardTrade obj);
+	
+	@Update("update card_trade set oiltype=#{oiltype},volumn=#{volumn},volumnt=#{volumnt},remark=#{remark} where ")
+	public int updateOne(CardTrade obj);
+	@Delete("update wujing.card_trade set tradetype=0 where cardcode=#{cardcode}  and mileage=#{mileage}")
+	public int deleteOne(CardTrade obj);
+	@Insert("update wujing.card_trade set tradetype=0 where cardcode=#{cardcode}  and mileage=#{mileage}")
+	public int insertOne(CardTrade obj);
 }

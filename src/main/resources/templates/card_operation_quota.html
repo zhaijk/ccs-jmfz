@@ -152,7 +152,7 @@ function load_data(cardcode,sendflag){
 		card_operation(function(flag){
 			console.info(flag);
 			if(flag==6){
-				alert("灰卡，请处理！！！");
+				alert_advance_info("灰卡，请处理！！！");
 				return;
 			}			
 			$.ajax({
@@ -166,7 +166,7 @@ function load_data(cardcode,sendflag){
 						//console.info(data.cardcode+" "+data.sendflag+" "+data.guidelinecount)
 						//console.info(card_code+" "+data.cardcode)
 						if(card_code!=data.cardcode){
-							alert('卡号不一致，请放置卡号：'+cardcode);	
+							alert_advance_info('卡号不一致，请放置卡号：'+cardcode);	
 							$("#btn_quota_card").attr('disabled',true);
 							return ;
 						}
@@ -189,17 +189,17 @@ function load_data(cardcode,sendflag){
 							type:'post',
 							data:{"cardcode":card_code,"sendflag":send_flag},
 							success:function(){								
-								alert('圈存操作成功');
+								alert_advance_info('圈存操作成功');
 								$("#btn_quota_card").attr('disabled',true);
 							},
 							error:function(xhr){
-								alert("错误提示： " + xhr.status + " " + xhr.statusText);
+								alert_advance_info("错误提示： " + xhr.status + " " + xhr.statusText);
 							}
 						});
 					});
 				},
 				error:function(xhr){
-					alert("错误提示： " + xhr.status + " " + xhr.statusText);
+					alert_advance_info("错误提示： " + xhr.status + " " + xhr.statusText);
 				}
 			});
 			

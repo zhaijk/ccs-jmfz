@@ -156,7 +156,7 @@ $(function(){
 	$("#oiltype").on('change',function(){	
 		var oiltype=$("#oiltype").val();
 		for(i in provideSumInfos){
-			//alert(provideSumInfos[i]);
+			//alert_advance_info(provideSumInfos[i]);
 			var code=provideSumInfos[i].oilType;
 			if(oiltype==code){
 				sum=provideSumInfos[i].sum;
@@ -170,12 +170,12 @@ $(function(){
 		var inputVal=$("input[name='changenumber']").val();
 		var departmentInfo=$("#departmentInfo").val();
 		if(inputVal==''){
-			alert("请输入发放量");
+			alert_advance_info("请输入发放量");
 			$("#confirmchange").attr('disabled',false);
 			return;
 		}
 		if(inputVal>sum){
-			alert("输入量："+inputVal +"大于 可发放量："+sum);
+			alert_advance_info("输入量："+inputVal +"大于 可发放量："+sum);
 			$("input[name='changenumber']").val('');
 			$("input[name='changenumber']").attr('placeholder',"最大发放量："+sum+"L");
 			$("#confirmchange").attr('disabled',false);
@@ -188,7 +188,7 @@ $(function(){
 			data:{departmentCode:departmentInfo,oilType:oiltype,inputGuideline:inputVal},
 			type:'post',
 			success:function(data){
-				alert(data);
+				alert_advance_info(data);
 			}
 		});
 	});

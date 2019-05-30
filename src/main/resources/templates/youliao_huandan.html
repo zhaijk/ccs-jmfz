@@ -204,22 +204,22 @@ $("#btn_submit").on('click',function(){
 	var danjuhao=$("#danjuhao").val();
 	console.info(danjuhao);
 	if(danjuhao=='all'){
-		alert('请选择单据号');return;
+		alert_advance_info('请选择单据号');return;
 	}		
 	var huandanhao=$("#huandanhao").val();
 	console.info(huandanhao);
 	if(huandanhao==''){
-		alert('请输入换单号');return;
+		alert_advance_info('请输入换单号');return;
 	}	
 	var dateselect=$("#dateselect").val();
 	console.info(dateselect);
 	if(dateselect==''){
-		alert('请选择操作日期');return;
+		alert_advance_info('请选择操作日期');return;
 	}	
 	var departname=$("#depart_name").val();	
 	var gongyingyouku=$("#gongyingyouku").val();
 	if(gongyingyouku=='all'){
-		alert('请选择供应油库');return;
+		alert_advance_info('请选择供应油库');return;
 	}
 	var memo=$("#memo").val();
 	var oilsinputs=$("#oilsinput td input");
@@ -240,7 +240,7 @@ $("#btn_submit").on('click',function(){
 		console.info(typeof val +" "+typeof limit[counter])
 		if(parseFloat(val)>parseFloat(limit[counter])){		
 			flag=1;
-			alert(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
+			alert_advance_info(oils[counter].name + " 输入值: "+val+"大于结余值: "+limit[counter]);
 			$(this).val('');
 			//break ;
 		}	
@@ -260,11 +260,11 @@ $("#btn_submit").on('click',function(){
 		type:'post',
 		data:{'danjuhao':danjuhao,'huandanhao':huandanhao,'kaidanriqi':dateselect,'gongyingyouku':gongyingyouku,'memo':memo,'oils':oilvals},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#btn_submit").attr('disabled',false);
 		},
 		error:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#btn_submit").attr('disabled',false);
 		}
 	});

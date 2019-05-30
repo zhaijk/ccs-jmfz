@@ -1,6 +1,10 @@
 package com.derun.jczb.controller;
 
+//import java.util.List;
 
+/**
+ *  info 加油站损耗管理
+ */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +19,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //import com.derun.jczb.dao.CarTypeMapper;
 //import com.derun.jczb.dao.DepartmentInfoMapper;
 import com.derun.jczb.dao.GasStationMapper;
+//import com.derun.jczb.dao.OilInfoMapper;
 import com.derun.jczb.model.CarInfo;
 import com.derun.jczb.model.Jiayouzhan;
-
+//import com.derun.jczb.model.OilDictionary;
+//import com.derun.jczb.util.SessionInfo;
+/**
+ * info 加油站信息管理
+ * @author Administrator
+ *
+ */
 @Controller
 public class GasStationManager {
 
@@ -25,7 +36,11 @@ public class GasStationManager {
 	
 	@Autowired 
 	private GasStationMapper gasStationMapper;
-	    
+//	@Autowired
+//	private OilInfoMapper oilInfoMapper;
+//	@Autowired
+//	private SessionInfo sessionInfo;
+	
 	@GetMapping("gas-station-manager.htm")
 	public String init(ModelMap model) {
 		/*//Cookie cookie=session.getCookie();
@@ -35,6 +50,10 @@ public class GasStationManager {
 		model.put("departInfos",departmentInfoMapper.queryALL());	
 		model.put("carInfos",carInfoMapper.queryALLUnions());*/	
 		//model.put("gasStationInfos",gasStationMapper.queryALL());	
+//		String departmentCode=sessionInfo.getUserInfo().getDanwei();
+//		//启用的油品类型
+//   	List<OilDictionary> objs=oilInfoMapper.queryBy(departmentCode);
+//		model.put("oilTypeInfos", objs);
 		return "gas_station_manager";
 	}
 	@GetMapping("gas-station-manager/datas")

@@ -217,7 +217,7 @@ $(function(){
     $('#addRow').on('click',function(){
     	var junqucode=$("#junqu_select").val();
     	if(junqucode=='all'){
-    		alert('请选择军区');
+    		alert_advance_info('请选择军区');
     		return;
     	}
     	$.ajax({
@@ -225,7 +225,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"add","junqu_code":junqucode},
     		success:function(result){
-				alert(result);
+				alert_advance_info(result);
 				//table.draw( true );
 				loadtable();
 				loadList();
@@ -246,14 +246,14 @@ $(function(){
     		}
     	});
     	if(code==null){
-    		alert('请选择一行');
+    		alert_advance_info('请选择一行');
     	}
     	$.ajax({
     		url:"supply_department_manager/edit",
     		type: 'post',
     		data:{"action":"del","junqu_code":code},
     		success:function(data){
-				alert(data);
+				alert_advance_info(data);
 				//table.row('.selected').remove().draw( false );
 				loadList();
 				loadtable();
@@ -261,7 +261,7 @@ $(function(){
 			}
     	});
     	
-    	/* alert(res+'111111111');
+    	/* alert_advance_info(res+'111111111');
     	//if(result=="success")
     		table.row('.selected').remove().draw( true );
     	//table.reload(); */

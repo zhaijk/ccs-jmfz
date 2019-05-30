@@ -125,7 +125,7 @@ $("#btn_submit").on('click',function(){
 	$("#btn_submit").attr('disabled',true);
 	var gongyingyouku=$("#gongyingyouku").val();
 	if(gongyingyouku=='all'){
-		alert('请选择存储油库');$("#btn_submit").attr('disabled',false);return;
+		alert_advance_info('请选择存储油库');$("#btn_submit").attr('disabled',false);return;
 	}	
 	var oilsinputs=$("#oilsinput td input");
 	var oilvals=new Array();
@@ -139,7 +139,7 @@ $("#btn_submit").on('click',function(){
 		total+=val;
 		if(parseFloat(val)>430){		
 			flag=1;
-			alert(oils[counter].name + " 输入值: "+val+"大于最大值:430 ");
+			alert_advance_info(oils[counter].name + " 输入值: "+val+"大于最大值:430 ");
 			$(this).val('');
 			return;
 		}
@@ -151,7 +151,7 @@ $("#btn_submit").on('click',function(){
 		return;
 	}	
 	if(total==0){
-		alert('请输入有效值');
+		alert_advance_info('请输入有效值');
 		$("#btn_submit").attr('disabled',false);
 		return;
 	}	
@@ -160,7 +160,7 @@ $("#btn_submit").on('click',function(){
 		type:'post',
 		data:{'youku':gongyingyouku,'oils':oilvals},
 		success:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#oilsinput td input").each(function(){
 				$(this).val("");
 			});
@@ -168,7 +168,7 @@ $("#btn_submit").on('click',function(){
 			$("#btn_submit").attr('disabled',false);
 		},
 		error:function(data){
-			alert(data);
+			alert_advance_info(data);
 			$("#btn_submit").attr('disabled',false);
 		}
 	});

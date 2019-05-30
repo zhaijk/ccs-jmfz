@@ -39,8 +39,11 @@ import com.derun.jczb.model.OilInfo;
 import com.derun.jczb.model.ProvideSumInfo;
 import com.derun.jczb.util.DataTypeConverter;
 import com.derun.jczb.util.SessionInfo;
-
-//单卡指标发放
+/**
+ * info 单卡指标发放
+ * @author Administrator
+ *
+ */
 @Controller
 public class ProvideCardQuota {
 	

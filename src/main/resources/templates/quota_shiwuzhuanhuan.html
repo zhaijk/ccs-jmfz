@@ -332,18 +332,18 @@ $(function(){
 		var changenumber=$("input[name='changenumber']").val();
 		var danjuhao=$("input[name='danjuhao']").val();		
 		if(changenumber>balance){
-			alert('输入值:'+changenumber+' 大于剩余指标:'+balance);return;
+			alert_advance_info('输入值:'+changenumber+' 大于剩余指标:'+balance);return;
 		}else if(changenumber<=0){
-			alert('转换数据:'+changenumber+' 无效');return;
+			alert_advance_info('转换数据:'+changenumber+' 无效');return;
 		}else if(danjuhao.length==0){
-			alert('请输入单据号'+danjuhao.length+" "+danjuhao);return;
+			alert_advance_info('请输入单据号'+danjuhao.length+" "+danjuhao);return;
 		}			
 		$.ajax({
 			url:'quota/shiwuzhuanhuan',
 			type:'post',
 			data:{"danjuhao":danjuhao,"changenumber":changenumber,"balance":balance,"density":density,"code":code},
 			success:function(data){
-				alert(data);
+				alert_advance_info(data);
 				$("#confirmchange").attr('disabled',false);
 			}						
 		});		

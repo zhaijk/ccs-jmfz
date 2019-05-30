@@ -3,7 +3,8 @@ package com.derun.jczb.model;
 public class Oilloss  {
 
 	private Long id;
-	private Long oiltype;
+	private int oiltype;
+	private String oilName;
 	private String jidu;
 	private Double zhugongsunhao;
 	private Double jiabosunhao;
@@ -56,11 +57,11 @@ public class Oilloss  {
 		this.id = id;
 	}
 
-	public Long getOiltype() {
+	public int getOiltype() {
 		return this.oiltype;
 	}
 
-	public void setOiltype(Long oiltype) {
+	public void setOiltype(int oiltype) {
 		this.oiltype = oiltype;
 	}
 
@@ -152,4 +153,26 @@ public class Oilloss  {
 		this.lossdate = lossdate;
 	}
 
+	public String getOilName() {
+		return oilName;
+	}
+
+	public void setOilName(String oilName) {
+		this.oilName = oilName;
+	}
+
+	@Override
+	public String toString() {
+		return "Oilloss [id=" + id + ", oiltype=" + oiltype + ", oilName=" + oilName + ", jidu=" + jidu
+				+ ", zhugongsunhao=" + zhugongsunhao + ", jiabosunhao=" + jiabosunhao + ", danweiid=" + danweiid
+				+ ", niandu=" + niandu + ", remark=" + remark + ", biaoji=" + biaoji + ", density=" + density
+				+ ", shiwuvolumn=" + shiwuvolumn + ", jiabovolumn=" + jiabovolumn + ", lossdate=" + lossdate
+				+ ", getId()=" + getId() + ", getOiltype()=" + getOiltype() + ", getJidu()=" + getJidu()
+				+ ", getZhugongsunhao()=" + getZhugongsunhao() + ", getJiabosunhao()=" + getJiabosunhao()
+				+ ", getDanweiid()=" + getDanweiid() + ", getNiandu()=" + getNiandu() + ", getRemark()=" + getRemark()
+				+ ", getBiaoji()=" + getBiaoji() + ", getDensity()=" + getDensity() + ", getShiwuvolumn()="
+				+ getShiwuvolumn() + ", getJiabovolumn()=" + getJiabovolumn() + ", getLossdate()=" + getLossdate()
+				+ ", getOilName()=" + getOilName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 }

@@ -90,21 +90,6 @@
 </div>
 </div>
 </div>
-<div class="col-md-6">
-<div class="box"> 
-<div class="box-header with-border">
-卡清除
-</div>
-<div class="box-body with-border">
-<!-- <table style="width:100%"><tr>
-    <td style="width:30%"><button id="btn_clear_read_card" class="btn btn-success btn-block" >读卡</button></td>
-    <td style="width:40%"><input type="text" class="form-control" disabled id="cardno_clear" value="" placeholder="卡号"/></td>
-    <td style="width:30%"><button id="btn_clear_card" class="btn btn-danger btn-block" >清卡</button></td>
-</tr></table> -->
-<button id="btn_clear_card" style="width:20%" class="btn btn-info btn-block" >清卡</button>
-</div>
-</div>
-</div>
 <div class="col-md-6 ">
 <div class="box"> 
 <div class="box-header with-border">
@@ -127,7 +112,7 @@
 </div>
 </div>
 </div>
-<div class="col-md-6 col-md-offset-6">
+<div class="col-md-6">
 <div class="box"> 
 <div class="box-header with-border">
 卡有效期
@@ -168,8 +153,22 @@
 </div>
 </div>
 </div>
-
-<!-- <div class="col-md-6 col-md-offset-6">
+<div class="col-md-6" style="display:none">
+<div class="box"> 
+<div class="box-header with-border">
+卡清除
+</div>
+<div class="box-body with-border">
+<!-- <table style="width:100%"><tr>
+    <td style="width:30%"><button id="btn_clear_read_card" class="btn btn-success btn-block" >读卡</button></td>
+    <td style="width:40%"><input type="text" class="form-control" disabled id="cardno_clear" value="" placeholder="卡号"/></td>
+    <td style="width:30%"><button id="btn_clear_card" class="btn btn-danger btn-block" >清卡</button></td>
+</tr></table> -->
+<button id="btn_clear_card" style="width:20%" class="btn btn-info btn-block" >清卡</button>
+</div>
+</div>
+</div>
+<div class="col-md-6" style="display:none">
 <div class="box"> 
 <div class="box-header with-border">
 卡解灰
@@ -198,11 +197,11 @@
 </table>
 </div>
 </div>
-</div> -->
 </div>
-<!-- <div class="alert alert-info alert-dismissible">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-<h4><i class="icon fa fa-info"></i> Alert!</h4>
+</div>
+<!-- <div class="alert_advance_info alert_advance_info-info alert_advance_info-dismissible">
+<button type="button" class="close" data-dismiss="alert_advance_info" aria-hidden="true">&times;</button>
+<h4><i class="icon fa fa-info"></i> alert_advance_info!</h4>
 <span ></span>
 </div> -->
 <th:block th:replace="head-js.html"></th:block>
@@ -215,7 +214,8 @@ function read_card(){
 		if(flaglen>1){
 			clear_card_info()
 			//failcounter++;
-			$("#card_status").html(card_status)
+			$("#card_status").text(card_status)
+			alert_advance_warnning(card_status)
 			return;
 		}
 		var card_status=parseInt(flag);		
@@ -296,21 +296,21 @@ function clear_card_info(){
 //初始化函数 
 function card_init(){		
 card_operation(function(flag){		
-	//alert(flag);
+	//alert_advance_info(flag);
 	switch(flag){
-		case 0: alert('正常卡，无法初始化！！！');return;
-		//case 1: alert('正常卡，无法初始化！！！');return;
-		case 2: alert('参数卡，无法初始化！！！');return;
-		//case 4: alert('卡已经发放，无法初始化！！！');return;
-		case 6: alert('灰卡，无法初始化！！！');return;
-		case 7: alert('无效卡，无法初始化！！！');return;		
+		case 0: alert_advance_info('正常卡，无法初始化！！！');return;
+		//case 1: alert_advance_info('正常卡，无法初始化！！！');return;
+		case 2: alert_advance_info('参数卡，无法初始化！！！');return;
+		//case 4: alert_advance_info('卡已经发放，无法初始化！！！');return;
+		case 6: alert_advance_info('灰卡，无法初始化！！！');return;
+		case 7: alert_advance_info('无效卡，无法初始化！！！');return;		
 	}
 	var card_no=$("#card_no").val();	
 	if(card_no.length==0){
-		alert('输入值为空');
+		alert_advance_info('输入值为空');
 		return;
 	}else if(isNaN(card_no)){
-		alert('请输入数字');
+		alert_advance_info('请输入数字');
 		return;
 	}
 	var card_password=$("#card_password").val();
@@ -335,7 +335,7 @@ card_operation(function(flag){
 	}
 	else 
 		dukaqi.InitCard(card_no, card_password);
-	alert('初始化成功');
+	alert_advance_info('初始化成功');
 	$("#card_no").val(parseInt(card_no)+1);
 	});	
 }
@@ -349,23 +349,24 @@ function card_clear(){
 			clear_card_info()
 			//failcounter++;
 			$("#card_status").html(card_status)
+			alert_advance_info(card_status);
 			return;
 		}
 		var card_status=parseInt(flag);
 		switch(card_status){			
-			case 0: $("#card_status").text('正常卡 无法清除');break;
-			case 1: $("#card_status").text('没有连接');break;
-			case 2: $("#card_status").text('参数卡 ');break;
-			case 3: $("#card_status").text('未初始化卡');break;
-			case 4: $("#card_status").text('密码错误 无法清除');break;
-			case 5: $("#card_status").text('初始化卡');break;
-			case 6: $("#card_status").text('灰卡 无法清除');break;
-			case 7: $("#card_status").text('无效卡 无法清除');break;
+			case 0: alert_advance_warnning('正常卡 无法清除');break;
+			case 1: alert_advance_warnning('没有连接');break;
+			case 2: alert_advance_warnning('参数卡 ');break;
+			case 3: alert_advance_warnning('未初始化卡');break;
+			case 4: alert_advance_warnning('密码错误 无法清除');break;
+			case 5: alert_advance_warnning('初始化卡');break;
+			case 6: alert_advance_warnning('灰卡 无法清除');break;
+			case 7: alert_advance_warnning('无效卡 无法清除');break;
 		}		
 		if(card_status==2 || card_status==3 || card_status ==5 ){			
 			var result=dukaqi.clearcard('0000');
-			if(result==0) $("#card_status").text('卡已清除！！！');
-			else $("#card_status").text('清除操作失败！！！');
+			if(result==0) alert_advance_info('卡已清除！！！');
+			else alert_advance_info('清除操作失败！！！');
 		}
 	});
 }
@@ -383,11 +384,11 @@ card_operation(function(flag){
 	if(flag==7){//无效卡
 		result=dukaqi.writecardinfo(4,0);
 	}else{
-		$("#card_status").text('不是无效卡！！！');
+		alert_advance_warnning('不是无效卡！！！');
 		return;
 	}
-	if(result==1) $("#card_status").text('正常卡！！！');
-	else $("#card_status").text('有效操作失败！！！');
+	if(result==1) alert_advance_info('操作成功，正常卡！！！');
+	else alert_advance_warnning('有效操作失败！！！');
 });
 }
 $("#btn_valid_card").on('click',function(){	
@@ -404,19 +405,20 @@ $("#btn_valid_date_card").on('click',function(){
 		if(flaglen>1){
 			clear_card_info()			
 			$("#card_status").html(card_status)
+			alert_advance_info(card_status);
 			return;
 		}
 		//console.info(flag);
 		var card_status=parseInt(flag);
 		switch(card_status){			
-			case 0: $("#card_status").text('正常卡 ');break;
-			case 1: $("#card_status").text('没有连接');break;
-			case 2: $("#card_status").text('参数卡 ');break;
-			case 3: $("#card_status").text('未初始化卡');break;
-			case 4: $("#card_status").text('密码错误 ');break;
-			case 5: $("#card_status").text('初始化卡');break;
-			case 6: $("#card_status").text('灰卡');break;
-			case 7: $("#card_status").text('无效卡');break;
+			case 0: alert_advance_info('正常卡 ');break;
+			case 1: alert_advance_info('没有连接');break;
+			case 2: alert_advance_info('参数卡 ');break;
+			case 3: alert_advance_info('未初始化卡');break;
+			case 4: alert_advance_info('密码错误 ');break;
+			case 5: alert_advance_info('初始化卡');break;
+			case 6: alert_advance_info('灰卡 ');break;
+			case 7: alert_advance_info('无效卡 ');break;
 		}		
 		if(card_status==0){			
 			var cardcode_read=dukaqi.readcardinfo(6);
@@ -433,7 +435,7 @@ $("#btn_valid_date_card").on('click',function(){
 					vailddate=data;
 				},
 				error:function(xhr){					
-					$("#card_status").text("错误提示： " + xhr.status + " " + xhr.statusText);
+					alert_advance_warnning("错误提示： " + xhr.status + " " + xhr.statusText);
 				}
 			});
 			$("#valid_date").val(vailddate);
@@ -443,9 +445,11 @@ $("#btn_valid_date_card").on('click',function(){
 				//console.info(vailddate+' '+vailddate_read);
 				var result=dukaqi.writecardinfo(3,vailddate.replace(/-/g,""));
 				if(result==1)
-					alert('success');
+					alert_advance_info('success');
 				else
-					alert('failure')
+					alert_advance_info('failure')
+			}else{
+				alert_advance_warnning('有效期一致,不需要修改！');
 			}
 		}
 		
@@ -456,7 +460,7 @@ $("#btn_valid_date_card").on('click',function(){
 			//console.info(cardcode_read+" "+cardcode+" "+vailddate);
 			//console.info(vailddate.replace(/-/g,""));替换字符-
 			dukaqi.writecardinfo(3,vailddate.replace(/-/g,""));
-			alert('success');
+			alert_advance_info('success');
 		}		 */
 		
 	});

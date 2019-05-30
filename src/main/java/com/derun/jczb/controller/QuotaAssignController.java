@@ -13,7 +13,11 @@ import com.derun.jczb.model.DeparDictionary;
 import com.derun.jczb.model.Zhibiaorecord;
 import com.derun.jczb.util.DataTypeConverter;
 import com.derun.jczb.util.SessionInfo;
-
+/**
+ * info 决策部分 指标分配
+ * @author Administrator
+ *
+ */
 @Controller
 public class QuotaAssignController {
 	
@@ -25,17 +29,18 @@ public class QuotaAssignController {
 	public String  init(ModelMap model) {
 //		String departmentCode="090000000000";
 		String departmentCode=sessioninfo.getDepartmentCode();
+		int jiezhuanDate=Integer.parseInt(sessioninfo.getJieZhuanDate());
 //		String niandu="2016";
 		//上级调拨
-		Zhibiaorecord sjdb=quotaMapper.queryBy(1, 2016,departmentCode);
+		Zhibiaorecord sjdb=quotaMapper.queryBy(1, jiezhuanDate,departmentCode);
 		//上级调整
-		Zhibiaorecord sjtz=quotaMapper.queryBy(3, 2016,departmentCode);
+		Zhibiaorecord sjtz=quotaMapper.queryBy(3, jiezhuanDate,departmentCode);
 		//已分配合计
-		Zhibiaorecord bjyfphj=quotaMapper.queryBy(2, 2016,departmentCode);
+		Zhibiaorecord bjyfphj=quotaMapper.queryBy(2, jiezhuanDate,departmentCode);
 		//本级已分配
-		List<Zhibiaorecord> bjyfp=quotaMapper.queryLstBy(2,2016,departmentCode);
+		List<Zhibiaorecord> bjyfp=quotaMapper.queryLstBy(2,jiezhuanDate,departmentCode);
 		//本级已分配
-		List<DeparDictionary> bjwfp=quotaMapper.queryDepartmentBy(2,2016);
+		List<DeparDictionary> bjwfp=quotaMapper.queryDepartmentBy(2,jiezhuanDate);
 		//放置对象
 		model.put("sjdb", sjdb);
 		model.put("sjtz", sjtz);
@@ -47,16 +52,18 @@ public class QuotaAssignController {
 	@GetMapping("quota_assign_managment/edit")
 	@ResponseBody
 	public String edit(String action,Zhibiaorecord obj) {
+		String strDate=sessioninfo.getJieZhuanDate();
+		int jiezhuanDate=Integer.parseInt(strDate);
 		//String niandu="2016";
 		int result=0;
 		//System.out.println(obj.getDanwei_name());
-		obj.setNiandu(2016);
+		obj.setNiandu(jiezhuanDate);
 		switch(action) {
 			case "accounting":
 				//记账
 				obj.setJizhang(1l);
 				obj.setWenjianhao("");
-				obj.setJzdate(DataTypeConverter.getYear());
+				obj.setJzdate(strDate);
 				result=quotaMapper.updateOne(obj);
 				break;
 			case "delete":
@@ -70,8 +77,8 @@ public class QuotaAssignController {
 				obj.setJizhang(0l);//未记账				
 				obj.setJf_xiaoji(obj.getJfTotal());//计算经费小计
 				obj.setYl_xiaoji(obj.getYlTotal());//计算油料小计
-				obj.setNiandu(2016);
-				obj.setFenpeidate(DataTypeConverter.getDate());
+				obj.setNiandu(jiezhuanDate);				
+				obj.setFenpeidate(DataTypeConverter.getDate());				
 				result=quotaMapper.insertOne(obj);
 				break;	
 		}

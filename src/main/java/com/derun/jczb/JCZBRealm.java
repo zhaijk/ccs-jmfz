@@ -14,6 +14,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.apache.shiro.subject.Subject;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -29,7 +32,7 @@ import com.derun.jczb.util.SessionInfo;
 @Component
 public class JCZBRealm extends AuthorizingRealm {
 	 
-//    private final static transient Logger logger = LoggerFactory.getLogger(CustomRealm.class);
+    private final static transient Logger logger = LoggerFactory.getLogger(CustomRealm.class);
     
     @Autowired
     private UserInfoMapper userinfoMapper;    
@@ -72,7 +75,7 @@ public class JCZBRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-    	//logger.info("授权操作......................................");
+    	System.out.println("doGetAuthorizationInfo 授权操作......................................");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String role = "admin";
 	    Set<String> set = new HashSet<>();	   

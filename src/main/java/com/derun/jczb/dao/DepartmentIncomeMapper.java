@@ -78,7 +78,7 @@ public interface DepartmentIncomeMapper {
 	@Select("select oilType as oiltype,sum(tonNum) as total from iccard.Department_Income where departmentCode like #{departmentCode}||'%'"
 			+ "and incomType=3 and provideDate2 > #{jiezhuanDate} group by oilType")
 	List<ZdgCardTrades> queryZdg(String departmentCode,String jiezhuanDate);
-	@Select("select * from iccard.department_income where departmentCode like #{departmentCode}||'%' and incomType=2 and provideDate2 > #{jiezhuanDate} order by provideDate2")
+	@Select("select rownum as id ,c.* from (select a.*,b.name as oilName from iccard.department_income a, iccard.oil_dictionary b  where a.oiltype=b.code and a.departmentCode like #{departmentCode}||'%' and a.incomType=2 and a.provideDate2 > #{jiezhuanDate} order by a.incomID desc) c")
 	List<DepartmentIncome>  queryZGYL(String departmentCode,String jiezhuanDate);
 	@SelectKey(statement="select to_char(iccard.Department_Income_sequence.nextval)  from dual" , before=true,keyColumn="incomID",resultType=String.class,keyProperty="incomID")
 	@Insert("insert into iccard.department_income (incomType,inputGuideline2,oilType,incomID,danjuhao,tonNum,density,departmentCode,provideDate2) values(#{incomType},#{inputGuideline2},#{oilType},#{incomID},#{danjuhao},#{tonNum},#{density},#{departmentCode},#{provideDate2})")

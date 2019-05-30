@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+
 //import javax.annotation.Resource;
 
 import org.apache.shiro.mgt.SecurityManager;
@@ -70,11 +72,15 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         logger.info("Shiro 设置realm.....");
-        securityManager.setRealm(Realm);
+        //AuthRealm authRealm = new AuthRealm();
+        realm.setCacheManager(new MemoryConstrainedCacheManager()); // 开启内存缓存
+        //authRealm.setCredentialsMatcher(credentialMather);
+        //return authRealm;
+        securityManager.setRealm(realm);
         return securityManager;
     }
     @Autowired
-    private JCZBRealm Realm;
+    private JCZBRealm realm;
     /**
      * 自定义身份认证 realm;
      * <p>

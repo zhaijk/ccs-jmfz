@@ -105,7 +105,7 @@ $('#card_lock').on('click',function(){
 	$(this).attr('disabled',true)
 	cardinfo=table.rows(['.selected']).data()[0];
 	if(typeof cardinfo=="undefined"){
-		alert('请选择一行数据')
+		alert_advance_info('请选择一行数据')
 	}else{
 		var cardcode =cardinfo.cardcode;
 		//console.info(cardcode);
@@ -114,10 +114,10 @@ $('#card_lock').on('click',function(){
 	    	type:'post',
 	    	data:{"cardcode":cardcode,'flag':'lock'},
 	    	success:function(data){
-	    		alert(data);
+	    		alert_advance_info(data);
 	    	},
 	    	error:function(xhr){
-	    		alert(xhr.status+' '+xhr.repsonseText);
+	    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
 	    	}
 		});
 	}
@@ -128,7 +128,7 @@ $('#card_unlock').on('click',function(){
 	$(this).attr('disabled',true)
 	cardinfo=table.rows(['.selected']).data()[0];
 	if(typeof cardinfo=="undefined"){
-		alert('请选择一行数据')
+		alert_advance_info('请选择一行数据')
 	}else{
 		var cardcode =cardinfo.cardcode
 		//console.info(cardcode)
@@ -137,10 +137,10 @@ $('#card_unlock').on('click',function(){
 	    	type:'post',
 	    	data:{"cardcode":cardcode,'flag':'unlock'},
 	    	success:function(data){
-	    		alert(data);
+	    		alert_advance_info(data);
 	    	},
 	    	error:function(xhr){
-	    		alert(xhr.status+' '+xhr.repsonseText);
+	    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
 	    	}
 		});
 	}
@@ -151,7 +151,7 @@ $('#card_kill').on('click',function(){
 	$(this).attr('disabled',true)
 	cardinfo=table.rows(['.selected']).data()[0];
 	if(typeof cardinfo=="undefined"){
-		alert('请选择一行数据')
+		alert_advance_info('请选择一行数据')
 	}else{
 		var cardcode =cardinfo.cardcode
 		//console.info(cardcode)
@@ -160,10 +160,10 @@ $('#card_kill').on('click',function(){
 	    	type:'post',
 	    	data:{"cardcode":cardcode,'flag':'invalid'},
 	    	success:function(data){
-	    		alert(data);
+	    		alert_advance_info(data);
 	    	},
 	    	error:function(xhr){
-	    		alert(xhr.status+' '+xhr.repsonseText);
+	    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
 	    	}
 		});
 	}
@@ -174,7 +174,7 @@ $('#card_renew').on('click',function(){
 	$(this).attr('disabled',true)
 	cardinfo=table.rows(['.selected']).data()[0];
 	if(typeof cardinfo=="undefined"){
-		alert('请选择一行数据')
+		alert_advance_info('请选择一行数据')
 	}else{
 		var cardcode =cardinfo.cardcode		
 		$.ajax({
@@ -198,7 +198,7 @@ $('#card_renew').on('click',function(){
 	    		writecard(data)
 	    	},
 	    	error:function(xhr){
-	    		alert(xhr.status+' '+xhr.repsonseText);
+	    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
 	    	}
 		});
 	}
@@ -210,7 +210,7 @@ card_operation(function(flag){
     var flaglen=(String(card_status)).length;
     //console.info(card_status);
 	if(flaglen>1) {
-		alert(card_status)
+		alert_advance_info(card_status)
 		return;
 	}
 	var card_status=parseInt(flag);		
@@ -225,7 +225,7 @@ card_operation(function(flag){
 		case 7: $("#card_status").text('无效卡');break;
 	}		
 	if(card_status!=5 ){			
-		alert('卡类型错误 不是未初始化卡')
+		alert_advance_info('卡类型错误 不是未初始化卡')
 		return;
 	}
 	//data.cardcode
@@ -239,7 +239,7 @@ card_operation(function(flag){
 	//console.info(cardinfo.fillCardterm.replace(/-/g,""))
 	result=dukaqi.writecardinfo(3,cardinfo.fillCardterm.replace(/-/g,""));//卡有效期
 	result=dukaqi.writecardinfo(11,cardinfo.oilType);//油品类型
-	alert('补卡成功：'+cardinfo.cardcode);
+	alert_advance_info('补卡成功：'+cardinfo.cardcode);
 	});
 }
 </script>

@@ -44,7 +44,7 @@ public class CardMain {
 	private String loseDate;	
 	private String reuseDate;	
 	private double mileage;//消费次数
-
+	private String oilName;
 
 	public Date getBufadate() {
 		return bufadate;
@@ -381,5 +381,13 @@ public class CardMain {
 
 	public void setStationid(String stationid) {
 		this.stationid = stationid;
+	}
+
+	public String getOilName() {
+		return oilName;
+	}
+
+	public void setOilName(String oilName) {
+		this.oilName = oilName;
 	}
 }

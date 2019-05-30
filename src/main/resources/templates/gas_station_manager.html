@@ -151,7 +151,7 @@ $(function(){
         //local.css("background-color","gray"); 
         var value=local.text();
         var index=local.index();
-        //alert(value+' '+index);
+        //alert_advance_info(value+' '+index);
         switch(index){
         case 1:
         	local.editable({
@@ -267,7 +267,7 @@ $(function(){
     		type: 'post',
     		data:{"action":"delete","autoCarCode":rowdata.autoCarCode,"id":rowdata.id},
     		success:function(result){
-				alert(result);
+				alert_advance_info(result);
 			}
     	});
     	if(result==true)
@@ -306,7 +306,7 @@ $(function(){
     			  "telephoneNumber":telephoneNumber,
     			  "name":rowdata.autoCarCode},
     		success:function(result){
-				alert(result);
+				alert_advance_info(result);
 			}
     	});
     });
@@ -331,19 +331,19 @@ $(function(){
     	});   	
     	console.info(departmentCode);
     	if(autoCarCode=='请输入车号'){
-    		alert("请输入车号");
+    		alert_advance_info("请输入车号");
     		return false;
     	}else if(departmentCode=='请选择部门'){
-    		alert("请选择部门");
+    		alert_advance_info("请选择部门");
     		return false;
     	}else if(carBrand=='请选择车辆类型'){
-    		alert("请选择车辆类型");
+    		alert_advance_info("请选择车辆类型");
     		return false;
     	}else if(driverName=='请输入使用人'){
-    		alert("请输入使用人");
+    		alert_advance_info("请输入使用人");
     		return false;
     	}else if(telephoneNumber=='请输入联系电话'){
-    		alert("请输入联系电话");
+    		alert_advance_info("请输入联系电话");
     		return false;
     	}
     	
@@ -363,12 +363,12 @@ $(function(){
   			  "name":rowdata.autoCarCode
   			},
   			success:function(result){
-				alert(result);
+				alert_advance_info(result);
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert(XMLHttpRequest.status); 
-				alert(XMLHttpRequest.readyState); 
-				alert(textStatus); 
+				alert_advance_info(XMLHttpRequest.status); 
+				alert_advance_info(XMLHttpRequest.readyState); 
+				alert_advance_info(textStatus); 
 			}
     	});    	
     });

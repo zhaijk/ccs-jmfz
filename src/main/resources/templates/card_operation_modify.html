@@ -246,7 +246,7 @@ $("#cardinfo_table").on("click","tr",function(){
     		$('#memo').val(data.memo)
     	},
     	error:function(xhr){
-    		alert(xhr);
+    		alert_advance_info(xhr);
     	}
     });
 });
@@ -261,10 +261,10 @@ $('#modify_carcode').on('click',function(){
     	type:'post',
     	data:{"cardcode":cardcode,'flag':'carcode','autoCarCode':carcode},
     	success:function(data){
-    		alert(data);
+    		alert_advance_info(data);
     	},
     	error:function(xhr){
-    		alert(xhr.status+' '+xhr.repsonseText);
+    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
     	}
 	});
 	$(this).attr('disabled',false)
@@ -280,10 +280,10 @@ $('#modify_oiltype').on('click',function(){
     	type:'post',
     	data:{"cardcode":cardcode,'flag':'oiltype','oilType':oiltype},
     	success:function(data){
-    		alert(data);
+    		alert_advance_info(data);
     	},
     	error:function(xhr){
-    		alert(xhr.status+' '+xhr.repsonseText);
+    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
     	}
 	});
 	$(this).attr('disabled',false)
@@ -300,11 +300,11 @@ $('#modify_validdate').on('click',function(){
     	type:'post',
     	data:{"cardcode":cardcode,'flag':'valid_date','fillCardterm':validdate},
     	success:function(data){
-    		alert(data);
+    		alert_advance_info(data);
     		loaddata();    		
     	},
     	error:function(xhr){
-    		alert(xhr.status+' '+xhr.repsonseText);
+    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
     	}
 	});
 	$(this).attr('disabled',false)
@@ -314,7 +314,7 @@ $('#modify_quotainfo').on('click',function(){
 	$(this).attr('disabled',true);
 	var cardcode =$("#card_code").val();
 	if(typeof(card_code) == "undefined"  || cardcode==""){
-		alert('请选择卡信息');
+		alert_advance_info('请选择卡信息');
 		return;
 	}
 	var fixedquota=$("#fixedquota").val();
@@ -343,10 +343,10 @@ $('#modify_quotainfo').on('click',function(){
     	type:'post',
     	data:{"cardcode":cardcode,'flag':'quota_info','destineGuideline':fixedquota,'carLimit':maxoil,'owner':owner,'phone':phone,'memo':memo,'buzhuzhibiao':allowancequota,'buzhuDate':allowancedate,'maxcount':maxcount},
     	success:function(data){
-    		alert(data);    				
+    		alert_advance_info(data);    				
     	},
     	error:function(xhr){
-    		alert(xhr.status+' '+xhr.repsonseText);
+    		alert_advance_info(xhr.status+' '+xhr.repsonseText);
     	}
 	});
 	$(this).attr('disabled',false)

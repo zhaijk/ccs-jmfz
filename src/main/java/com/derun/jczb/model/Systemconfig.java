@@ -3,7 +3,7 @@ package com.derun.jczb.model;
 public class Systemconfig {
 	
 	private Long id;			// 主键,固定为1,有只只有一条这样的记录
-	private String danweiCode;	// 单位编码
+	private String danwei_code;	// 单位编码
 	private String danwei;		// 单位名称
 	private Long jici;			// 级次,为0时为总部,为1时为总部下单位,为2时上级单位级次为1
 	private String linqinCode1;	// 联勤编码1 96位0或1字符串,外部联勤码
@@ -40,15 +40,7 @@ public class Systemconfig {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getDanweiCode() {
-		return this.danweiCode;
-	}
-
-	public void setDanweiCode(String danweiCode) {
-		this.danweiCode = danweiCode;
-	}
-
+	
 	public String getDanwei() {
 		return this.danwei;
 	}
@@ -95,6 +87,14 @@ public class Systemconfig {
 
 	public void setNiandu(Integer niandu) {
 		this.niandu = niandu;
+	}
+
+	public String getDanwei_code() {
+		return danwei_code;
+	}
+
+	public void setDanwei_code(String danwei_code) {
+		this.danwei_code = danwei_code;
 	}
 
 }

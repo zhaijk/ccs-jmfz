@@ -14,12 +14,12 @@ import com.derun.jczb.model.JunquDictionary;
  */
 public interface JunquDictionaryMapper {
 
-	@Select("select rownum as id,junqu_code,junqu,flag,biaozhi  from jiangsu.JUNQU_DICTIONARY where biaozhi=1 order by junqu_code")
+	@Select("select rownum as id,junqu_code,junqu,flag,biaozhi  from JUNQU_DICTIONARY where biaozhi=1 order by junqu_code")
 	public List<JunquDictionary>  queryALL();
-	@Update("update jiangsu.JUNQU_DICTIONARY set biaozhi=#{biaozhi}  where junqu_code=#{junqu_code}")
+	@Update("update JUNQU_DICTIONARY set biaozhi=#{biaozhi}  where junqu_code=#{junqu_code}")
 	public int  updateOne(JunquDictionary obj);
-	@Insert("insert into jiangsu.JUNQU_DICTIONARY(junqu_code,junqu,flag) values(#{junqu_code},#{junqu},#{flag})")
+	@Insert("insert into JUNQU_DICTIONARY(junqu_code,junqu,flag) values(#{junqu_code},#{junqu},#{flag})")
 	public int  save(JunquDictionary obj);
-	@Select("select rownum as id,junqu_code,junqu,flag,biaozhi  from jiangsu.JUNQU_DICTIONARY where biaozhi is null or biaozhi <> 1  order by junqu_code")
+	@Select("select rownum as id,junqu_code,junqu,flag,biaozhi  from JUNQU_DICTIONARY where biaozhi is null or biaozhi <> 1  order by junqu_code")
 	public List<JunquDictionary>  queryBy();
 }

@@ -25,6 +25,7 @@ import com.derun.jczb.model.OilDictionary;
 import com.derun.jczb.model.YoukuDictionary;
 import com.derun.jczb.model.Zhuandaigong;
 import com.derun.jczb.util.DataTypeConverter;
+import com.derun.jczb.util.SessionInfo;
 
 /**
  **    调拨 解放军换单 
@@ -46,6 +47,8 @@ public class CommitServiceImpl implements CommitService{
 	private DiaobodanRecordMapper diaobodanRecordMapper;
 	@Autowired
 	private DepartDictionaryMapper departInfoMapper;
+	@Autowired
+	private SessionInfo sessionInfo;
 	
 	public List<String> queryDanjuhao(String niandu) {		
 		return diaobodanMapper.queryDanjuhao(niandu);
@@ -188,10 +191,11 @@ public class CommitServiceImpl implements CommitService{
 	 */
 	@Transactional(rollbackFor=SQLException.class,propagation=Propagation.REQUIRED)
 	public String insertHuanDan(Diaobodan diaobodan, Integer[] oils)  {
+		
 		List<OilDictionary> oilinfo=queryByOil("1");
 		diaobodan.setCaozuoriqi(DataTypeConverter.getDate());
 		diaobodan.setCaozuotime(DataTypeConverter.getTime());
-		Diaobodan dbd=diaobodanMapper.queryBySJ(diaobodan.getDanjuhao(), "2016");
+		Diaobodan dbd=diaobodanMapper.queryBySJ(diaobodan.getDanjuhao(), sessionInfo.getJieZhuanDate());
 		String name=youkuDictionaryMapper.queryNameByCode(diaobodan.getGongyingyouku());
 		diaobodan.setBeizhu_sys(name);
 		diaobodan.setDayin(0l);
@@ -306,7 +310,7 @@ public class CommitServiceImpl implements CommitService{
 		List<OilDictionary> oilinfo=queryByOil("1");
 		diaobodan.setCaozuoriqi(DataTypeConverter.getDate());
 		diaobodan.setCaozuotime(DataTypeConverter.getTime());
-		Diaobodan dbd=diaobodanMapper.queryBySJ(diaobodan.getDanjuhao(), "2016");
+		Diaobodan dbd=diaobodanMapper.queryBySJ(diaobodan.getDanjuhao(), sessionInfo.getJieZhuanDate());
 		String name=youkuDictionaryMapper.queryNameByCode(diaobodan.getGongyingyouku());
 		diaobodan.setBeizhu_sys(name);
 		diaobodan.setDayin(0l);

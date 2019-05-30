@@ -178,9 +178,38 @@ public class Zhibiaorecord {
 		this.danwei_name = danwei_name;
 	}
 	public double getJfTotal() {
-		return jf_zgzy+jf_zgfy+jf_ykgl+jf_jyzgl+jf_ylywgl+jf_ylgl;
+		double sum=0;
+		if(jf_zgzy!=null) {
+			sum+=jf_zgzy;
+		}
+		if(jf_zgfy!=null) {
+			sum+=jf_zgfy;
+		}
+		if(jf_ykgl!=null) {
+			sum+=jf_ykgl;
+		}
+		if(jf_jyzgl!=null) {
+			sum+=jf_jyzgl;
+		}
+		if(jf_ylywgl!=null) {
+			sum+=jf_ylywgl;
+		}
+		if(jf_ylgl!=null) {
+			sum+=jf_ylgl;
+		}
+		return sum;
 	}
 	public long getYlTotal() {
-		return 	yl_jdzg+yl_zgzy+yl_zgfy;
+		long sum=0;
+		if(yl_jdzg!=null) {
+			sum+=yl_jdzg;
+		}
+		if(yl_zgzy!=null) {
+			sum+=yl_zgzy;
+		}
+		if(yl_zgfy!=null) {
+			sum+=yl_zgfy;
+		}
+		return 	sum;
 	}
 }

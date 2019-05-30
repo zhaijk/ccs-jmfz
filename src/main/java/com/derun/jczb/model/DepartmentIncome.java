@@ -2,6 +2,7 @@ package com.derun.jczb.model;
 
 public class DepartmentIncome {
 	
+	private int id;
 	private String incomID;
 	private String departmentCode;
 	private int oilType;
@@ -12,6 +13,7 @@ public class DepartmentIncome {
 	private int incomType;			//1:上级调拨  2:支队自购 	
 	private int coverType;	
 	private String danjuhao;
+	private String oilName;
 	
 	public String getDanjuhao() {		
 		return danjuhao;
@@ -99,5 +101,21 @@ public class DepartmentIncome {
 				+ ", tonNum=" + tonNum + ", inputGuideline2=" + inputGuideline2 + ", provideDate2=" + provideDate2
 				+ ", density=" + density + ", incomType=" + incomType + ", coverType=" + coverType + ", danjuhao="
 				+ danjuhao + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getOilName() {
+		return oilName;
+	}
+
+	public void setOilName(String oilName) {
+		this.oilName = oilName;
 	}	
 }
