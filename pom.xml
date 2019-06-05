@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.derun</groupId>
-  <artifactId>jczb</artifactId>
-  <version>2.0</version>
+  <artifactId>jmfz</artifactId>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <name>jczb</name>
@@ -151,7 +151,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-        	<mainClass>com.derun.jczb.JCZBApp</mainClass>
+        	<mainClass>com.derun.ccs.jmfz.JMFZApp</mainClass>
         </configuration>
       </plugin>
     </plugins>

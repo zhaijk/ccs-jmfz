@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">
+  <title>用户信息管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <th:block th:replace="head-css.html"></th:block>
+  
+ </head>
+<body>	
+<div class="box">          
+<div class="box-header with-border">
+	<h3 class="box-title">用户信息表</h3>
+	
+</div>
+<div class="box-body with-border">
+	<table id="table_infos" class="table table-hover table-stripe table-bordered table-condensed">
+	<thead>	
+	<tr style="font-size:16px;background-color:rgb(237, 241, 244);align:center">
+		<th style="width:6%;text-align:center">序号</th>
+		<th class="order-column" style="width:10%">登录名</th>
+		<th class="order-column" style="width:10%">密码1</th>
+		<th class="order-column" style="width:10%">密码2</th>
+		<th class="order-column" style="width:10%">公司缩写</th>
+		<th class="order-column" style="width:10%">公司名称</th>
+		<th class="order-column" style="width:10%">用户类型</th>
+	</tr>
+	</thead>
+	</table>	
+</div>
+</div>
+<th:block th:replace="head-js.html"></th:block>
+<script type='text/javascript' th:inline="javascript">
+function loadtable(){
+	table.ajax.reload();
+}
+var table=$('#table_infos').DataTable({
+    'pageLength' : 10,
+	'lengthChange' : false,
+	'searching' : true,
+	'info' : true,
+	'autoWidth' : false,
+	"bDestroy":true,
+   	"bRetrieve":true,   		 
+   	"select": {
+   	    style: 'single',
+   	    info: ''
+   	},   	   
+   	"sort": false,
+   	//"order": [1,'asc'],  	
+	//"aoColumnDefs":[{"bSortable": false,"aTargets":[0,1,2,3,4,5]}],
+	"ajax": "userinfo/datas",
+	"columns": [
+		{ "data": "id"},
+		{ "data": "username"},
+        { "data": "password1"},
+        { "data": "password2"},
+        { "data": "companyname"},
+		{ "data": "companydata"},
+        { "data": "usertypename"}
+    ],
+    "oLanguage": { //国际化配置  
+	    "sProcessing" : "正在获取数据，请稍后...",    
+		"sLengthMenu" : "显示 _MENU_ 条",    
+		"sZeroRecords" : "没有您要搜索的内容",    
+		"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+		"sInfoEmpty" : "记录数为0",    
+		"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+		"sInfoPostFix" : "",    
+		"sSearch" : "查询",
+		"sUrl" : "",    
+		"oPaginate": {    
+			"sFirst" : "首页",    
+			"sPrevious" : "<<",    
+			"sNext" : ">>",    
+			"sLast" : "尾页"    
+		}
+    }    	
+}); 
+</script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:score="http://thymeleafexamples">
+<head>
+  <meta charset="utf-8">
+  <title>减免车型信息管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <th:block th:replace="head-css.html"></th:block>
+ </head>
+<body>	
+<!-- 
+    <section class="content-header">
+      <h1>减免审核
+        <small>example</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">减免审核</a></li>
+        <li class="active">执行流程</li>
+      </ol>
+    </section>
+
+    Main content -->
+    <section class="content">
+
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <ul class="timeline">
+            <!-- timeline time label -->
+            <li class="time-label">
+                  <span class="bg-blue">新能源减免审核 </span>
+            </li>
+            <!-- /.timeline-label -->
+            <!-- timeline item -->
+            <li>
+              <i class="fa fa-hourglass-start bg-blue"></i>
+
+              <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> 1:05</span>
+               <button id="xnysj" class="btn btn-success btn-primary" style="width:80px;">启动</button>
+			   <div class="progress" style="position:absolute;top:14px;width:60%;left:82px;">
+                <div id="pro1" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:90%">
+                  <span id="proinfo1">90% </span>
+                </div>
+              </div>
+                <div class="timeline-body">
+                  <table id="xny_infos" class="table table-hover  table-bordered table-condensed">
+					<thead>
+					<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+                  	
+                  		<th>审核日期</th>
+                  		<th>操作员</th>
+                  		<th>审核记录数</th>
+                  		<th>应收税额</th>
+                  		<th>实收税额</th>
+                  		<th>减免税额</th>
+                  		<th>减免数量</th>
+                  		<th>异常数量</th>
+                  	</tr>		
+                  	</thead>
+                  	<tbody>
+                  		<!-- <td>2019-05-31</td>
+                  		<td>税务局员工-张觉</td>
+                  		<td>45</td>
+                  		<td>7234.56</td>
+                  		<td>2234.56</td>
+                  		<td>534.56</td>
+                  		<td>32</td>
+                  		<td>2</td> -->
+                  	</tbody>                  	
+                  </table>
+                </div>
+                <!-- <div class="timeline-footer">
+                  <a class="btn btn-primary btn-xs">Read more</a>
+                  <a class="btn btn-danger btn-xs">Delete</a>
+                </div> -->
+              </div>
+            </li>
+            <li class="time-label">
+                  <span class="bg-blue">
+                  	审核减免审核
+                  </span>
+            </li>
+            <li>
+              <i class="fa fa-hourglass-start bg-blue"></i>
+
+              <div class="timeline-item">
+               <span class="time"><i class="fa fa-clock-o"></i> 3:15</span>
+               <button id="jmsj" class="btn btn-success btn-primary" style="width:80px;">启动
+               </button>
+			   <div class="progress" style="position:absolute;top:14px;width:60%;left:82px;">
+                <div id="pro2"class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                  <span id="proinfo2">60%</span>
+                </div>
+              </div>
+                <div class="timeline-body">
+                  <table id="sh_infos" class="table table-hover  table-bordered table-condensed">
+					<thead>
+					<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+                  	
+                  		<th>审核日期</th>
+                  		<th>操作员</th>
+                  		<th>审核记录数</th>
+                  		<th>应收税额</th>
+                  		<th>实收税额</th>
+                  		<th>减免税额</th>
+                  		<th>减免数量</th>
+                  		<th>异常数量</th>
+                  	</tr>		
+                  	</thead>
+                  	<tbody>
+                  		<!-- <td>2019-05-31</td>
+                  		<td>税务局员工-张觉</td>
+                  		<td>45</td>
+                  		<td>7234.56</td>
+                  		<td>2234.56</td>
+                  		<td>534.56</td>
+                  		<td>32</td>
+                  		<td>2</td> -->
+                  	</tbody>                  	
+                  </table>
+                </div>
+                <!-- <div class="timeline-footer">
+                  <a class="btn btn-primary btn-xs">Read more</a>
+                  <a class="btn btn-danger btn-xs">Delete</a>
+                </div> -->
+              </div>
+            </li>
+ 			<li class="time-label">
+                  <span class="bg-blue">
+                  	总审核
+                  </span>
+            </li>
+                        <li>
+              <i class="fa fa-hourglass-end bg-blue"></i>
+
+                            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> 4:20</span>
+
+               <button id="zsj" class="btn btn-success btn-primary" style="width:80px;">启动
+               </button>
+			   <div class="progress" style="position:absolute;top:14px;width:60%;left:82px;">
+                <div id="pro3" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                  <span id="proinfo3">40% Complete (success)</span>
+                </div>
+              </div>
+                <div class="timeline-body">
+                  <table id="total_infos" class="table table-hover  table-bordered table-condensed">
+					<thead>
+					<tr style="font-size: 16px; background-color: rgb(237, 241, 244); align: center">
+                  	
+                  		<th>审核日期</th>
+                  		<th>操作员</th>
+                  		<th>审核记录数</th>
+                  		<th>应收税额</th>
+                  		<th>实收税额</th>
+                  		<th>减免税额</th>
+                  		<th>减免数量</th>
+                  		<th>异常数量</th>
+                  	</tr>		
+                  	</thead>
+                  	<tbody>
+                  		<!-- <td>2019-05-31</td>
+                  		<td>税务局员工-张觉</td>
+                  		<td>45</td>
+                  		<td>7234.56</td>
+                  		<td>2234.56</td>
+                  		<td>534.56</td>
+                  		<td>32</td>
+                  		<td>2</td> -->
+                  	</tbody>                  	
+                  </table>
+                </div>
+                <!-- <div class="timeline-footer">
+                  <a class="btn btn-primary btn-xs">Read more</a>
+                  <a class="btn btn-danger btn-xs">Delete</a>
+                </div> -->
+              </div>
+            </li>
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+           
+          </ul>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+<th:block th:replace="head-js.html"></th:block>
+<script type="text/javascript">
+var pro1_counter=Number(0);
+var pro2_counter=Number(0);
+var pro3_counter=Number(0);
+var timer1;
+var timer2;
+var timer3;
+$(function(){
+	$("#xnysj").on('click',function(){
+		pro1_counter=0;
+		$(this).attr('disabled',true);
+		clearInterval(timer1);
+		timer1=setInterval(counter1,150);
+		//$(this).attr('disabled',false);
+	})
+	$("#jmsj").on('click',function(){
+		pro2_counter=0;
+		$(this).attr('disabled',true);
+		clearInterval(timer2);
+		timer2=setInterval(counter2,170);
+		//$(this).attr('disabled',false);
+	})
+	$("#zsj").on('click',function(){
+		pro3_counter=0;
+		$(this).attr('disabled',true);
+		clearInterval(timer3);
+		timer3=setInterval(counter3,320);
+		//$(this).attr('disabled',false);
+	})
+})
+function load_xny(){
+	var table=$('#xny_infos').DataTable({
+		'paging':false,
+		'lengthChange' : false,
+		'searching' : false,
+		'info' : false,
+		'autoWidth' : false,
+		"bDestroy":true,
+	   	"bRetrieve":true,   		 
+	   	"select": {
+	   	    style: 'single',
+	   	    info: ''
+	   	},   	   
+	   	"sort": false,
+	   	//"order": [1,'asc'],  	
+		//"aoColumnDefs":[{"bSortable": false,"aTargets":[0,1,2,3,4,5]}],
+		"ajax": "auditquery/xny",
+		"columns": [
+			{ "data": "hdsj"},
+			{ "data": "hdrmc"},
+	        { "data": "total"},
+	        { "data": "ysse"},
+			{ "data": "ssse"},
+			{ "data": "jmse"},
+	        { "data": "jm"},
+	        { "data": "yc"}
+	    ],
+	    "oLanguage": { //国际化配置  
+		    "sProcessing" : "正在获取数据，请稍后...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "查询",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+	    }    	
+	}); 
+}
+function load_sh(){
+	var table=$('#sh_infos').DataTable({
+		'paging':false,
+		'lengthChange' : false,
+		'searching' : false,
+		'info' : false,
+		'autoWidth' : false,
+		"bDestroy":true,
+	   	"bRetrieve":true,   		 
+	   	"select": {
+	   	    style: 'single',
+	   	    info: ''
+	   	},   	   
+	   	"sort": false,
+	   	//"order": [1,'asc'],  	
+		//"aoColumnDefs":[{"bSortable": false,"aTargets":[0,1,2,3,4,5]}],
+		"ajax": "auditquery/sh",
+		"columns": [
+			{ "data": "hdsj"},
+			{ "data": "hdrmc"},
+	        { "data": "total"},
+	        { "data": "ysse"},
+			{ "data": "ssse"},
+			{ "data": "jmse"},
+	        { "data": "jm"},
+	        { "data": "yc"}
+	    ],
+	    "oLanguage": { //国际化配置  
+		    "sProcessing" : "正在获取数据，请稍后...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "查询",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+	    }    	
+	}); 
+}
+function load_total(){
+	var table=$('#total_infos').DataTable({
+		'paging':false,
+		'lengthChange' : false,
+		'searching' : false,
+		'info' : false,
+		'autoWidth' : false,
+		"bDestroy":true,
+	   	"bRetrieve":true,   		 
+	   	"select": {
+	   	    style: 'single',
+	   	    info: ''
+	   	},   	   
+	   	"sort": false,
+	   	//"order": [1,'asc'],  	
+		//"aoColumnDefs":[{"bSortable": false,"aTargets":[0,1,2,3,4,5]}],
+		"ajax": "auditquery/total",
+		"columns": [
+			{ "data": "hdsj"},
+			{ "data": "hdrmc"},
+	        { "data": "total"},
+	        { "data": "ysse"},
+			{ "data": "ssse"},
+			{ "data": "jmse"},
+	        { "data": "jm"},
+	        { "data": "yc"}
+	    ],
+	    "oLanguage": { //国际化配置  
+		    "sProcessing" : "正在获取数据，请稍后...",    
+			"sLengthMenu" : "显示 _MENU_ 条",    
+			"sZeroRecords" : "没有您要搜索的内容",    
+			"sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+			"sInfoEmpty" : "记录数为0",    
+			"sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+			"sInfoPostFix" : "",    
+			"sSearch" : "查询",
+			"sUrl" : "",    
+			"oPaginate": {    
+				"sFirst" : "首页",    
+				"sPrevious" : "<<",    
+				"sNext" : ">>",    
+				"sLast" : "尾页"    
+			}
+	    }    	
+	}); 
+}
+function counter1(){
+	pro1_counter=pro1_counter+1;
+	$('#pro1').css('width',pro1_counter+'%');
+	$('#proinfo1').text(pro1_counter+'%');
+	if(pro1_counter>=100){
+		clearInterval(timer1);
+		$("#xnysj").attr('disabled',false);
+		pro1_counter=100;
+		/* $.ajax({
+			url:'auditquery/xny',
+			type:'get',
+			success:function(data){
+				alert(data);
+			},
+			error:function(xhr){
+				alert(xhr.statusCode);
+			}
+		}) */
+		load_xny();
+	}
+}
+function counter2(){
+	pro2_counter=pro2_counter+1;
+	$('#pro2').css('width',pro2_counter+'%');
+	$('#proinfo2').text(pro2_counter+'%');
+	if(pro2_counter>=100){
+		clearInterval(timer2);
+		$("#jmsj").attr('disabled',false);
+		pro2_counter=99;
+		load_sh();
+	}
+}
+function counter3(){
+	pro3_counter=pro3_counter+1;
+	$('#pro3').css('width',pro3_counter+'%');
+	$('#proinfo3').text(pro3_counter+'% Complete (success)');
+	if(pro3_counter>=100){
+		clearInterval(timer3);
+		$("#zsj").attr('disabled',false);
+		pro3_counter=99;
+		load_total();
+	}
+}
+</script>
+</body>
+</html>
