@@ -10,7 +10,7 @@ import org.apache.ibatis.mapping.StatementType;
  *
  */
 public interface AuditMapper {
-	@Select(value="call ZXXNY")
+	@Select(value="call ZXXNY()")
 	@Options(statementType=StatementType.CALLABLE)
-	public int audit();
+	public void  audit();
 }

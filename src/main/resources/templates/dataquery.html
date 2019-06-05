@@ -15,7 +15,7 @@
 			<div style="font-size:20px;">减免明细查询</div>
 		</div>			
 		<div class="col-md-2">				
-				<select class="form-control" id="type">
+				<select class="form-control" id="type" disabled>
 					<option value="all">选择类型</option>
 					<option value="normal">正常</option>	
 					<option value="YJWJ">应减未减</option>					
@@ -46,7 +46,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar" ></i>
                   </div>
-                  <input type="text" readonly class="form-control pull-right" id="querydatestart" placeholder='消费日期 从'>
+                  <input type="text" readonly class="form-control pull-right" id="querydatestart" placeholder='登记日期 从'>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -69,7 +69,7 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar" ></i>
                   </div>
-                  <input type="text" readonly class="form-control pull-right" id="querydatestop" placeholder='消费日期 至'>
+                  <input type="text" readonly class="form-control pull-right" id="querydatestop" placeholder='登记日期至'>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -88,8 +88,8 @@
 				<th style="width: 8%">减免比例</th>				
 				<th style="width: 10%">减免前金额</th>
 				<th style="width: 8%">入库金额</th>
-				<th style="width: 15%">核定时间</th>
-				<th style="width: 8%">核定原因</th>	
+				<th style="width: 8%">登记日期</th>
+				<th style="width: 15%">核定时间</th>					
 				<th style="width: 11%">核定人名称</th>
 			</tr>
 			</thead>
@@ -100,17 +100,20 @@
 </div>
 <th:block th:reaplce="head-js.html"></th:block>
 <script type='text/javascript' th:inline="javascript">
+var type_init=[[${type_init}]]
+$('#type').val(type_init)
 function loaddata(){	
+	var type_init=[[${type_init}]]
 	var querydatestart=$('#querydatestart').val();	
 	var querydatestop=$('#querydatestop').val();
-
+	//$('#type').val(type_init)
 	var type=$('#type').val();
 	var bxgs=$('#bxgs').val();	
 	var hmhp=$('#hmhp').val();
 	var nsrmc=$('#nsrmc').val();
 	
 	var table=$('#table_infos').DataTable({	
-		'pageLength' : 8,
+		//'pageLength' : 10,
 		"processing": 		true,
 	    "serverSide": 		true,
 		'lengthChange' : 	false,
@@ -130,11 +133,11 @@ function loaddata(){
         	{ "data": "nsrmc"},
         	{ "data": "jmlx" },
         	{ "data": "jmje" },
-        	{ "data": "jmbl" },
+        	{ "data": "strjmbl" },
         	{ "data": "jmqse" },
         	{ "data": "rkje" },
-        	{ "data": "hdsj" },
-        	{ "data": "hdyy" },
+        	{ "data": "csdjrq" },
+        	{ "data": "hdsj" },        	
         	{ "data": "hdrmc" }
     	],
 		"oLanguage": { //国际化配置  

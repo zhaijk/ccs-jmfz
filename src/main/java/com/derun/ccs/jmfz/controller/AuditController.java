@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.derun.ccs.jmfz.dao.AuditMapper;
 import com.derun.ccs.jmfz.dao.CcsHdXxMapper;
 import com.derun.ccs.jmfz.model.BXGS;
 import com.derun.ccs.jmfz.model.TotalInfo;
@@ -20,6 +21,8 @@ public class AuditController {
 
 	@Autowired
 	private  CcsHdXxMapper ccsHdXxMapper;
+	@Autowired
+	private AuditMapper auditMapper;
 	
 	@GetMapping("audit.htm")
 	public String init() {
@@ -35,6 +38,7 @@ public class AuditController {
 	@GetMapping("auditquery/sh")
 	@ResponseBody
 	public DataTableDO<TotalInfo> querySH() {
+		ccsHdXxMapper.deleteRepeat();
 		DataTableDO<TotalInfo> dataTableDO=new DataTableDO<TotalInfo>();
 		dataTableDO.setData(ccsHdXxMapper.querySHTotal());
 		return dataTableDO;
@@ -45,5 +49,12 @@ public class AuditController {
 		DataTableDO<TotalInfo> dataTableDO=new DataTableDO<TotalInfo>();
 		dataTableDO.setData(ccsHdXxMapper.queryTotal());
 		return dataTableDO;
-	}	
+	}
+	@GetMapping("audit/operation")
+	@ResponseBody
+	public String execAudit() {		
+		ccsHdXxMapper.deleteAll();
+		auditMapper.audit();
+		return "success";
+	}
 }

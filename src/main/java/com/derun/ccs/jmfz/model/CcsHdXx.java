@@ -52,6 +52,7 @@ public class CcsHdXx {
 	private String JMYYDM;	//减免原因代码	
 	private String JMFADM;	//减免方案代码　
 	private double JMBL;	//减免比例
+	private String STRJMBL;	//减免比例
 	private double JMJE;	//减免金额
 	private String CPXH;	//厂牌型号
 	private String HPYS;	//号牌颜色
@@ -467,5 +468,11 @@ public class CcsHdXx {
 	}
 	public void setRow_id(int row_id) {
 		this.row_id = row_id;
+	}	
+	public String getSTRJMBL() {
+		return STRJMBL;
+	}
+	public void setSTRJMBL(String sTRJMBL) {
+		STRJMBL = sTRJMBL;
 	}	
 }

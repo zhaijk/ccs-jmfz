@@ -358,10 +358,23 @@ function load_total(){
 	    }    	
 	}); 
 }
+function audit(){
+	$.ajax({
+		'url':'audit/operation',
+		'type':'get',
+		'success':function(data){
+			//alert(data);
+		},
+		'error':function(xhr){
+			//alert(xhr);
+		}
+	})
+}
 function counter1(){
 	pro1_counter=pro1_counter+1;
 	$('#pro1').css('width',pro1_counter+'%');
 	$('#proinfo1').text(pro1_counter+'%');
+	if(pro1_counter==2) audit();
 	if(pro1_counter>=100){
 		clearInterval(timer1);
 		$("#xnysj").attr('disabled',false);
@@ -375,18 +388,19 @@ function counter1(){
 			error:function(xhr){
 				alert(xhr.statusCode);
 			}
-		}) */
-		load_xny();
+		}) */		
+		load_xny();		
 	}
 }
 function counter2(){
 	pro2_counter=pro2_counter+1;
 	$('#pro2').css('width',pro2_counter+'%');
 	$('#proinfo2').text(pro2_counter+'%');
+	if(pro2_counter==2) audit();
 	if(pro2_counter>=100){
 		clearInterval(timer2);
 		$("#jmsj").attr('disabled',false);
-		pro2_counter=99;
+		pro2_counter=99;		
 		load_sh();
 	}
 }
@@ -394,6 +408,7 @@ function counter3(){
 	pro3_counter=pro3_counter+1;
 	$('#pro3').css('width',pro3_counter+'%');
 	$('#proinfo3').text(pro3_counter+'% Complete (success)');
+	if(pro3_counter==2) audit();
 	if(pro3_counter>=100){
 		clearInterval(timer3);
 		$("#zsj").attr('disabled',false);
@@ -401,6 +416,7 @@ function counter3(){
 		load_total();
 	}
 }
+
 </script>
 </body>
 </html>

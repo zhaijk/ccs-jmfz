@@ -1,5 +1,7 @@
 package com.derun.ccs.jmfz.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +12,8 @@ import com.derun.ccs.jmfz.dao.BXGSMapper;
 import com.derun.ccs.jmfz.dao.CcsHdXxMapper;
 import com.derun.ccs.jmfz.dao.JMDMMapper;
 import com.derun.ccs.jmfz.dao.JMLXMapper;
+import com.derun.ccs.jmfz.dao.UserMapper;
+import com.derun.ccs.jmfz.model.UserInfo;
 
 @Controller
 public class IndexController {
@@ -22,13 +26,20 @@ public class IndexController {
 	private JMLXMapper jMLXMapper;
 	@Autowired
 	private CcsHdXxMapper ccsHdXxMapper;
+	@Autowired
+	private UserMapper userMapper;
+	
+	
 	@GetMapping({"/",""})
 	public String init() {
 		return "login";
 	}
 	@PostMapping("login")
-	public String login() {
-		
+	public String login(String loginname,String loginpassword) {
+		List<UserInfo> result=userMapper.querBy(loginname,loginpassword);
+		if(result.size()==0) {
+			return "loginfailure";
+		}
 		return "redirect:welcome";
 	}
 	@GetMapping("welcome")

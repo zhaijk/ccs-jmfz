@@ -1,5 +1,6 @@
 package com.derun.ccs.jmfz.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +32,9 @@ public class QueryController {
 	
 	
 	@GetMapping("dataquery.htm")
-	public String init(ModelMap model) {
+	public String init(ModelMap model,String type) {
 		model.put("bxgsinfos", bXGSmapper.queryALLBXGS());
+		model.put("type_init", type);
 		return "dataquery";
 	}
 	@PostMapping("dataquery/datas")
@@ -62,6 +64,11 @@ public class QueryController {
 		int total=(int) pageObjs.getTotal();
 		maps.setRecordsFiltered(total);
 		maps.setRecordsTotal(total);
+		for(CcsHdXx obj:objs) {
+			obj.setCSDJRQ(obj.getCSDJRQ().substring(0,10));
+			obj.setHDSJ(obj.getHDSJ().substring(0, obj.getHDSJ().length()-2));
+			obj.setSTRJMBL(obj.getJMBL()==0?"0":(int)(obj.getJMBL()*100)+"%");
+		}
 		maps.setData(objs);
 		return maps;
 	}	
