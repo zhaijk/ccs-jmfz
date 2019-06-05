@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,10 +26,11 @@ public class AuditController {
 	@Autowired
 	private  CcsHdXxMapper ccsHdXxMapper;
 	@Autowired
-	private AuditMapper auditMapper;
+	private AuditMapper auditMapper;	
 	
 	@GetMapping("audit.htm")
-	public String init() {
+	public String init(ModelMap model ,String param) {
+		model.put("param", param);
 		return "audit";
 	}
 	@GetMapping("auditquery/xny")

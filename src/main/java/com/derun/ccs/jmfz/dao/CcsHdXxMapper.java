@@ -20,7 +20,7 @@ public interface CcsHdXxMapper {
 			+"<if test='\"all\"!=type and \"normal\"!=type'>"
 			+" jmyc=#{type} </if>"
 			+"<if test='\"all\"!=bxgs'>"
-			+" and jmyc=#{type} </if>"
+			+" and bxgs=#{bxgs} </if>"
 			+"<if test='\"all\"!=nsrmc'>"
 			+" and nsrmc like #{nsrmc} || '%' </if>"
 			+"<if test='\"all\"!=hmhp'>"
