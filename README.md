@@ -1,5 +1,5 @@
-  = 车船税减免政策辅助系统 2019-06-05
- = \ccs-jmfz
+ 车船税减免政策辅助系统 2019-06-05
+ \ccs-jmfz
  * .git 版本管理目录
  * .settings 项目ide配置参数
  * src  源码
@@ -29,22 +29,22 @@ ehcached.xml  ehcache 缓存框架配置文件
  *    QueryController.java   查询控制器
  *    UserInfoController.java用户信息管理控制器
 数据访问对象包  com.derun.css.jmfz.dao: mybatis 注解
-   AuditMapper.java   审计查询
-   BXGSMapper.java    保险公司信息查询
-   CcsHdXxMapper.java SYJK_CCS_CCSHDXX表操作接口    
-   CLCBJMBAXXMapper.java YH_CLCBJMBAXX查询接口  
-   JMDMMapper.java    减免车型信息查询
-   JMLXMapper.java    减免类型信息查询
-   UserMapper.java    用户信息查询
+ *    AuditMapper.java   审计查询
+ *    BXGSMapper.java    保险公司信息查询
+ *    CcsHdXxMapper.java SYJK_CCS_CCSHDXX表操作接口    
+ *    CLCBJMBAXXMapper.java YH_CLCBJMBAXX查询接口  
+ *    JMDMMapper.java    减免车型信息查询
+ *    JMLXMapper.java    减免类型信息查询
+ *    UserMapper.java    用户信息查询
  数据模型包  com.derun.css.jmfz.model: pojo对象
-   BXGS.java   险公司信息模模型
-   CcsHdXx.java    审计信息模型
-   CLCBJMBAXX.java 新能源减免信息模型
-   JMDM.java    减免车型信息模型
-   JMLX.java    减免类型信息模型
-   QueryDataVO.java    查询数据中间结果模型
-   TotalInfo.java      汇总信息模型
-   UserInfo.java       用户信息模型
+ *    BXGS.java   险公司信息模模型
+ *    CcsHdXx.java    审计信息模型
+ *    CLCBJMBAXX.java 新能源减免信息模型
+ *    JMDM.java    减免车型信息模型
+ *    JMLX.java    减免类型信息模型
+ *    QueryDataVO.java    查询数据中间结果模型
+ *    TotalInfo.java      汇总信息模型
+ *    UserInfo.java       用户信息模型
     
    
    
