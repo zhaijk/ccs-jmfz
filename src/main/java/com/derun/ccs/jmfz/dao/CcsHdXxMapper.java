@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.derun.ccs.jmfz.model.CcsHdXx;
 import com.derun.ccs.jmfz.model.TotalInfo;
@@ -52,4 +53,6 @@ public interface CcsHdXxMapper {
 	public  int deleteAll();
 	@Delete("delete   from SYJK_CCS_CCSHDXX  where jmlx='AC' and nsrmc is null")
 	public int deleteRepeat();
+	@Update("update  SYJK_CCS_CCSHDXX  set hdrmc=#{username}")
+	public int updateAll(String username);
 }

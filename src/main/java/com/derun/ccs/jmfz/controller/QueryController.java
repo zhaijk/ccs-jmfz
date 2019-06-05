@@ -1,6 +1,5 @@
 package com.derun.ccs.jmfz.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,15 +39,14 @@ public class QueryController {
 	@PostMapping("dataquery/datas")
 	@ResponseBody
 	public QueryDataVO<CcsHdXx> query(String nsrmc,String type,String bxgs,String hmhp,String querydatestart,String querydatestop,HttpServletRequest request,int draw,int start ,int length) {
-		//System.out.println(type);
-		hmhp=hmhp.trim();
-		nsrmc=nsrmc.trim();
 		if(null==nsrmc ||nsrmc.equals("")) {
-	 		hmhp="all";
-		}
+			nsrmc="all";
+		}else
+			nsrmc=nsrmc.trim();
 		if(null==hmhp ||hmhp.equals("")) {
 	 		hmhp="all";
-		}
+		}else
+			hmhp=hmhp.trim();
 		if(null==querydatestart ||querydatestart.equals("")) {
 			querydatestart="all";
 		}
