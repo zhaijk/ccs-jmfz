@@ -1,5 +1,5 @@
-车船税减免政策辅助系统 2019-06-05
-\ccs-jmfz
+##车船税减免政策辅助系统 2019-06-05
+##\ccs-jmfz
 *.git 版本管理目录
 *.settings 项目ide配置参数
 *src  源码
@@ -28,3 +28,12 @@ ehcached.xml  ehcache 缓存框架配置文件
    JMLXController.java    减免类型信息管理控制器
    QueryController.java   查询控制器
    UserInfoController.java用户信息管理控制器
+数据访问对象包  com.derun.css.jmfz.dao:
+   AuditMapper.java   审计控制器
+   BXGSMapper.java    保险公司信息管理控制器
+   DataTableDO.java       数据传输模型    
+   IndexController.java   登录、主页控制器
+   JMCXController.java    减免车型信息管理控制器
+   JMLXController.java    减免类型信息管理控制器
+   QueryController.java   查询控制器
+   UserInfoController.java用户信息管理控制器   
